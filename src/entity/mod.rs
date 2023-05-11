@@ -2,9 +2,6 @@
 
 use std::time::Instant;
 
-use rand::Rng;
-use rand_chacha::ChaChaRng;
-
 use crate::params;
 
 /// The different type of obstacle
@@ -12,6 +9,14 @@ use crate::params;
 pub enum ObstacleEntityType {
     Cactus = 0,
     Rock = 1,
+    Pterodactyle = 2,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum ObstacleGenerateType {
+    Cactus = 0,
+    Rock = 1,
+    RockAndPterodactyle = 2,
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -54,29 +59,35 @@ impl Obstacle {
         }
     }
 
+    pub fn new_pterodactyle(x: f64, velocity : f64, last_time_update : Instant) -> Self {
+        Self {
+            x : x - params::PTERODACTYLE_OFFSET as f64,
+            y : params::PTERODACTYLE_FLYING_HEIGHT as f64,
+            width : params::PTERODACTYLE_WIDTH,
+            height : params::PTERODACTYLE_HEIGHT,
+            velocity : velocity,
+            type_: ObstacleEntityType::Pterodactyle,
+            last_time_update,
+        }
+    }
+
     /// wrapper to create an obstacle
     pub fn new(x: f64, velocity : f64, last_time_update : Instant, type_ : ObstacleEntityType) -> Self {
         match type_ {
             ObstacleEntityType::Cactus => Obstacle::new_cactus(x, velocity, last_time_update),
-            ObstacleEntityType::Rock => Obstacle::new_rock(x, velocity, last_time_update)
+            ObstacleEntityType::Rock => Obstacle::new_rock(x, velocity, last_time_update),
+            ObstacleEntityType::Pterodactyle => Obstacle::new_pterodactyle(x, velocity, last_time_update),
         }
-    }
-
-    /// wrapper to create random obstacle
-    pub fn new_random(x: f64, velocity : f64, last_time_update : Instant,  rng : &mut ChaChaRng) -> Self {
-        let random_entity: ObstacleEntityType = match rng.gen_range(0..2) {
-            0 => ObstacleEntityType::Cactus,
-            _ => ObstacleEntityType::Rock,
-        };
-        Obstacle::new(x, velocity, last_time_update, random_entity)
     }
 
     /// Update the obstacle position
     pub fn update(&mut self, now: Instant) {
-        let delta = now.duration_since(self.last_time_update).as_secs_f64();
-        if delta < 0.0 {// if the time is in the future, we don't update
+        if now < self.last_time_update {// if the time is in the future, we don't update
             return;
         }
+
+        let delta = now.duration_since(self.last_time_update).as_secs_f64();
+       
         
         self.x -= delta * self.velocity;
         //println!("update obstacle : {:?} -> {:?}", self, delta);

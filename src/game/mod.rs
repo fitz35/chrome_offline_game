@@ -8,7 +8,7 @@ use iced::widget::{canvas, Canvas};
 use iced::theme::{Theme};
 use iced::{Application, executor, Command, Rectangle, Size, Color, Point, Subscription, window, keyboard};
 
-use crate::entity::{Dinosaur, Obstacle};
+use crate::entity::{Dinosaur, Obstacle, ObstacleGenerateType};
 use crate::params;
 use crate::utils::{str_to_u8_array, get_scale_value, check_collision};
 
@@ -48,7 +48,6 @@ impl Game {
             rng : ChaChaRng::from_seed(str_to_u8_array(seed)),
             cache,
         };
-        me.update(now);
         me
     }
     // ---------------- game state ----------------
@@ -103,22 +102,8 @@ impl Game {
         );
         
         last_time.checked_add(
-            Duration::from_secs(interval as u64)// apply the coef with reverse it
+            Duration::from_millis((interval * 1000.0) as u64)// apply the coef with reverse it
         ).unwrap()// WARN : error if the duration is too big
-    }
-
-    /// generate a random (given the random generator) new obstacle with speed adapted to the score
-    /// at the time time_to_appear
-    fn generate_next_obstacle_entity(x : f64, time_to_appear : Instant, score : u64, rng : &mut ChaChaRng) -> Obstacle {
-        let velocity = get_scale_value(
-            params::MAX_OBSTACLE_SPEED,
-            params::MIN_OBSTACLE_SPEED,
-            params::OBSTACLE_INCREASE_SPEED_INTERVAL,
-            score,
-            params::SCORE_INCREASE_SPEED_INTERVAL,
-            false
-        ) as f64;
-        Obstacle::new_random(x, velocity, time_to_appear, rng)
     }
 
     /// generate the next obstacle (add it to the vector) and update the timing
@@ -127,30 +112,45 @@ impl Game {
             self.next_obstacle_time, 
             self.score
         );
-        let next_obstacle = Self::generate_next_obstacle_entity(
-            params::GAME_WIDTH as f64, 
-            new_next_obstacle_time, 
-            self.score,
-            &mut self.rng
-        );
-        // update timing
+        let x = params::GAME_WIDTH as f64 + params::PTERODACTYLE_OFFSET as f64;
+        
+        let random_obstacle: ObstacleGenerateType = match self.rng.gen_range(0..3) {
+            0 => ObstacleGenerateType::Cactus,
+            1 => ObstacleGenerateType::Rock,
+            2 => ObstacleGenerateType::RockAndPterodactyle,
+            _ => panic!("impossible"),
+        };
+
+        match random_obstacle {
+            ObstacleGenerateType::Cactus => {
+                self.obstacles.push(Obstacle::new_cactus(x, params::OBSTACLE_SPEED, new_next_obstacle_time));
+            },
+            ObstacleGenerateType::Rock => {
+                self.obstacles.push(Obstacle::new_rock(x, params::OBSTACLE_SPEED, new_next_obstacle_time));
+            },
+            ObstacleGenerateType::RockAndPterodactyle => {
+                self.obstacles.push(Obstacle::new_rock(x, params::OBSTACLE_SPEED, new_next_obstacle_time));
+                self.obstacles.push(Obstacle::new_pterodactyle(
+                    x, 
+                    params::OBSTACLE_SPEED, 
+                    new_next_obstacle_time
+                ));
+            },
+        }
+
         self.next_obstacle_time = new_next_obstacle_time;
-        // update the vector
-        self.obstacles.push(next_obstacle);
     }
 
     /// update all the obstacle and remove (add 1 to the score) the obstacle outside the screen
     fn update_all_obstacles(&mut self, now : Instant) {
         
         let mut to_remove : Vec<usize> = Vec::new();
-        let mut i : usize = 0;
-        for obstacle in self.obstacles.iter_mut() {
+        for (i, obstacle) in self.obstacles.iter_mut().enumerate() {
             obstacle.update(now);
 
             if (obstacle.x + obstacle.width as f64) < 0.0 {
                 to_remove.push(i);
             }
-            i = i + 1;
         }
 
         self.score += to_remove.len() as u64;
