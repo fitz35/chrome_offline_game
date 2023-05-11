@@ -1,11 +1,12 @@
 use std::time::{Instant, Duration};
-use iced::widget::canvas::{Cursor, Geometry, Cache};
-use iced::widget::{canvas, Canvas};
+
 use rand::{Rng, SeedableRng};
 use rand_chacha::ChaChaRng;
 
-use iced::theme::{self, Theme};
-use iced::{Application, executor, Command, Rectangle, Size, Color, Point};
+use iced::widget::canvas::{Cursor, Geometry, Cache};
+use iced::widget::{canvas, Canvas};
+use iced::theme::{Theme};
+use iced::{Application, executor, Command, Rectangle, Size, Color, Point, Subscription, window, keyboard};
 
 use crate::entity::{Dinosaur, Obstacle};
 use crate::params;
@@ -108,7 +109,7 @@ impl Game {
 
     /// generate a random (given the random generator) new obstacle with speed adapted to the score
     /// at the time time_to_appear
-    fn generate_next_obstacle_entity(x : i16, time_to_appear : Instant, score : u64, rng : &mut ChaChaRng) -> Obstacle {
+    fn generate_next_obstacle_entity(x : f64, time_to_appear : Instant, score : u64, rng : &mut ChaChaRng) -> Obstacle {
         let velocity = get_scale_value(
             params::MAX_OBSTACLE_SPEED,
             params::MIN_OBSTACLE_SPEED,
@@ -116,7 +117,7 @@ impl Game {
             score,
             params::SCORE_INCREASE_SPEED_INTERVAL,
             false
-        );
+        ) as f64;
         Obstacle::new_random(x, velocity, time_to_appear, rng)
     }
 
@@ -127,7 +128,7 @@ impl Game {
             self.score
         );
         let next_obstacle = Self::generate_next_obstacle_entity(
-            params::GAME_WIDTH as i16, 
+            params::GAME_WIDTH as f64, 
             new_next_obstacle_time, 
             self.score,
             &mut self.rng
@@ -140,12 +141,13 @@ impl Game {
 
     /// update all the obstacle and remove (add 1 to the score) the obstacle outside the screen
     fn update_all_obstacles(&mut self, now : Instant) {
+        
         let mut to_remove : Vec<usize> = Vec::new();
         let mut i : usize = 0;
         for obstacle in self.obstacles.iter_mut() {
             obstacle.update(now);
 
-            if (obstacle.x + obstacle.width as i16) < 0 {
+            if (obstacle.x + obstacle.width as f64) < 0.0 {
                 to_remove.push(i);
             }
             i = i + 1;
@@ -161,7 +163,7 @@ impl Game {
 // ----------------- front -----------------
 #[derive(Debug, Clone, Copy)]
 pub enum Message {
-    Jump(),
+    Jump,
     Update(Instant),
 }
 
@@ -172,7 +174,7 @@ impl Application for Game {
     type Message = Message;
     type Flags = ();
 
-    fn new(flags: Self::Flags) -> (Self, iced::Command<Self::Message>) {
+    fn new(_flags: Self::Flags) -> (Self, iced::Command<Self::Message>) {
         (
             // construct the game at the beginning
             Self::new(Instant::now(), params::LAND_SEED, Some(Default::default())),
@@ -184,14 +186,17 @@ impl Application for Game {
         String::from("Chrome Dinosaur")
     }
 
+    // handle the message
     fn update(&mut self, message: Self::Message) -> iced::Command<Self::Message> {
         match message {
-            Message::Jump() => {
+            Message::Jump => {
                 self.jump();
                 Command::none()
             },
             Message::Update(now) => {
                 self.update(now);
+                // don't forget to clear the cache to force the redraw
+                self.cache.as_ref().unwrap().clear();
                 Command::none()
             }
         }
@@ -199,15 +204,38 @@ impl Application for Game {
 
     fn view(&self) -> iced::Element<'_, Self::Message, iced::Renderer<Self::Theme>> {
         Canvas::new(self)
-            .width(300)
-            .height(300)
+            .width(params::GAME_WIDTH)
+            .height(params::GAME_HEIGHT)
             .into()
+    }
+
+    fn subscription(&self) -> Subscription<Message> {
+        window::frames().map(Message::Update)
     }
 }
 
 
-impl<Message> canvas::Program<Message> for Game {
+impl canvas::Program<Message> for Game {
     type State = ();
+
+    // catch the event 
+    fn update(
+            &self,
+            _state: &mut Self::State,
+            event: canvas::Event,
+            _bounds: Rectangle,
+            _cursor: Cursor,
+        ) -> (canvas::event::Status, Option<Message>) {
+        match event {
+            canvas::Event::Keyboard(keyboard_event) => {
+                match keyboard_event {
+                   keyboard::Event::CharacterReceived(' ') => (canvas::event::Status::Captured, Some(Message::Jump)),
+                    _ => (canvas::event::Status::Ignored, None)
+                }
+            },
+            _ => (canvas::event::Status::Ignored, None),
+        }
+    }
 
     fn draw(
         &self,
@@ -216,12 +244,24 @@ impl<Message> canvas::Program<Message> for Game {
         bounds: Rectangle,
         _cursor: Cursor,
     ) -> Vec<Geometry> {
+        // dont forget the as-ref (option) and the unwrap (can throw erreur if the cache is not initialized)
         let geometry = self.cache.as_ref().unwrap().draw(bounds.size(), |frame| {
+            
+            // draw the dinosaur
             frame.fill_rectangle(
-                Point { x: (0.0), y: (0.0) }, 
-                Size { width: (100.0), height: (100.0) }, 
+                Point { x: (self.dinosaur.x as f32), y: (self.dinosaur.y as f32) }, 
+                Size { width: (self.dinosaur.width as f32), height: (self.dinosaur.height as f32) }, 
                 Color::BLACK
-            )
+            );
+
+            // draw the obstacles
+            for obstacle in self.obstacles.iter() {
+                frame.fill_rectangle(
+                    Point { x: (obstacle.x as f32), y: (obstacle.y as f32) }, 
+                    Size { width: (obstacle.width as f32), height: (obstacle.height as f32) }, 
+                    Color::BLACK
+                )
+            }
         });
 
         vec![geometry]

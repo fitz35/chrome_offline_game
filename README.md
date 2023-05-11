@@ -14,7 +14,7 @@ Note : this library sucked, use Iced instead
 
 ### Iced
 
-more information [here](https://github.com/iced-rs/iced).
+more information [here](https://github.com/iced-rs/iced). The module "tokio" is for the subscription. To have access todebug, press f12
 
 #### WSL install
 

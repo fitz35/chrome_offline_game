@@ -14,25 +14,25 @@ pub enum ObstacleEntityType {
     Rock = 1,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct Obstacle {
     /// bottom left point x
-    pub x: i16,
+    pub x: f64,
     /// bottom left point y
-    pub y: i16,
+    pub y: f64,
     pub width: u16,
     pub height: u16,
-    pub velocity: u8,// horizontal px/s
+    pub velocity: f64,// horizontal px/s
     pub type_: ObstacleEntityType,
     pub last_time_update: Instant,
 }
 
 impl Obstacle {
     /// Create a new cactus obstacle
-    pub fn new_cactus(x: i16, velocity : u8, last_time_update : Instant) -> Self {
+    pub fn new_cactus(x: f64, velocity : f64, last_time_update : Instant) -> Self {
         Self {
             x,
-            y : 0,
+            y : 0.0,
             width : params::CACTUS_WIDTH,
             height : params::CACTUS_HEIGHT,
             velocity,
@@ -42,10 +42,10 @@ impl Obstacle {
     }
 
     /// Create a new rock obstacle
-    pub fn new_rock(x: i16, velocity : u8, last_time_update : Instant) -> Self {
+    pub fn new_rock(x: f64, velocity : f64, last_time_update : Instant) -> Self {
         Self {
             x,
-            y : 0,
+            y : 0.0,
             width : params::ROCK_WIDTH,
             height : params::ROCK_HEIGHT,
             velocity,
@@ -55,7 +55,7 @@ impl Obstacle {
     }
 
     /// wrapper to create an obstacle
-    pub fn new(x: i16, velocity : u8, last_time_update : Instant, type_ : ObstacleEntityType) -> Self {
+    pub fn new(x: f64, velocity : f64, last_time_update : Instant, type_ : ObstacleEntityType) -> Self {
         match type_ {
             ObstacleEntityType::Cactus => Obstacle::new_cactus(x, velocity, last_time_update),
             ObstacleEntityType::Rock => Obstacle::new_rock(x, velocity, last_time_update)
@@ -63,7 +63,7 @@ impl Obstacle {
     }
 
     /// wrapper to create random obstacle
-    pub fn new_random(x: i16, velocity : u8, last_time_update : Instant,  rng : &mut ChaChaRng) -> Self {
+    pub fn new_random(x: f64, velocity : f64, last_time_update : Instant,  rng : &mut ChaChaRng) -> Self {
         let random_entity: ObstacleEntityType = match rng.gen_range(0..2) {
             0 => ObstacleEntityType::Cactus,
             _ => ObstacleEntityType::Rock,
@@ -73,11 +73,13 @@ impl Obstacle {
 
     /// Update the obstacle position
     pub fn update(&mut self, now: Instant) {
-        let delta = now.duration_since(self.last_time_update).as_secs_f32();
+        let delta = now.duration_since(self.last_time_update).as_secs_f64();
         if delta < 0.0 {// if the time is in the future, we don't update
             return;
         }
-        self.x -= (delta * self.velocity as f32) as i16;
+        
+        self.x -= delta * self.velocity;
+        //println!("update obstacle : {:?} -> {:?}", self, delta);
         self.last_time_update = now;
     }
 
@@ -86,15 +88,15 @@ impl Obstacle {
 }
 
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct Dinosaur {
     /// bottom left point x
-    pub x: i16,
+    pub x: f64,
     /// bottom left point y
-    pub y: i16,
+    pub y: f64,
     pub width: u16,
     pub height: u16,
-    pub velocity: i16,// vertical px/s
+    pub velocity: f64,// vertical px/s
     pub last_time_update: Instant,// in seconds
 }
 
@@ -102,18 +104,18 @@ pub struct Dinosaur {
 impl Dinosaur {
     pub fn new_dinosaur(last_time_update : Instant) -> Self {
         Self {
-            x : 50,
-            y : 0,
+            x : 50.0,
+            y : 0.0,
             width : params::DINAUSOR_WIDTH,
             height : params::DINAUSOR_HEIGHT,
-            velocity : 0,
+            velocity : 0.0,
             last_time_update,
         }
     }
 
     /// jump
-    fn intern_hump(&mut self, velocity : i16) -> bool {
-        if self.y == 0 && self.velocity == 0{
+    fn intern_hump(&mut self, velocity : f64) -> bool {
+        if self.y <= 0.0 && self.velocity <= 0.0{
             self.velocity = velocity;
             return true;
         }
@@ -122,17 +124,17 @@ impl Dinosaur {
 
     /// rapid jump
     pub fn jump(&mut self) -> bool {
-        self.intern_hump(20)
+        self.intern_hump(params::DINAUSOR_JUMP_VELOCITY as f64)
     }
 
     /// Update the position and apply the gravity
     pub fn update(&mut self, tick: Instant) {
-        let delta = (tick - self.last_time_update).as_secs_f32();
-        self.y += (self.velocity as f32 * delta) as i16;
-        self.velocity -= (params::GRAVITY as f32 * delta) as i16;
-        if self.y <= 0 {
-            self.y = 0;
-            self.velocity = 0;
+        let delta = (tick - self.last_time_update).as_secs_f64();
+        self.y += self.velocity * delta;
+        self.velocity -= params::GRAVITY as f64 * delta;
+        if self.y <= 0.0 {
+            self.y = 0.0;
+            self.velocity = 0.0;
         }
         self.last_time_update = tick;
     }
