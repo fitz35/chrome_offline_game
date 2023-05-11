@@ -124,11 +124,6 @@ impl Dinosaur {
     pub fn jump(&mut self) -> bool {
         self.intern_hump(20)
     }
-        
-    /// long jump
-    pub fn long_jump(&mut self) -> bool {
-        self.intern_hump(40)
-    }
 
     /// Update the position and apply the gravity
     pub fn update(&mut self, tick: Instant) {

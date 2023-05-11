@@ -1,6 +1,11 @@
 use std::time::{Instant, Duration};
+use iced::widget::canvas::{Cursor, Geometry, Cache};
+use iced::widget::{canvas, Canvas};
 use rand::{Rng, SeedableRng};
 use rand_chacha::ChaChaRng;
+
+use iced::theme::{self, Theme};
+use iced::{Application, executor, Command, Rectangle, Size, Color, Point};
 
 use crate::entity::{Dinosaur, Obstacle};
 use crate::params;
@@ -22,11 +27,15 @@ pub struct Game {
      /// time when the game started
     pub game_start_time: Instant,
 
+    // ------ rng ------
     pub rng : ChaChaRng,
+
+    // ------ display ------
+    cache: Option<Cache>,
 }
 
 impl Game {
-    pub fn new(now : Instant, seed: &str) -> Self {
+    pub fn new(now : Instant, seed: &str, cache : Option<Cache>) -> Self {
         let mut me = Self {
             dinosaur: Dinosaur::new_dinosaur(now),
             obstacles: Vec::new(),
@@ -35,7 +44,8 @@ impl Game {
             last_time_update : now,
             next_obstacle_time : now,
             game_start_time : now,
-            rng : ChaChaRng::from_seed(str_to_u8_array(seed))
+            rng : ChaChaRng::from_seed(str_to_u8_array(seed)),
+            cache,
         };
         me.update(now);
         me
@@ -74,10 +84,6 @@ impl Game {
 
     pub fn jump(&mut self) {
         self.dinosaur.jump();
-    }
-
-    pub fn long_jump(&mut self) {
-        self.dinosaur.long_jump();
     }
 
     // ---------------- helper and game generation ---------
@@ -152,6 +158,77 @@ impl Game {
     }
 }
 
+// ----------------- front -----------------
+#[derive(Debug, Clone, Copy)]
+pub enum Message {
+    Jump(),
+    Update(Instant),
+}
+
+// define the application for iced on the game
+impl Application for Game {
+    type Theme = Theme;
+    type Executor = executor::Default;
+    type Message = Message;
+    type Flags = ();
+
+    fn new(flags: Self::Flags) -> (Self, iced::Command<Self::Message>) {
+        (
+            // construct the game at the beginning
+            Self::new(Instant::now(), params::LAND_SEED, Some(Default::default())),
+            Command::none(),
+        )
+    }
+
+    fn title(&self) -> String {
+        String::from("Chrome Dinosaur")
+    }
+
+    fn update(&mut self, message: Self::Message) -> iced::Command<Self::Message> {
+        match message {
+            Message::Jump() => {
+                self.jump();
+                Command::none()
+            },
+            Message::Update(now) => {
+                self.update(now);
+                Command::none()
+            }
+        }
+    }
+
+    fn view(&self) -> iced::Element<'_, Self::Message, iced::Renderer<Self::Theme>> {
+        Canvas::new(self)
+            .width(300)
+            .height(300)
+            .into()
+    }
+}
+
+
+impl<Message> canvas::Program<Message> for Game {
+    type State = ();
+
+    fn draw(
+        &self,
+        _state: &Self::State,
+        _theme: &Theme,
+        bounds: Rectangle,
+        _cursor: Cursor,
+    ) -> Vec<Geometry> {
+        let geometry = self.cache.as_ref().unwrap().draw(bounds.size(), |frame| {
+            frame.fill_rectangle(
+                Point { x: (0.0), y: (0.0) }, 
+                Size { width: (100.0), height: (100.0) }, 
+                Color::BLACK
+            )
+        });
+
+        vec![geometry]
+    }
+}
+
+// ----------------- tests -----------------
 
 #[cfg(test)]
 mod tests {
@@ -160,7 +237,7 @@ mod tests {
     #[test]
     fn test_random_coherence() {
         // test the random number generator and the seed "test"
-        let mut game = Game::new(Instant::now(), "test");
+        let mut game = Game::new(Instant::now(), "test", None);
         let random_number1: u32 = game.rng.gen(); 
         let random_number2: u32 = game.rng.gen();
         let random_number3: u32 = game.rng.gen();

@@ -2,7 +2,10 @@
 pub const GAME_WIDTH : u16 = 500;
 pub const GAME_HEIGHT : u16 = 300;
 
+// ----------- display ---------------------
+
 // ----------  game equilibrage -----------
+pub const LAND_SEED: &str = "42";
 // game physique
 pub const GRAVITY : u8 = 10; // px/s^2
 
