@@ -1,5 +1,6 @@
 use std::time::{Instant, Duration};
 
+use iced::widget::image::Handle;
 use rand::{Rng, SeedableRng};
 use rand_chacha::ChaChaRng;
 
