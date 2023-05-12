@@ -114,12 +114,6 @@ pub struct NeuroneWeb {
 }
 
 impl NeuroneWeb {
-    /// create a new web of neurone
-    pub fn new(neurones : Vec<Neurone>) -> Self {
-        Self {
-            neurones,
-        }
-    }
 
     /// create a new completly random web of neurone
     pub fn new_random(rng : &mut ChaChaRng) -> Self {
@@ -156,7 +150,6 @@ impl NeuroneWeb {
         for (i, neurone) in &mut self.neurones.iter_mut().enumerate() {    
             if rng.gen_bool((*PARAMS).neurone_remove_mutation_rate) {
                 neurones_to_remove.push(i);
-                println!("remove neurone {}", i);
             }else{
                 neurone.mutate(rng);
             }

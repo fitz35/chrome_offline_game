@@ -138,23 +138,29 @@ pub fn brain_train_pipeline(){
         }
 
         // get the best brains
-        let mut best_scores : &(Brain, u64) = &scores[0];
+        let mut best_brains : Vec<&(Brain, u64)> = vec![&scores[0]];
         for score in &scores {
-            if score.1 > best_scores.1 {
-                best_scores = score;
+            if score.1 > best_brains.get(0).unwrap().1 {
+                best_brains = vec![score];
+            }else if score.1 == best_brains.get(0).unwrap().1 {
+                best_brains.push(score);
             }
+                
         }
 
         // save the best brains
-        let brain_str = serde_json::to_string(&best_scores.0).unwrap();
+        let brain_str = serde_json::to_string(&best_brains).unwrap();
         fs::write(format!("{}/brain{}.json", folder_name, i), brain_str).expect("Unable to write file");
 
-        println!("best score : {}", best_scores.1);
+        println!("best score : {}", best_brains.get(0).unwrap().1);
 
         // genere the next generation
         let mut next_generation = Vec::new();
         for _ in 0..(*PARAMS).training_nb_brain {
-            let brain = best_scores.0.mutate(&mut rng);
+            // take a random brain from the best brains and mutate it
+            let best_scores_index = rng.gen_range(0..best_brains.len());
+
+            let brain = best_brains[best_scores_index].0.mutate(&mut rng);
             next_generation.push(brain);
         }
         brains = next_generation;
