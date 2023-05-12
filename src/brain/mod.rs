@@ -1,9 +1,16 @@
-use rand::{Rng};
+use std::time::{Instant, Duration};
+use std::thread;
+use std::fs;
+use std::time::{SystemTime, UNIX_EPOCH};
+
+use rand::{Rng, SeedableRng};
 use rand_chacha::ChaChaRng;
+use serde::{Deserialize, Serialize};
+use serde_json;
 
-use crate::{neurone::NeuroneWeb, entity::Obstacle, params::{PARAMS}};
+use crate::{neurone::NeuroneWeb, entity::Obstacle, params::{PARAMS}, utils::str_to_u8_array, game::Game};
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Brain {
     pub neurone_web : Vec<NeuroneWeb>
 }
@@ -63,3 +70,94 @@ impl Brain {
     }
 }
 
+
+fn brain_run(brain : Brain) -> u64 {
+    // create the game
+    let mut now = Instant::now();
+    let mut game = Game::new(now, &(*PARAMS).land_seed, Some(brain), None);
+    let mut current_miliseconds = 0;
+    let interval = 1000 / (*PARAMS).game_fps as u64;// in miliseconds
+    // run the game
+    while !game.has_lost {
+        current_miliseconds += interval;
+        let duration = Duration::from_millis(current_miliseconds);
+        now = now.checked_add(duration).unwrap();
+        game.update(now);
+    }
+
+    game.score
+}
+
+/// train the brain
+pub fn brain_train_pipeline(){
+    // ----------- create the folder where we will save the brains ------------
+
+    // Get the current timestamp
+    let timestamp = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .expect("Failed to retrieve timestamp")
+        .as_secs();
+
+    // Convert the timestamp to a string
+    let folder_name = format!("./ressources/results/{}", timestamp);
+
+    // Create the folder
+    fs::create_dir(&folder_name)
+        .expect("Failed to create folder");
+
+    // save the params
+    let params = serde_json::to_string(&(*PARAMS)).unwrap();
+    fs::write(format!("{}/params.json", folder_name), params).expect("Unable to write file");
+
+    // ----------- create the brains ------------
+    let mut rng = ChaChaRng::from_seed(str_to_u8_array((*PARAMS).brain_seed.as_str()));
+
+    // create a lot of brain
+    let mut brains = Vec::new();
+    for _ in 0..(*PARAMS).training_nb_brain {
+        brains.push(Brain::new(&mut rng));
+    }
+
+    for i in 0..(*PARAMS).training_nb_generation {
+        // run the brains in parallel
+        let mut scores : Vec<(Brain, u64)> = Vec::new();
+        let mut handles = vec![];
+        for brain in brains {
+            let brain_copy = brain.clone();
+            let handle = thread::spawn(move || {
+                let result = brain_run(brain_copy);
+                (brain, result)
+            });
+            handles.push(handle);
+        }
+
+        // wait for the threads to finish
+        for handle in handles {
+            let result = handle.join().unwrap();
+            scores.push(result);
+        }
+
+        // get the best brains
+        let mut best_scores : &(Brain, u64) = &scores[0];
+        for score in &scores {
+            if score.1 > best_scores.1 {
+                best_scores = score;
+            }
+        }
+
+        // save the best brains
+        let brain_str = serde_json::to_string(&best_scores.0).unwrap();
+        fs::write(format!("{}/brain{}.json", folder_name, i), brain_str).expect("Unable to write file");
+
+        println!("best score : {}", best_scores.1);
+
+        // genere the next generation
+        let mut next_generation = Vec::new();
+        for _ in 0..(*PARAMS).training_nb_brain {
+            let brain = best_scores.0.mutate(&mut rng);
+            next_generation.push(brain);
+        }
+        brains = next_generation;
+    }
+
+}

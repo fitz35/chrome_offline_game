@@ -1,5 +1,6 @@
 use std::env;
 
+use brain::brain_train_pipeline;
 use game::Game;
 use iced::{Settings, Application};
 
@@ -18,7 +19,7 @@ fn main() -> iced::Result {
     if args.len() > 1 && args[1] == "train" {
         // run the brain train
     
-        
+        brain_train_pipeline();
 
 
 

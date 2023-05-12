@@ -9,8 +9,9 @@ use iced::widget::{canvas, Canvas};
 use iced::theme::{Theme};
 use iced::{Application, executor, Command, Rectangle, Size, Color, Point, Subscription, window, keyboard};
 
+use crate::brain::Brain;
 use crate::entity::{Dinosaur, Obstacle, ObstacleGenerateType, ObstacleEntityType};
-use crate::params::{self, PARAMS};
+use crate::params::{PARAMS};
 use crate::utils::{str_to_u8_array, get_scale_value, check_collision};
 
 
@@ -32,12 +33,15 @@ pub struct Game {
     // ------ rng ------
     pub rng : ChaChaRng,
 
+    // ------ auto play ------
+    pub brain : Option<Brain>,
+
     // ------ display ------
     cache: Option<Cache>,
 }
 
 impl Game {
-    pub fn new(now : Instant, seed: &str, cache : Option<Cache>) -> Self {
+    pub fn new(now : Instant, seed: &str, brain : Option<Brain>, cache : Option<Cache>) -> Self {
         let me = Self {
             dinosaur: Dinosaur::new_dinosaur(now),
             obstacles: Vec::new(),
@@ -47,6 +51,7 @@ impl Game {
             next_obstacle_time : now,
             game_start_time : now,
             rng : ChaChaRng::from_seed(str_to_u8_array(seed)),
+            brain,
             cache,
         };
         me
@@ -54,6 +59,16 @@ impl Game {
     // ---------------- game state ----------------
 
     pub fn update(&mut self, now: Instant) {
+        // if we have a brain, we use it
+        match &self.brain {
+            Some(brain) => {
+                if brain.is_jump(&self.obstacles) {
+                    self.jump();
+                }
+            },
+            None => {}
+        }
+
         self.dinosaur.update(now);
 
         // update all obstacle
@@ -195,7 +210,7 @@ impl Application for Game {
     fn new(_flags: Self::Flags) -> (Self, iced::Command<Self::Message>) {
         (
             // construct the game at the beginning
-            Self::new(Instant::now(), (*PARAMS).land_seed.as_str(), Some(Default::default())),
+            Self::new(Instant::now(), (*PARAMS).land_seed.as_str(), None, Some(Default::default())),
             Command::none(),
         )
     }
@@ -223,7 +238,7 @@ impl Application for Game {
                 Command::none()
             },
             Message::Restart => {
-                *self = Self::new(Instant::now(), (*PARAMS).land_seed.as_str(), Some(Default::default()));
+                *self = Self::new(Instant::now(), (*PARAMS).land_seed.as_str(), None, Some(Default::default()));
                 Command::none()
             },
         }
@@ -314,7 +329,7 @@ mod tests {
     #[test]
     fn test_random_coherence() {
         // test the random number generator and the seed "test"
-        let mut game = Game::new(Instant::now(), "test", None);
+        let mut game = Game::new(Instant::now(), "test", None, None);
         let random_number0: u32 = game.rng.gen();
         let random_number1: u32 = game.rng.gen(); 
         let random_number2: u32 = game.rng.gen();

@@ -54,6 +54,10 @@ pub struct GameParameters {
     pub neurone_y_mutation_rate: f64,
     pub neurone_x_mutation_range: f64,
     pub neurone_y_mutation_range: f64,
+
+    // training
+    pub training_nb_generation: u64,
+    pub training_nb_brain: u64,
 }
 
 
@@ -111,6 +115,10 @@ impl GameParameters {
             neurone_y_mutation_rate: 0.1,
             neurone_x_mutation_range: 50.0,
             neurone_y_mutation_range: 50.0,
+
+            // training
+            training_nb_generation: 100,
+            training_nb_brain: 500,
         }
     }
 }

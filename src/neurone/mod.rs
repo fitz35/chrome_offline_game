@@ -1,10 +1,11 @@
 use rand::{Rng, distributions::Uniform};
 use rand_chacha::ChaChaRng;
+use serde::{Serialize, Deserialize};
 
 use crate::{params::{PARAMS}, entity::Obstacle, utils::{check_collision, get_random_float}};
 
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Neurone {
     pub x : f64,
     pub y : f64,
@@ -16,14 +17,14 @@ pub struct Neurone {
 }
 
 /// Neurone activation condition
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub enum NeuroneActivationCondition {
     Air,
     Obstacle,
 }
 
 /// if the activation, force to not jump or jump
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub enum NeuroneActivation {
     Jump,
     NoJump,
@@ -107,7 +108,7 @@ impl Neurone {
 }
 
 /// a web of neurone
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct NeuroneWeb {
     pub neurones : Vec<Neurone>,
 }
@@ -155,6 +156,7 @@ impl NeuroneWeb {
         for (i, neurone) in &mut self.neurones.iter_mut().enumerate() {    
             if rng.gen_bool((*PARAMS).neurone_remove_mutation_rate) {
                 neurones_to_remove.push(i);
+                println!("remove neurone {}", i);
             }else{
                 neurone.mutate(rng);
             }
