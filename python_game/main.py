@@ -39,7 +39,7 @@ dinosaur_img = pygame.transform.flip(dinosaur_img, False, True)
 
 # -------------------------- obstacle --------------------------
 obstacle_spawn_timer = 10000
-obstacle_spawn_interval = 1500  # milliseconds (2 seconds)
+obstacle_spawn_interval = 2500  # milliseconds (2 seconds)
 
 obstacle_x_change = -5
 
@@ -50,8 +50,8 @@ class ObstacleType(Enum):
     PTERODACTYL = 3
 
 # Define the cactus properties
-cactus_width = 40 * SCALE
-cactus_height = 60 * SCALE
+cactus_width = 50 * SCALE
+cactus_height = 90 * SCALE
 cactus_x = DISPLAI_WIDTH
 cactus_y = DISPLAY_HEIGHT - cactus_height - 10
 cactus_img = pygame.transform.scale(cactus_img, (cactus_width, cactus_height))
@@ -66,8 +66,8 @@ rock_img = pygame.transform.scale(rock_image, (rock_width, rock_height))
 rock_img = pygame.transform.flip(rock_img, False, True)
 
 # define the pterodactyl properties
-pterodactyl_width = 40 * SCALE
-pterodactyl_height = 40 * SCALE
+pterodactyl_width = 60 * SCALE
+pterodactyl_height = 60 * SCALE
 pterodactyl_x = DISPLAI_WIDTH
 pterodactyl_y = DISPLAY_HEIGHT - pterodactyl_height - DINAUSOR_HEIGHT - 10 # - DINAUSOR_HEIGHT to make the pterodactyl fly in the air
 pterodactyl_img = pygame.transform.scale(pterodactyl_img, (pterodactyl_width, pterodactyl_height))

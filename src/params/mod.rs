@@ -1,65 +1,121 @@
-use rand::distributions::Uniform;
-
-// ----------- basics ---------------------
-pub const GAME_WIDTH : u16 = 1280;
-pub const GAME_HEIGHT : u16 = 720;
-
-pub const GAME_FPS : u8 = 60;
-// ----------- display ---------------------
-
-// ----------  game equilibrage -----------
-pub const LAND_SEED: &str = "42";
-// game physique
-pub const GRAVITY : u64 = 2000; // px/s^2
+use serde::{Serialize, Deserialize};
+use lazy_static::lazy_static;
 
 
-pub const DINAUSOR_JUMP_VELOCITY : f64 = 800.0; // px/s
-// game timing
+#[derive(Serialize, Deserialize)]
+pub struct GameParameters {
+    // Basics
+    pub game_width: u16,
+    pub game_height: u16,
+    pub game_fps: u8,
 
-/// increase the speed of the game every ... points
-pub const SCORE_INCREASE_SPEED_INTERVAL : f64 = 2.0; 
-// generation of new obstacle
-pub const MIN_OBSTACLE_GENERATION_TIME : f64 = 1.2; // second
-pub const MAX_OBSTACLE_GENERATION_TIME : f64 = 2.0; // second
-pub const OBSTACLE_GENERATION_TIME_DECREASE_SPEED : f64 = 0.2; // second
-// speed of obstacle
-pub const OBSTACLE_SPEED : f64 = 400.0; // px/s
+    // Display
+    // ...
 
-// ---------- Entity ------------
-pub const DINAUSOR_WIDTH : u16 = 40;
-pub const DINAUSOR_HEIGHT : u16 = 100;
+    // Game Equilibrage
+    pub land_seed: String,
+    pub gravity: u64,
 
-pub const CACTUS_WIDTH : u16 = 40;
-pub const CACTUS_HEIGHT : u16 = 80;
+    // Game Timing
+    pub dinausor_jump_velocity: f64,
+    pub score_increase_speed_interval: f64,
 
-pub const ROCK_WIDTH : u16 = 40;
-pub const ROCK_HEIGHT : u16 = 40;
+    // Generation of New Obstacle
+    pub min_obstacle_generation_time: f64,
+    pub max_obstacle_generation_time: f64,
+    pub obstacle_generation_time_decrease_speed: f64,
+    pub obstacle_speed: f64,
 
-pub const PTERODACTYLE_WIDTH : u16 = 40;
-pub const PTERODACTYLE_HEIGHT : u16 = 40;
-pub const PTERODACTYLE_FLYING_HEIGHT : u16 = 110;
-pub const PTERODACTYLE_OFFSET : u16 = 130;
+    // Entity
+    pub dinausor_width: u16,
+    pub dinausor_height: u16,
+    pub cactus_width: u16,
+    pub cactus_height: u16,
+    pub rock_width: u16,
+    pub rock_height: u16,
+    pub pterodactyle_width: u16,
+    pub pterodactyle_height: u16,
+    pub pterodactyle_flying_height: u16,
+    pub pterodactyle_offset: u16,
 
-// ----------- neurone ---------------------
-pub const BRAIN_SEED: &str = "Intellect";
+    // Neurone
+    pub brain_seed: String,
+    pub neurone_width: u16,
+    pub neurone_height: u16,
+    pub neurone_web_creation_nb_neurones_min: u16,
+    pub neurone_web_creation_nb_neurones_max: u16,
+    pub brain_creation_nb_neurone_web_min: u16,
+    pub brain_creation_nb_neurone_web_max: u16,
+    pub neurone_web_add_mutation_rate: f64,
+    pub neurone_web_remove_mutation_rate: f64,
+    pub neurone_add_mutation_rate: f64,
+    pub neurone_remove_mutation_rate: f64,
+    pub neurone_x_mutation_rate: f64,
+    pub neurone_y_mutation_rate: f64,
+    pub neurone_x_mutation_range: f64,
+    pub neurone_y_mutation_range: f64,
+}
 
-pub const NEURONE_WIDTH : u16 = 40;
-pub const NEURONE_HEIGHT : u16 = 40;
 
-pub const NEURONE_WEB_CREATION_NB_NEURONES_MIN : u16 = 2;
-pub const NEURONE_WEB_CREATION_NB_NEURONES_MAX : u16 = 4;
+impl GameParameters {
 
-pub const BRAIN_CREATION_NB_NEURONE_WEB_MIN : u16 = 1;
-pub const BRAIN_CREATION_NB_NEURONE_WEB_MAX : u16 = 3;
+    fn new_default() -> Self {
+        GameParameters {
+            // Basics
+            game_width: 1280,
+            game_height: 720,
+            game_fps: 60,
+
+            // Display
+            // ...
+
+            // Game Equilibrage
+            land_seed: "42".to_string(),
+            gravity: 2000,
+
+            // Game Timing
+            dinausor_jump_velocity: 800.0,
+            score_increase_speed_interval: 2.0,
+
+            // Generation of New Obstacle
+            min_obstacle_generation_time: 1.2,
+            max_obstacle_generation_time: 2.0,
+            obstacle_generation_time_decrease_speed: 0.2,
+            obstacle_speed: 400.0,
+
+            // Entity
+            dinausor_width: 40,
+            dinausor_height: 100,
+            cactus_width: 40,
+            cactus_height: 80,
+            rock_width: 40,
+            rock_height: 40,
+            pterodactyle_width: 40,
+            pterodactyle_height: 40,
+            pterodactyle_flying_height: 110,
+            pterodactyle_offset: 130,
+
+            // Neurone
+            brain_seed: "Intellect".to_string(),
+            neurone_width: 40,
+            neurone_height: 40,
+            neurone_web_creation_nb_neurones_min: 2,
+            neurone_web_creation_nb_neurones_max: 4,
+            brain_creation_nb_neurone_web_min: 1,
+            brain_creation_nb_neurone_web_max: 3,
+            neurone_web_add_mutation_rate: 0.01,
+            neurone_web_remove_mutation_rate: 0.01,
+            neurone_add_mutation_rate: 0.01,
+            neurone_remove_mutation_rate: 0.01,
+            neurone_x_mutation_rate: 0.1,
+            neurone_y_mutation_rate: 0.1,
+            neurone_x_mutation_range: 50.0,
+            neurone_y_mutation_range: 50.0,
+        }
+    }
+}
 
 
-pub const NEURONE_WEB_ADD_MUTATION_RATE : f64 = 0.01;
-pub const NEURONE_WEB_REMOVE_MUTATION_RATE : f64 = 0.01;
-
-pub const NEURONE_ADD_MUTATION_RATE : f64 = 0.01;
-pub const NEURONE_REMOVE_MUTATION_RATE : f64 = 0.01;
-
-pub const NEURONE_X_MUTATION_RATE : f64 = 0.1;
-pub const NEURONE_Y_MUTATION_RATE : f64 = 0.1;
-pub const NEURONE_X_MUTATION_RANGE : f64 = 50.0;
-pub const NEURONE_Y_MUTATION_RANGE : f64 = 50.0;
+lazy_static! {
+    pub static ref PARAMS: GameParameters = GameParameters::new_default();
+}

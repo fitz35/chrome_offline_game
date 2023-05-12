@@ -10,7 +10,7 @@ use iced::theme::{Theme};
 use iced::{Application, executor, Command, Rectangle, Size, Color, Point, Subscription, window, keyboard};
 
 use crate::entity::{Dinosaur, Obstacle, ObstacleGenerateType, ObstacleEntityType};
-use crate::params;
+use crate::params::{self, PARAMS};
 use crate::utils::{str_to_u8_array, get_scale_value, check_collision};
 
 
@@ -94,11 +94,11 @@ impl Game {
     /// get the timing for the next obstacle (accelerate 4 times)
     fn get_next_obstacle_timing(last_time : Instant, score : u64) -> Instant {
         let interval = get_scale_value(
-            params::MAX_OBSTACLE_GENERATION_TIME,
-            params::MIN_OBSTACLE_GENERATION_TIME,
-            params::OBSTACLE_GENERATION_TIME_DECREASE_SPEED,
+            (*PARAMS).max_obstacle_generation_time,
+            (*PARAMS).min_obstacle_generation_time,
+            (*PARAMS).obstacle_generation_time_decrease_speed,
             score,
-            params::SCORE_INCREASE_SPEED_INTERVAL,
+            (*PARAMS).score_increase_speed_interval,
             true
         );
         
@@ -113,7 +113,7 @@ impl Game {
             self.next_obstacle_time, 
             self.score
         );
-        let x = params::GAME_WIDTH as f64 + params::PTERODACTYLE_OFFSET as f64;
+        let x = (*PARAMS).game_width as f64 + (*PARAMS).pterodactyle_offset as f64;
         
         let random_obstacle: ObstacleGenerateType = match self.rng.gen_range(0..3) {
             0 => ObstacleGenerateType::Cactus,
@@ -126,7 +126,7 @@ impl Game {
             ObstacleGenerateType::Cactus => {
                 self.obstacles.push(Obstacle::new(
                     x, 
-                    params::OBSTACLE_SPEED, 
+                    (*PARAMS).obstacle_speed, 
                     new_next_obstacle_time,
                     ObstacleEntityType::Cactus 
                 ));
@@ -134,7 +134,7 @@ impl Game {
             ObstacleGenerateType::Rock => {
                 self.obstacles.push(Obstacle::new(
                     x, 
-                    params::OBSTACLE_SPEED, 
+                    (*PARAMS).obstacle_speed, 
                     new_next_obstacle_time,
                     ObstacleEntityType::Rock
                 ));
@@ -142,13 +142,13 @@ impl Game {
             ObstacleGenerateType::RockAndPterodactyle => {
                 self.obstacles.push(Obstacle::new(
                     x, 
-                    params::OBSTACLE_SPEED, 
+                    (*PARAMS).obstacle_speed, 
                     new_next_obstacle_time,
                     ObstacleEntityType::Rock
                 ));
                 self.obstacles.push(Obstacle::new(
                     x, 
-                    params::OBSTACLE_SPEED, 
+                    (*PARAMS).obstacle_speed, 
                     new_next_obstacle_time,
                     ObstacleEntityType::Pterodactyle
                 ));
@@ -195,7 +195,7 @@ impl Application for Game {
     fn new(_flags: Self::Flags) -> (Self, iced::Command<Self::Message>) {
         (
             // construct the game at the beginning
-            Self::new(Instant::now(), params::LAND_SEED, Some(Default::default())),
+            Self::new(Instant::now(), (*PARAMS).land_seed.as_str(), Some(Default::default())),
             Command::none(),
         )
     }
@@ -223,7 +223,7 @@ impl Application for Game {
                 Command::none()
             },
             Message::Restart => {
-                *self = Self::new(Instant::now(), params::LAND_SEED, Some(Default::default()));
+                *self = Self::new(Instant::now(), (*PARAMS).land_seed.as_str(), Some(Default::default()));
                 Command::none()
             },
         }
@@ -231,8 +231,8 @@ impl Application for Game {
 
     fn view(&self) -> iced::Element<'_, Self::Message, iced::Renderer<Self::Theme>> {
         Canvas::new(self)
-            .width(params::GAME_WIDTH)
-            .height(params::GAME_HEIGHT)
+            .width((*PARAMS).game_width)
+            .height((*PARAMS).game_height)
             .into()
     }
 

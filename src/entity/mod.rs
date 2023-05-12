@@ -2,7 +2,7 @@
 
 use std::time::Instant;
 
-use crate::params;
+use crate::params::{PARAMS};
 
 /// The different type of obstacle
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -38,8 +38,8 @@ impl Obstacle {
         Self {
             x,
             y : 0.0,
-            width : params::CACTUS_WIDTH,
-            height : params::CACTUS_HEIGHT,
+            width : (*PARAMS).cactus_width,
+            height : (*PARAMS).cactus_height,
             velocity,
             type_: ObstacleEntityType::Cactus,
             last_time_update,
@@ -51,8 +51,8 @@ impl Obstacle {
         Self {
             x,
             y : 0.0,
-            width : params::ROCK_WIDTH,
-            height : params::ROCK_HEIGHT,
+            width : (*PARAMS).rock_width,
+            height : (*PARAMS).rock_height,
             velocity,
             type_: ObstacleEntityType::Rock,
             last_time_update,
@@ -61,10 +61,10 @@ impl Obstacle {
 
     pub fn new_pterodactyle(x: f64, velocity : f64, last_time_update : Instant) -> Self {
         Self {
-            x : x - params::PTERODACTYLE_OFFSET as f64,
-            y : params::PTERODACTYLE_FLYING_HEIGHT as f64,
-            width : params::PTERODACTYLE_WIDTH,
-            height : params::PTERODACTYLE_HEIGHT,
+            x : x - (*PARAMS).pterodactyle_offset as f64,
+            y : (*PARAMS).pterodactyle_flying_height as f64,
+            width : (*PARAMS).pterodactyle_width,
+            height : (*PARAMS).pterodactyle_height,
             velocity : velocity,
             type_: ObstacleEntityType::Pterodactyle,
             last_time_update,
@@ -117,8 +117,8 @@ impl Dinosaur {
         Self {
             x : 50.0,
             y : 0.0,
-            width : params::DINAUSOR_WIDTH,
-            height : params::DINAUSOR_HEIGHT,
+            width : (*PARAMS).dinausor_width,
+            height : (*PARAMS).dinausor_height,
             velocity : 0.0,
             last_time_update,
         }
@@ -135,14 +135,14 @@ impl Dinosaur {
 
     /// rapid jump
     pub fn jump(&mut self) -> bool {
-        self.intern_hump(params::DINAUSOR_JUMP_VELOCITY as f64)
+        self.intern_hump((*PARAMS).dinausor_jump_velocity as f64)
     }
 
     /// Update the position and apply the gravity
     pub fn update(&mut self, tick: Instant) {
         let delta = (tick - self.last_time_update).as_secs_f64();
         self.y += self.velocity * delta;
-        self.velocity -= params::GRAVITY as f64 * delta;
+        self.velocity -= (*PARAMS).gravity as f64 * delta;
         if self.y <= 0.0 {
             self.y = 0.0;
             self.velocity = 0.0;

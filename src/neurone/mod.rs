@@ -1,7 +1,7 @@
 use rand::{Rng, distributions::Uniform};
 use rand_chacha::ChaChaRng;
 
-use crate::{params, entity::Obstacle, utils::{check_collision, get_random_float}};
+use crate::{params::{PARAMS}, entity::Obstacle, utils::{check_collision, get_random_float}};
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -35,8 +35,8 @@ impl Neurone {
         Self {
             x,
             y,
-            width : params::NEURONE_WIDTH,
-            height : params::NEURONE_HEIGHT,
+            width : (*PARAMS).neurone_width,
+            height : (*PARAMS).neurone_height,
             activation_condition,
             activation,
         }
@@ -44,8 +44,8 @@ impl Neurone {
 
     /// create a totaly new random neurone
     pub fn new_random(rng : &mut ChaChaRng) -> Self {
-        let x = get_random_float(0.0, (params::GAME_WIDTH - params::NEURONE_WIDTH) as f64, rng);
-        let y = get_random_float(0.0, (params::GAME_HEIGHT - params::NEURONE_HEIGHT) as f64, rng);
+        let x = get_random_float(0.0, ((*PARAMS).game_width - (*PARAMS).neurone_width) as f64, rng);
+        let y = get_random_float(0.0, ((*PARAMS).game_height - (*PARAMS).neurone_height) as f64, rng);
         let activation_condition = 
             match rng.gen_range(0..2) {
                 0 => NeuroneActivationCondition::Air,
@@ -59,8 +59,8 @@ impl Neurone {
         Self {
             x,
             y,
-            width : params::NEURONE_WIDTH,
-            height : params::NEURONE_HEIGHT,
+            width : (*PARAMS).neurone_width,
+            height : (*PARAMS).neurone_height,
             activation_condition,
             activation,
         }
@@ -68,8 +68,8 @@ impl Neurone {
 
     /// mutate this neurone
     pub fn mutate(&mut self, rng : &mut ChaChaRng) {
-        self.x = get_random_float(self.x - params::NEURONE_X_MUTATION_RANGE, self.x + params::NEURONE_X_MUTATION_RANGE, rng);
-        self.y = get_random_float(self.y - params::NEURONE_Y_MUTATION_RANGE, self.y + params::NEURONE_Y_MUTATION_RANGE, rng);
+        self.x = get_random_float(self.x - (*PARAMS).neurone_x_mutation_range, self.x + (*PARAMS).neurone_x_mutation_range, rng);
+        self.y = get_random_float(self.y - (*PARAMS).neurone_y_mutation_range, self.y + (*PARAMS).neurone_y_mutation_range, rng);
     }
 
     /// get the activation of the neurone if its condition is met
@@ -124,10 +124,10 @@ impl NeuroneWeb {
     pub fn new_random(rng : &mut ChaChaRng) -> Self {
         let mut neurones = Vec::new();
         // get the number of neurones
-        let nb_neurones = rng.gen_range(params::NEURONE_WEB_CREATION_NB_NEURONES_MIN..params::NEURONE_WEB_CREATION_NB_NEURONES_MAX);
+        let nb_neurones = rng.gen_range((*PARAMS).neurone_web_creation_nb_neurones_min..(*PARAMS).neurone_web_creation_nb_neurones_max);
         // gain of performance by declaring the distribution outside of the loop
-        let x_dist = Uniform::from(0.0..(params::GAME_WIDTH - params::NEURONE_WIDTH) as f64);
-        let y_dist = Uniform::from(0.0..(params::GAME_HEIGHT - params::NEURONE_HEIGHT) as f64);
+        let x_dist = Uniform::from(0.0..((*PARAMS).game_width - (*PARAMS).neurone_width) as f64);
+        let y_dist = Uniform::from(0.0..((*PARAMS).game_height - (*PARAMS).neurone_height) as f64);
         for _ in 0..nb_neurones {
             let x = rng.sample(x_dist);
             let y = rng.sample(y_dist);
@@ -153,7 +153,7 @@ impl NeuroneWeb {
         let mut neurones_to_remove: Vec<usize> = Vec::new();
         // mutate the neurone web
         for (i, neurone) in &mut self.neurones.iter_mut().enumerate() {    
-            if rng.gen_bool(params::NEURONE_REMOVE_MUTATION_RATE) {
+            if rng.gen_bool((*PARAMS).neurone_remove_mutation_rate) {
                 neurones_to_remove.push(i);
             }else{
                 neurone.mutate(rng);
@@ -166,7 +166,7 @@ impl NeuroneWeb {
         }
 
         // add new neurone web if rng say so
-        if rng.gen_bool(params::NEURONE_WEB_ADD_MUTATION_RATE) {
+        if rng.gen_bool((*PARAMS).neurone_web_add_mutation_rate) {
             self.neurones.push(Neurone::new_random(rng));
         }
     }
@@ -208,24 +208,24 @@ mod tests {
             let mut rng = ChaChaRng::from_seed([0; 32]);
             let neurone = Neurone::new_random(&mut rng);
             assert!(neurone.x >= 0.0);
-            assert!(neurone.x <= (params::GAME_WIDTH - params::NEURONE_WIDTH) as f64);
+            assert!(neurone.x <= ((*PARAMS).game_width - (*PARAMS).neurone_width) as f64);
             assert!(neurone.y >= 0.0);
-            assert!(neurone.y <= (params::GAME_HEIGHT - params::NEURONE_HEIGHT) as f64);
+            assert!(neurone.y <= ((*PARAMS).game_height - (*PARAMS).neurone_height) as f64);
         }        
     }
 
     #[test]
     fn test_neurone_web_generation(){
         for _ in 0..100 {
-            let mut rng = ChaChaRng::from_seed(str_to_u8_array(params::BRAIN_SEED));
+            let mut rng = ChaChaRng::from_seed(str_to_u8_array((*PARAMS).brain_seed.as_str()));
             let neurone_web = NeuroneWeb::new_random(&mut rng);
-            assert!(neurone_web.neurones.len() >= params::NEURONE_WEB_CREATION_NB_NEURONES_MIN as usize);
-            assert!(neurone_web.neurones.len() <= params::NEURONE_WEB_CREATION_NB_NEURONES_MAX as usize);
+            assert!(neurone_web.neurones.len() >= (*PARAMS).neurone_web_creation_nb_neurones_min as usize);
+            assert!(neurone_web.neurones.len() <= (*PARAMS).neurone_web_creation_nb_neurones_max as usize);
             for neurone in &neurone_web.neurones {
                 assert!(neurone.x >= 0.0);
-                assert!(neurone.x <= (params::GAME_WIDTH - params::NEURONE_WIDTH) as f64);
+                assert!(neurone.x <= ((*PARAMS).game_width - (*PARAMS).neurone_width) as f64);
                 assert!(neurone.y >= 0.0);
-                assert!(neurone.y <= (params::GAME_HEIGHT - params::NEURONE_HEIGHT) as f64);
+                assert!(neurone.y <= ((*PARAMS).game_height - (*PARAMS).neurone_height) as f64);
             }        
         }
     }

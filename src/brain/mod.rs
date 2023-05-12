@@ -1,7 +1,7 @@
-use rand::{SeedableRng, Rng};
+use rand::{Rng};
 use rand_chacha::ChaChaRng;
 
-use crate::{neurone::NeuroneWeb, entity::Obstacle, utils::str_to_u8_array, params};
+use crate::{neurone::NeuroneWeb, entity::Obstacle, params::{PARAMS}};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Brain {
@@ -10,7 +10,7 @@ pub struct Brain {
 
 impl Brain {
     pub fn new(rng : &mut ChaChaRng) -> Self {
-        let nb_neurone_web = rng.gen_range(params::BRAIN_CREATION_NB_NEURONE_WEB_MIN..params::BRAIN_CREATION_NB_NEURONE_WEB_MAX);
+        let nb_neurone_web = rng.gen_range((*PARAMS).brain_creation_nb_neurone_web_min..(*PARAMS).brain_creation_nb_neurone_web_max);
         let mut neurone_web = Vec::new();
         for _ in 0..nb_neurone_web {
             neurone_web.push(NeuroneWeb::new_random(rng));
@@ -27,7 +27,7 @@ impl Brain {
         let mut neurone_to_remove: Vec<usize> = Vec::new();
         // mutate the neurone web
         for (i, neurone_web) in &mut new_neurone_web.iter_mut().enumerate() {    
-            if rng.gen_bool(params::NEURONE_WEB_REMOVE_MUTATION_RATE) {
+            if rng.gen_bool((*PARAMS).neurone_web_remove_mutation_rate) {
                 neurone_to_remove.push(i);
             }else{
                 neurone_web.mutate(rng);
@@ -40,7 +40,7 @@ impl Brain {
         }
 
         // add new neurone web if rng say so
-        if rng.gen_bool(params::NEURONE_WEB_ADD_MUTATION_RATE) {
+        if rng.gen_bool((*PARAMS).neurone_web_add_mutation_rate) {
             new_neurone_web.push(NeuroneWeb::new_random(rng));
         }
 
