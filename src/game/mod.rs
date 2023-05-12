@@ -1,3 +1,4 @@
+use std::fmt::format;
 use std::time::{Instant, Duration};
 
 use iced::widget::image::Handle;
@@ -165,6 +166,7 @@ impl Game {
 #[derive(Debug, Clone, Copy)]
 pub enum Message {
     Jump,
+    Restart,
     Update(Instant),
 }
 
@@ -191,15 +193,24 @@ impl Application for Game {
     fn update(&mut self, message: Self::Message) -> iced::Command<Self::Message> {
         match message {
             Message::Jump => {
-                self.jump();
+                if !self.has_lost {
+                    self.jump();
+                }
                 Command::none()
             },
             Message::Update(now) => {
-                self.update(now);
+                if !self.has_lost {
+                    self.update(now);
+                }
+               
                 // don't forget to clear the cache to force the redraw
                 self.cache.as_ref().unwrap().clear();
                 Command::none()
-            }
+            },
+            Message::Restart => {
+                *self = Self::new(Instant::now(), params::LAND_SEED, Some(Default::default()));
+                Command::none()
+            },
         }
     }
 
@@ -230,7 +241,12 @@ impl canvas::Program<Message> for Game {
         match event {
             canvas::Event::Keyboard(keyboard_event) => {
                 match keyboard_event {
-                   keyboard::Event::CharacterReceived(' ') => (canvas::event::Status::Captured, Some(Message::Jump)),
+                    keyboard::Event::CharacterReceived(' ') => {
+                        if self.has_lost {
+                            return (canvas::event::Status::Captured, Some(Message::Restart))
+                        }
+                        (canvas::event::Status::Captured, Some(Message::Jump))
+                    },
                     _ => (canvas::event::Status::Ignored, None)
                 }
             },
@@ -247,21 +263,24 @@ impl canvas::Program<Message> for Game {
     ) -> Vec<Geometry> {
         // dont forget the as-ref (option) and the unwrap (can throw erreur if the cache is not initialized)
         let geometry = self.cache.as_ref().unwrap().draw(bounds.size(), |frame| {
-            
-            // draw the dinosaur
-            frame.fill_rectangle(
-                Point { x: (self.dinosaur.x as f32), y: (self.dinosaur.y as f32) }, 
-                Size { width: (self.dinosaur.width as f32), height: (self.dinosaur.height as f32) }, 
-                Color::BLACK
-            );
-
-            // draw the obstacles
-            for obstacle in self.obstacles.iter() {
+            if self.has_lost {
+                frame.fill_text(format!("Lost (press space to restart): {}", self.score));
+            }else{
+                // draw the dinosaur
                 frame.fill_rectangle(
-                    Point { x: (obstacle.x as f32), y: (obstacle.y as f32) }, 
-                    Size { width: (obstacle.width as f32), height: (obstacle.height as f32) }, 
+                    Point { x: (self.dinosaur.x as f32), y: (self.dinosaur.y as f32) }, 
+                    Size { width: (self.dinosaur.width as f32), height: (self.dinosaur.height as f32) }, 
                     Color::BLACK
-                )
+                );
+
+                // draw the obstacles
+                for obstacle in self.obstacles.iter() {
+                    frame.fill_rectangle(
+                        Point { x: (obstacle.x as f32), y: (obstacle.y as f32) }, 
+                        Size { width: (obstacle.width as f32), height: (obstacle.height as f32) }, 
+                        Color::BLACK
+                    )
+                }
             }
         });
 
@@ -279,14 +298,16 @@ mod tests {
     fn test_random_coherence() {
         // test the random number generator and the seed "test"
         let mut game = Game::new(Instant::now(), "test", None);
+        let random_number0: u32 = game.rng.gen();
         let random_number1: u32 = game.rng.gen(); 
         let random_number2: u32 = game.rng.gen();
         let random_number3: u32 = game.rng.gen();
         let random_number4: u32 = game.rng.gen();
 
-        assert_eq!(random_number1, 1389975915);
-        assert_eq!(random_number2, 2957384555);
-        assert_eq!(random_number3, 2883209199);
-        assert_eq!(random_number4, 3610659652);
+        assert_eq!(random_number0, 3689551725);
+        assert_eq!(random_number1, 2123915653);
+        assert_eq!(random_number2, 2261116396);
+        assert_eq!(random_number3, 1389975915);
+        assert_eq!(random_number4, 2957384555);
     }
 }
