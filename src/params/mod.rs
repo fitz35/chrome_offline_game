@@ -1,3 +1,5 @@
+use rand::distributions::Uniform;
+
 // ----------- basics ---------------------
 pub const GAME_WIDTH : u16 = 1280;
 pub const GAME_HEIGHT : u16 = 720;
@@ -37,3 +39,27 @@ pub const PTERODACTYLE_WIDTH : u16 = 40;
 pub const PTERODACTYLE_HEIGHT : u16 = 40;
 pub const PTERODACTYLE_FLYING_HEIGHT : u16 = 110;
 pub const PTERODACTYLE_OFFSET : u16 = 130;
+
+// ----------- neurone ---------------------
+pub const BRAIN_SEED: &str = "Intellect";
+
+pub const NEURONE_WIDTH : u16 = 40;
+pub const NEURONE_HEIGHT : u16 = 40;
+
+pub const NEURONE_WEB_CREATION_NB_NEURONES_MIN : u16 = 2;
+pub const NEURONE_WEB_CREATION_NB_NEURONES_MAX : u16 = 4;
+
+pub const BRAIN_CREATION_NB_NEURONE_WEB_MIN : u16 = 1;
+pub const BRAIN_CREATION_NB_NEURONE_WEB_MAX : u16 = 3;
+
+
+pub const NEURONE_WEB_ADD_MUTATION_RATE : f64 = 0.01;
+pub const NEURONE_WEB_REMOVE_MUTATION_RATE : f64 = 0.01;
+
+pub const NEURONE_ADD_MUTATION_RATE : f64 = 0.01;
+pub const NEURONE_REMOVE_MUTATION_RATE : f64 = 0.01;
+
+pub const NEURONE_X_MUTATION_RATE : f64 = 0.1;
+pub const NEURONE_Y_MUTATION_RATE : f64 = 0.1;
+pub const NEURONE_X_MUTATION_RANGE : f64 = 50.0;
+pub const NEURONE_Y_MUTATION_RANGE : f64 = 50.0;

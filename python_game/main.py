@@ -8,6 +8,7 @@ pygame.init()
 # Set up the display
 DISPLAI_WIDTH = 1280
 DISPLAY_HEIGHT = 720
+SCALE = 2.5
 game_display = pygame.display.set_mode((DISPLAI_WIDTH, DISPLAY_HEIGHT))
 pygame.display.set_caption("T-Rex Game")
 
@@ -28,8 +29,8 @@ background_img = pygame.transform.scale(background_img, (DISPLAI_WIDTH, DISPLAY_
 
 
 # Define the dinosaur properties
-DINAUSOR_WIDTH = 60
-DINAUSOR_HEIGHT = 90
+DINAUSOR_WIDTH = 60 * SCALE
+DINAUSOR_HEIGHT = 90 * SCALE
 dinosaur_x = 100
 dinosaur_y = DISPLAY_HEIGHT - DINAUSOR_HEIGHT - 10
 dinosaur_y_change = 0
@@ -49,24 +50,24 @@ class ObstacleType(Enum):
     PTERODACTYL = 3
 
 # Define the cactus properties
-cactus_width = 40
-cactus_height = 60
+cactus_width = 40 * SCALE
+cactus_height = 60 * SCALE
 cactus_x = DISPLAI_WIDTH
 cactus_y = DISPLAY_HEIGHT - cactus_height - 10
 cactus_img = pygame.transform.scale(cactus_img, (cactus_width, cactus_height))
 cactus_img = pygame.transform.flip(cactus_img, False, True)
 
 # Define the rock properties
-rock_width = 40
-rock_height = 40
+rock_width = 40 * SCALE
+rock_height = 40 * SCALE
 rock_x = DISPLAI_WIDTH
 rock_y = DISPLAY_HEIGHT - rock_height - 10
 rock_img = pygame.transform.scale(rock_image, (rock_width, rock_height))
 rock_img = pygame.transform.flip(rock_img, False, True)
 
 # define the pterodactyl properties
-pterodactyl_width = 40
-pterodactyl_height = 40
+pterodactyl_width = 40 * SCALE
+pterodactyl_height = 40 * SCALE
 pterodactyl_x = DISPLAI_WIDTH
 pterodactyl_y = DISPLAY_HEIGHT - pterodactyl_height - DINAUSOR_HEIGHT - 10 # - DINAUSOR_HEIGHT to make the pterodactyl fly in the air
 pterodactyl_img = pygame.transform.scale(pterodactyl_img, (pterodactyl_width, pterodactyl_height))

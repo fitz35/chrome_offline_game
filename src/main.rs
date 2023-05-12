@@ -6,6 +6,8 @@ mod game;
 mod entity;
 mod utils;
 mod params;
+mod neurone;
+mod brain;
 
 
 fn main() -> iced::Result {

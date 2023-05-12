@@ -1,7 +1,6 @@
-use std::fmt::format;
+
 use std::time::{Instant, Duration};
 
-use iced::widget::image::Handle;
 use rand::{Rng, SeedableRng};
 use rand_chacha::ChaChaRng;
 
@@ -10,7 +9,7 @@ use iced::widget::{canvas, Canvas};
 use iced::theme::{Theme};
 use iced::{Application, executor, Command, Rectangle, Size, Color, Point, Subscription, window, keyboard};
 
-use crate::entity::{Dinosaur, Obstacle, ObstacleGenerateType};
+use crate::entity::{Dinosaur, Obstacle, ObstacleGenerateType, ObstacleEntityType};
 use crate::params;
 use crate::utils::{str_to_u8_array, get_scale_value, check_collision};
 
@@ -39,7 +38,7 @@ pub struct Game {
 
 impl Game {
     pub fn new(now : Instant, seed: &str, cache : Option<Cache>) -> Self {
-        let mut me = Self {
+        let me = Self {
             dinosaur: Dinosaur::new_dinosaur(now),
             obstacles: Vec::new(),
             score: 0,
@@ -125,17 +124,33 @@ impl Game {
 
         match random_obstacle {
             ObstacleGenerateType::Cactus => {
-                self.obstacles.push(Obstacle::new_cactus(x, params::OBSTACLE_SPEED, new_next_obstacle_time));
-            },
-            ObstacleGenerateType::Rock => {
-                self.obstacles.push(Obstacle::new_rock(x, params::OBSTACLE_SPEED, new_next_obstacle_time));
-            },
-            ObstacleGenerateType::RockAndPterodactyle => {
-                self.obstacles.push(Obstacle::new_rock(x, params::OBSTACLE_SPEED, new_next_obstacle_time));
-                self.obstacles.push(Obstacle::new_pterodactyle(
+                self.obstacles.push(Obstacle::new(
                     x, 
                     params::OBSTACLE_SPEED, 
-                    new_next_obstacle_time
+                    new_next_obstacle_time,
+                    ObstacleEntityType::Cactus 
+                ));
+            },
+            ObstacleGenerateType::Rock => {
+                self.obstacles.push(Obstacle::new(
+                    x, 
+                    params::OBSTACLE_SPEED, 
+                    new_next_obstacle_time,
+                    ObstacleEntityType::Rock
+                ));
+            },
+            ObstacleGenerateType::RockAndPterodactyle => {
+                self.obstacles.push(Obstacle::new(
+                    x, 
+                    params::OBSTACLE_SPEED, 
+                    new_next_obstacle_time,
+                    ObstacleEntityType::Rock
+                ));
+                self.obstacles.push(Obstacle::new(
+                    x, 
+                    params::OBSTACLE_SPEED, 
+                    new_next_obstacle_time,
+                    ObstacleEntityType::Pterodactyle
                 ));
             },
         }
@@ -243,8 +258,10 @@ impl canvas::Program<Message> for Game {
                 match keyboard_event {
                     keyboard::Event::CharacterReceived(' ') => {
                         if self.has_lost {
+                            // restart the game
                             return (canvas::event::Status::Captured, Some(Message::Restart))
                         }
+                        // jump
                         (canvas::event::Status::Captured, Some(Message::Jump))
                     },
                     _ => (canvas::event::Status::Ignored, None)

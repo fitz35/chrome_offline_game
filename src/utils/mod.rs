@@ -1,3 +1,6 @@
+use rand::{distributions::Uniform, Rng};
+use rand_chacha::ChaChaRng;
+
 /// convert a string to a [u8; 32] array
 /// NOTE : fill the array with zeroes if the string is shorter than 32 characters
 /// NOTE : truncate the string if it is longer than 32 characters
@@ -59,6 +62,12 @@ pub fn check_collision(
 
     // Check for collision by comparing the boundaries
     !(right1 < x2 || x1 > right2 || bottom1 < y2 || y1 > bottom2)
+}
+
+/// get a random float between min and max
+pub fn get_random_float(min : f64, max : f64, rng : &mut ChaChaRng) -> f64 {
+    let between = Uniform::from(min..max);
+    rng.sample(between)
 }
 
 
