@@ -37,7 +37,7 @@ dinosaur_img = pygame.transform.scale(dinosaur_img, (DINAUSOR_WIDTH, DINAUSOR_HE
 dinosaur_img = pygame.transform.flip(dinosaur_img, False, True)
 
 # -------------------------- obstacle --------------------------
-obstacle_spawn_timer = 0
+obstacle_spawn_timer = 10000
 obstacle_spawn_interval = 1500  # milliseconds (2 seconds)
 
 obstacle_x_change = -5
@@ -122,8 +122,8 @@ while not game_over:
 
     # -------------------------- new obstacle --------------------------
     # spawn obstacles
-    obstacle_spawn_timer += clock.get_rawtime()
-    if obstacle_spawn_timer >= obstacle_spawn_interval:
+    obstacle_spawn_timer -= clock.get_rawtime()
+    if obstacle_spawn_timer < 0:
         obstacle_type = random.choice(list(ObstacleType))
         if obstacle_type == ObstacleType.CACTUS:
             obstacle_img = cactus_img
@@ -150,7 +150,7 @@ while not game_over:
             'img': obstacle_img
         }
         obstacles.append(new_obstacle)
-        obstacle_spawn_timer = 0
+        obstacle_spawn_timer = obstacle_spawn_interval
 
 
     # -------------------------- collision --------------------------
