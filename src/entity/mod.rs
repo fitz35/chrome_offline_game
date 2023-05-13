@@ -140,7 +140,7 @@ impl Dinosaur {
 
     /// Update the position and apply the gravity
     pub fn update(&mut self, tick: Instant) {
-        let delta = (tick - self.last_time_update).as_secs_f64();
+        let delta = tick.duration_since(self.last_time_update).as_secs_f64();
         self.y += self.velocity * delta;
         self.velocity -= (*PARAMS).gravity as f64 * delta;
         if self.y <= 0.0 {

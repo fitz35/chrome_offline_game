@@ -219,7 +219,7 @@ pub fn brain_train_pipeline(folder_path_input : Option<String>){
         }
 
         // save the progression (brain and random)
-        if i % (PARAMS).interval_to_save_result == 0 || i == (*PARAMS).training_nb_generation - 1{
+        if i % (PARAMS).interval_to_save_result == 0 || i == i_begin + (*PARAMS).training_nb_generation - 1{
             let brains_to_save: Vec<Brain> = best_brains.iter().map(|&(brain, _)| brain.clone()).collect();
             let to_save = IntermediateResult {
                 brains : brains_to_save,
