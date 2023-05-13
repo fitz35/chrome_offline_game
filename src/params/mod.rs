@@ -79,7 +79,7 @@ impl GameParameters {
 
             // Game Timing
             dinausor_jump_velocity: 800.0,
-            score_increase_speed_interval: 20.0,
+            score_increase_speed_interval: 2.0,
 
             // Generation of New Obstacle
             min_obstacle_generation_time: 1.2,

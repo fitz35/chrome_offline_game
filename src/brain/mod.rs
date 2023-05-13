@@ -151,7 +151,7 @@ pub fn brain_train_pipeline(){
         let brain_str = serde_json::to_string(&best_brains).unwrap();
         fs::write(format!("{}/brain{}.json", folder_name, i), brain_str).expect("Unable to write file");
 
-        println!("best score : {}", best_brains.get(0).unwrap().1);
+        println!("(it : {}) best score : {}", i, best_brains.get(0).unwrap().1);
 
         // genere the next generation (mutate all the best brains, begin randomly)
         // keep all the best brains and doesn't discard them
@@ -168,6 +168,11 @@ pub fn brain_train_pipeline(){
                 best_scores_index = 0;
             }
         }
+        // add the best brains
+        for best_brain in best_brains {
+            next_generation.push(best_brain.0.clone());
+        }
+
         brains = next_generation;
     }
 

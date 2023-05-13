@@ -5,7 +5,7 @@ use serde::{Serialize, Deserialize};
 use crate::{params::{PARAMS}, entity::Obstacle, utils::{check_collision, get_random_float, remove_indexes}};
 
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
 pub struct Neurone {
     pub x : f64,
     pub y : f64,
@@ -17,14 +17,14 @@ pub struct Neurone {
 }
 
 /// Neurone activation condition
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum NeuroneActivationCondition {
     Air,
     Obstacle,
 }
 
 /// if the activation, force to not jump or jump
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum NeuroneActivation {
     Jump,
     NoJump,

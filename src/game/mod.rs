@@ -198,17 +198,34 @@ pub enum Message {
     Update(Instant),
 }
 
+#[derive(Debug, Clone)]
+pub enum CustomFlags {
+    None,
+    Brain(Brain),
+}
+
+// define the default value for the flags
+impl Default for CustomFlags {
+    fn default() -> Self {
+        // Define the default values for CustomFlags here
+        CustomFlags::None
+    }
+}
+
 // define the application for iced on the game
 impl Application for Game {
     type Theme = Theme;
     type Executor = executor::Default;
     type Message = Message;
-    type Flags = ();
+    type Flags = CustomFlags;
 
-    fn new(_flags: Self::Flags) -> (Self, iced::Command<Self::Message>) {
+    fn new(flags: Self::Flags) -> (Self, iced::Command<Self::Message>) {
         (
             // construct the game at the beginning
-            Self::new(Instant::now(), (*PARAMS).land_seed.as_str(), None, Some(Default::default())),
+            match flags {
+                CustomFlags::None => Self::new(Instant::now(), (*PARAMS).land_seed.as_str(), None, Some(Default::default())),
+                CustomFlags::Brain(brain) => Self::new(Instant::now(), (*PARAMS).land_seed.as_str(), Some(brain), Some(Default::default())),
+            },
             Command::none(),
         )
     }
