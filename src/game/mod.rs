@@ -12,7 +12,7 @@ use iced::{Application, executor, Command, Rectangle, Size, Color, Point, Subscr
 use crate::brain::Brain;
 use crate::entity::{Dinosaur, Obstacle, ObstacleGenerateType, ObstacleEntityType};
 use crate::params::{PARAMS};
-use crate::utils::{str_to_u8_array, get_scale_value, check_collision};
+use crate::utils::{str_to_u8_array, get_scale_value, check_collision, remove_indexes};
 
 
 
@@ -186,9 +186,7 @@ impl Game {
         }
 
         self.score += to_remove.len() as u64;
-        for index_to_remove in to_remove.iter() {
-            self.obstacles.remove(*index_to_remove);
-        }
+        remove_indexes(&mut self.obstacles, &to_remove);
     }
 }
 

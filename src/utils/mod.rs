@@ -70,6 +70,16 @@ pub fn get_random_float(min : f64, max : f64, rng : &mut ChaChaRng) -> f64 {
     rng.sample(between)
 }
 
+/// remove the elements of the vector at the indexes (tooken before the remove)
+pub fn remove_indexes<T>(vec : &mut Vec<T>, indexes : &Vec<usize>) {
+    let mut nb_removed = 0;
+    for i in indexes {
+        if i - nb_removed < vec.len() {
+            vec.remove(i - nb_removed);
+            nb_removed += 1;
+        }
+    }
+}
 
 #[cfg(test)]
 mod tests {
@@ -134,6 +144,41 @@ mod tests {
         // Test case 4: Squares share an edge (no overlap)
         let collision_8 = check_collision(-5.0, -5.0, 10, 10, 5.0, 5.0, 10, 10);
         assert!(collision_8);
+    }
+
+    #[test]
+    fn test_remove_indexes() {
+        // Create a vector with some elements
+        let mut vec = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+        // Define the indexes to remove
+        let indexes = vec![2, 5, 8];
+
+        // Remove the elements at the specified indexes
+        remove_indexes(&mut vec, &indexes);
+
+        // Verify the vector after removal
+        assert_eq!(vec, vec![1, 2, 4, 5, 7, 8, 10]);
+    }
+
+    #[test]
+    fn test_remove_indexes_empty_vec() {
+        let mut vec: Vec<i32> = vec![];
+        let indexes = vec![1, 2, 3]; // Indexes to remove
+
+        remove_indexes(&mut vec, &indexes);
+
+        assert_eq!(vec.len(), 0); // Empty vector remains unchanged
+    }
+
+    #[test]
+    fn test_remove_indexes_all_elements() {
+        let mut vec = vec![1, 2, 3, 4, 5];
+        let indexes = vec![0, 1, 2, 3, 4]; // Indexes to remove
+
+        remove_indexes(&mut vec, &indexes);
+
+        assert_eq!(vec.len(), 0); // All elements removed, resulting in an empty vector
     }
 
 }

@@ -50,14 +50,14 @@ pub struct GameParameters {
     pub neurone_web_remove_mutation_rate: f64,
     pub neurone_add_mutation_rate: f64,
     pub neurone_remove_mutation_rate: f64,
-    pub neurone_x_mutation_rate: f64,
-    pub neurone_y_mutation_rate: f64,
     pub neurone_x_mutation_range: f64,
     pub neurone_y_mutation_range: f64,
 
     // training
     pub training_nb_generation: u64,
     pub training_nb_brain: u64,
+    /// the score limit to stop the training (if the brain reach this score, we actually consider it as a good brain)
+    pub limit_score: u64,
 }
 
 
@@ -79,7 +79,7 @@ impl GameParameters {
 
             // Game Timing
             dinausor_jump_velocity: 800.0,
-            score_increase_speed_interval: 2.0,
+            score_increase_speed_interval: 20.0,
 
             // Generation of New Obstacle
             min_obstacle_generation_time: 1.2,
@@ -107,18 +107,18 @@ impl GameParameters {
             neurone_web_creation_nb_neurones_max: 4,
             brain_creation_nb_neurone_web_min: 1,
             brain_creation_nb_neurone_web_max: 3,
-            neurone_web_add_mutation_rate: 0.01,
-            neurone_web_remove_mutation_rate: 0.01,
-            neurone_add_mutation_rate: 0.01,
-            neurone_remove_mutation_rate: 0.01,
-            neurone_x_mutation_rate: 0.1,
-            neurone_y_mutation_rate: 0.1,
-            neurone_x_mutation_range: 50.0,
-            neurone_y_mutation_range: 50.0,
+            neurone_web_add_mutation_rate: 0.1,
+            neurone_web_remove_mutation_rate: 0.1,
+            neurone_add_mutation_rate: 0.1,
+            neurone_remove_mutation_rate: 0.1,
+            neurone_x_mutation_range: 150.0,
+            neurone_y_mutation_range: 150.0,
 
             // training
-            training_nb_generation: 100,
-            training_nb_brain: 500,
+            training_nb_generation: 500,
+            training_nb_brain: 1000,
+            limit_score: 1000,
+            
         }
     }
 }

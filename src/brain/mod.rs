@@ -8,6 +8,7 @@ use rand_chacha::ChaChaRng;
 use serde::{Deserialize, Serialize};
 use serde_json;
 
+use crate::utils::remove_indexes;
 use crate::{neurone::NeuroneWeb, entity::Obstacle, params::{PARAMS}, utils::str_to_u8_array, game::Game};
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -42,9 +43,7 @@ impl Brain {
         }
 
         // remove the marqued random web
-        for i in neurone_to_remove {
-            new_neurone_web.remove(i);
-        }
+        remove_indexes(&mut new_neurone_web, &neurone_to_remove);
 
         // add new neurone web if rng say so
         if rng.gen_bool((*PARAMS).neurone_web_add_mutation_rate) {
@@ -78,7 +77,7 @@ fn brain_run(brain : Brain) -> u64 {
     let mut current_miliseconds = 0;
     let interval = 1000 / (*PARAMS).game_fps as u64;// in miliseconds
     // run the game
-    while !game.has_lost {
+    while !game.has_lost && (game.score < (*PARAMS).limit_score) {
         current_miliseconds += interval;
         let duration = Duration::from_millis(current_miliseconds);
         now = now.checked_add(duration).unwrap();
@@ -154,14 +153,20 @@ pub fn brain_train_pipeline(){
 
         println!("best score : {}", best_brains.get(0).unwrap().1);
 
-        // genere the next generation
+        // genere the next generation (mutate all the best brains, begin randomly)
+        // keep all the best brains and doesn't discard them
+        // take a random brain from the best brains and rotate the index
+        let mut best_scores_index = rng.gen_range(0..best_brains.len());
         let mut next_generation = Vec::new();
         for _ in 0..(*PARAMS).training_nb_brain {
-            // take a random brain from the best brains and mutate it
-            let best_scores_index = rng.gen_range(0..best_brains.len());
-
+            // mutate the brain
             let brain = best_brains[best_scores_index].0.mutate(&mut rng);
             next_generation.push(brain);
+            // rotate the best scores index
+            best_scores_index = best_scores_index + 1;
+            if best_scores_index >= best_brains.len() {
+                best_scores_index = 0;
+            }
         }
         brains = next_generation;
     }

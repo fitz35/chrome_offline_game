@@ -2,7 +2,7 @@ use rand::{Rng, distributions::Uniform};
 use rand_chacha::ChaChaRng;
 use serde::{Serialize, Deserialize};
 
-use crate::{params::{PARAMS}, entity::Obstacle, utils::{check_collision, get_random_float}};
+use crate::{params::{PARAMS}, entity::Obstacle, utils::{check_collision, get_random_float, remove_indexes}};
 
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -69,8 +69,14 @@ impl Neurone {
 
     /// mutate this neurone
     pub fn mutate(&mut self, rng : &mut ChaChaRng) {
-        self.x = get_random_float(self.x - (*PARAMS).neurone_x_mutation_range, self.x + (*PARAMS).neurone_x_mutation_range, rng);
-        self.y = get_random_float(self.y - (*PARAMS).neurone_y_mutation_range, self.y + (*PARAMS).neurone_y_mutation_range, rng);
+        // get the range of the mutation for x and y (we don't want to go out of the screen)
+        let min_x = (self.x - (*PARAMS).neurone_x_mutation_range).max(0.0);
+        let max_x = (self.x + (*PARAMS).neurone_x_mutation_range).min(((*PARAMS).game_width - (*PARAMS).neurone_width) as f64);
+        let min_y = (self.y - (*PARAMS).neurone_y_mutation_range).max(0.0);
+        let max_y = (self.y + (*PARAMS).neurone_y_mutation_range).min(((*PARAMS).game_height - (*PARAMS).neurone_height) as f64);
+
+        self.x = get_random_float(min_x, max_x, rng);
+        self.y = get_random_float(min_y, max_y, rng);
     }
 
     /// get the activation of the neurone if its condition is met
@@ -147,7 +153,7 @@ impl NeuroneWeb {
     pub fn mutate(&mut self, rng : &mut ChaChaRng) {
         let mut neurones_to_remove: Vec<usize> = Vec::new();
         // mutate the neurone web
-        for (i, neurone) in &mut self.neurones.iter_mut().enumerate() {    
+        for (i, neurone) in &mut self.neurones.iter_mut().enumerate() {   
             if rng.gen_bool((*PARAMS).neurone_remove_mutation_rate) {
                 neurones_to_remove.push(i);
             }else{
@@ -156,9 +162,7 @@ impl NeuroneWeb {
         }
 
         // remove the marqued random web
-        for i in neurones_to_remove {
-            self.neurones.remove(i);
-        }
+        remove_indexes(&mut self.neurones, &neurones_to_remove);
 
         // add new neurone web if rng say so
         if rng.gen_bool((*PARAMS).neurone_web_add_mutation_rate) {
