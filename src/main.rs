@@ -1,6 +1,8 @@
 
-use brain::brain_train_pipeline;
-use game::{Game};
+use std::{fs::File, io::BufReader};
+
+use brain::{brain_train_pipeline, Brain};
+use game::{Game, CustomFlags};
 use iced::{Settings, Application};
 use program_args::ProgramArgs;
 use structopt::StructOpt;
@@ -28,14 +30,22 @@ fn main() -> iced::Result {
         })
     }else if args.brain_path.is_some() {
         // run the brain play
-        // TODO : get the brain in the given path
+        let file = File::open(args.brain_path.unwrap()).expect("Unable to open file");
+        let reader = BufReader::new(file);
+
+        let brain : Vec<(Brain, usize)> = serde_json::from_reader(reader).expect("Unable to read file");
+        if brain.len() == 0 {
+            println!("The brain file is empty");
+            return Ok(());
+        }
         Game::run(Settings {
             antialiasing: true,
+            flags : CustomFlags::Brain(brain[0].0.clone()),
             ..Settings::default()
         })
     }else if args.folder_path.is_some() {
         // run the brain train
-        brain_train_pipeline();
+        brain_train_pipeline(args.folder_path);
         return Ok(());
     }else {
         // error, we need to have at least one argument

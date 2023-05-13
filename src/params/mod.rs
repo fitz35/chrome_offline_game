@@ -58,6 +58,7 @@ pub struct GameParameters {
     pub training_nb_brain: u64,
     /// the score limit to stop the training (if the brain reach this score, we actually consider it as a good brain)
     pub limit_score: u64,
+    pub result_folder_path: String,
 }
 
 
@@ -115,9 +116,10 @@ impl GameParameters {
             neurone_y_mutation_range: 150.0,
 
             // training
-            training_nb_generation: 500,
+            training_nb_generation: 1500,
             training_nb_brain: 1000,
             limit_score: 1000,
+            result_folder_path: "./ressources/results/".to_string(),
             
         }
     }

@@ -1,3 +1,4 @@
+use std::path::{Path};
 use std::time::{Instant, Duration};
 use std::thread;
 use std::fs;
@@ -88,25 +89,38 @@ fn brain_run(brain : Brain) -> u64 {
 }
 
 /// train the brain
-pub fn brain_train_pipeline(){
+pub fn brain_train_pipeline(folder_path_input : Option<String>){
     // ----------- create the folder where we will save the brains ------------
-
-    // Get the current timestamp
-    let timestamp = SystemTime::now()
+    let mut folder_path;
+    if folder_path_input.is_some() {
+        folder_path = folder_path_input.unwrap();
+    }else{
+        // Get the current timestamp
+        let timestamp = SystemTime::now()
         .duration_since(UNIX_EPOCH)
         .expect("Failed to retrieve timestamp")
         .as_secs();
 
-    // Convert the timestamp to a string
-    let folder_name = format!("./ressources/results/{}", timestamp);
+        // Convert the timestamp to a string
+        let timestamp = timestamp.to_string();
+        let result_folder = (*PARAMS).result_folder_path.clone();
+        folder_path = format!("{}{}", result_folder, timestamp);
+    }
+    // check the slash at the end
+    if !folder_path.ends_with("/") {
+        folder_path = format!("{}/", folder_path);
+    }
 
-    // Create the folder
-    fs::create_dir(&folder_name)
-        .expect("Failed to create folder");
-
+    // Create the folder if it doesn't exist
+    if !Path::new(&folder_path).exists() {
+        fs::create_dir(folder_path.clone())
+            .expect("Failed to create folder");
+    }
+    
     // save the params
     let params = serde_json::to_string(&(*PARAMS)).unwrap();
-    fs::write(format!("{}/params.json", folder_name), params).expect("Unable to write file");
+    let params_path = format!("{}params.json", folder_path.clone());
+    fs::write(params_path, params).expect("Unable to write file");
 
     // ----------- create the brains ------------
     let mut rng = ChaChaRng::from_seed(str_to_u8_array((*PARAMS).brain_seed.as_str()));
@@ -149,7 +163,8 @@ pub fn brain_train_pipeline(){
 
         // save the best brains
         let brain_str = serde_json::to_string(&best_brains).unwrap();
-        fs::write(format!("{}/brain{}.json", folder_name, i), brain_str).expect("Unable to write file");
+        let brain_path = format!("{}brain{}.json", folder_path.clone(), i);
+        fs::write(brain_path, brain_str).expect("Unable to write file");
 
         println!("(it : {}) best score : {}", i, best_brains.get(0).unwrap().1);
 
