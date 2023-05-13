@@ -23,3 +23,10 @@ Don't forget to install [openGL](https://gist.github.com/Mluckydwyer/8df7782b1a6
 ```shell
 sudo apt install mesa-utils libglu1-mesa-dev freeglut3-dev mesa-common-dev
 ```
+
+
+## Params
+
+### Params crate
+
+The 'game_fps' must be higher than

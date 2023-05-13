@@ -2,12 +2,12 @@ use serde::{Serialize, Deserialize};
 use lazy_static::lazy_static;
 
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, PartialEq, Clone, Debug)]
 pub struct GameParameters {
     // Basics
     pub game_width: u16,
     pub game_height: u16,
-    pub game_fps: u8,
+    pub game_fps: u16,
 
     // Display
     // ...
@@ -59,6 +59,8 @@ pub struct GameParameters {
     /// the score limit to stop the training (if the brain reach this score, we actually consider it as a good brain)
     pub limit_score: u64,
     pub result_folder_path: String,
+    /// the number of brain to save at the end of the training, if < 0 we save all the brain
+    pub max_nb_brain_to_save: i64,
 }
 
 
@@ -69,7 +71,7 @@ impl GameParameters {
             // Basics
             game_width: 1280,
             game_height: 720,
-            game_fps: 60,
+            game_fps: 300,
 
             // Display
             // ...
@@ -108,18 +110,19 @@ impl GameParameters {
             neurone_web_creation_nb_neurones_max: 4,
             brain_creation_nb_neurone_web_min: 1,
             brain_creation_nb_neurone_web_max: 3,
-            neurone_web_add_mutation_rate: 0.1,
-            neurone_web_remove_mutation_rate: 0.1,
-            neurone_add_mutation_rate: 0.1,
-            neurone_remove_mutation_rate: 0.1,
-            neurone_x_mutation_range: 150.0,
-            neurone_y_mutation_range: 150.0,
+            neurone_web_add_mutation_rate: 0.2,
+            neurone_web_remove_mutation_rate: 0.2,
+            neurone_add_mutation_rate: 0.2,
+            neurone_remove_mutation_rate: 0.2,
+            neurone_x_mutation_range: 300.0,
+            neurone_y_mutation_range: 300.0,
 
             // training
             training_nb_generation: 1500,
-            training_nb_brain: 1000,
+            training_nb_brain: 2000,
             limit_score: 1000,
             result_folder_path: "./ressources/results/".to_string(),
+            max_nb_brain_to_save: 5,
             
         }
     }

@@ -7,7 +7,7 @@ use rand_chacha::ChaChaRng;
 use iced::widget::canvas::{Cursor, Geometry, Cache};
 use iced::widget::{canvas, Canvas};
 use iced::theme::{Theme};
-use iced::{Application, executor, Command, Rectangle, Size, Color, Point, Subscription, window, keyboard};
+use iced::{Application, executor, Command, Rectangle, Size, Color, Point, Subscription, keyboard};
 
 use crate::brain::Brain;
 use crate::entity::{Dinosaur, Obstacle, ObstacleGenerateType, ObstacleEntityType};
@@ -59,16 +59,6 @@ impl Game {
     // ---------------- game state ----------------
 
     pub fn update(&mut self, now: Instant) {
-        // if we have a brain, we use it
-        match &self.brain {
-            Some(brain) => {
-                if brain.is_jump(&self.obstacles) {
-                    self.jump();
-                }
-            },
-            None => {}
-        }
-
         self.dinosaur.update(now);
 
         // update all obstacle
@@ -95,6 +85,16 @@ impl Game {
         // calculate the next obstacle if we have passed the time
         if now >= self.next_obstacle_time {
             self.generate_next_obstacle();
+        }
+
+        // if we have a brain, we use it
+        match &self.brain {
+            Some(brain) => {
+                if brain.is_jump(&self.obstacles) {
+                    self.jump();
+                }
+            },
+            None => {}
         }
     }
 
@@ -191,10 +191,10 @@ impl Game {
 }
 
 // ----------------- front -----------------
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone)]
 pub enum Message {
     Jump,
-    Restart,
+    Restart(Option<Brain>),
     Update(Instant),
 }
 
@@ -252,8 +252,8 @@ impl Application for Game {
                 self.cache.as_ref().unwrap().clear();
                 Command::none()
             },
-            Message::Restart => {
-                *self = Self::new(Instant::now(), (*PARAMS).land_seed.as_str(), None, Some(Default::default()));
+            Message::Restart(brain) => {
+                *self = Self::new(Instant::now(), (*PARAMS).land_seed.as_str(), brain, Some(Default::default()));
                 Command::none()
             },
         }
@@ -267,7 +267,11 @@ impl Application for Game {
     }
 
     fn subscription(&self) -> Subscription<Message> {
-        window::frames().map(Message::Update)
+        iced::time::every(std::time::Duration::from_millis(1000/(*PARAMS).game_fps as u64)).map(|_| {
+            Message::Update(
+                Instant::now()
+            )
+        })
     }
 }
 
@@ -289,7 +293,7 @@ impl canvas::Program<Message> for Game {
                     keyboard::Event::CharacterReceived(' ') => {
                         if self.has_lost {
                             // restart the game
-                            return (canvas::event::Status::Captured, Some(Message::Restart))
+                            return (canvas::event::Status::Captured, Some(Message::Restart(self.brain.clone())))
                         }
                         // jump
                         (canvas::event::Status::Captured, Some(Message::Jump))

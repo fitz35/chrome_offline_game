@@ -183,11 +183,21 @@ pub fn brain_train_pipeline(folder_path_input : Option<String>){
                 best_scores_index = 0;
             }
         }
-        // add the best brains
-        for best_brain in best_brains {
-            next_generation.push(best_brain.0.clone());
-        }
+        // add the old best brains randomly
+        if best_brains.len() <= (*PARAMS).max_nb_brain_to_save as usize ||
+            (*PARAMS).max_nb_brain_to_save < 0 {
+            for best_brain in best_brains {
+                next_generation.push(best_brain.0.clone());
+            }
+        }else{
+            for _ in 0..(*PARAMS).max_nb_brain_to_save {
+                // get a random index
+                let i_brain = rng.gen_range(0..best_brains.len());
 
+                let brain = best_brains[i_brain].0.clone();
+                next_generation.push(brain);
+            }
+        }
         brains = next_generation;
     }
 
