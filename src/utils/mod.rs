@@ -1,5 +1,7 @@
+use std::fs;
+
 use rand::{distributions::Uniform, Rng};
-use rand_chacha::ChaChaRng;
+use rand_pcg::Pcg64;
 
 /// convert a string to a [u8; 32] array
 /// NOTE : fill the array with zeroes if the string is shorter than 32 characters
@@ -65,7 +67,7 @@ pub fn check_collision(
 }
 
 /// get a random float between min and max
-pub fn get_random_float(min : f64, max : f64, rng : &mut ChaChaRng) -> f64 {
+pub fn get_random_float(min : f64, max : f64, rng : &mut Pcg64) -> f64 {
     let between = Uniform::from(min..max);
     rng.sample(between)
 }
@@ -79,6 +81,25 @@ pub fn remove_indexes<T>(vec : &mut Vec<T>, indexes : &Vec<usize>) {
             nb_removed += 1;
         }
     }
+}
+/// get the max i of the brain file in the folder
+pub fn get_max_i(folder_path : &str) -> Option<u64> {
+    let max_i = fs::read_dir(folder_path)
+        .expect("Failed to read directory")
+        .filter_map(|entry| {
+            entry.ok()
+                .and_then(|dir_entry| dir_entry.file_name().to_str().map(String::from))
+                .and_then(|file_name| {
+                    if file_name.starts_with("brain") && file_name.ends_with(".json") {
+                        file_name[5..file_name.len() - 5].parse::<u64>().ok()
+                    } else {
+                        None
+                    }
+                })
+        })
+        .max();
+
+    max_i
 }
 
 #[cfg(test)]

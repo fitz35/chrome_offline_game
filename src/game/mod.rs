@@ -2,12 +2,12 @@
 use std::time::{Instant, Duration};
 
 use rand::{Rng, SeedableRng};
-use rand_chacha::ChaChaRng;
 
 use iced::widget::canvas::{Cursor, Geometry, Cache};
 use iced::widget::{canvas, Canvas};
 use iced::theme::{Theme};
 use iced::{Application, executor, Command, Rectangle, Size, Color, Point, Subscription, keyboard};
+use rand_pcg::Pcg64;
 
 use crate::brain::Brain;
 use crate::entity::{Dinosaur, Obstacle, ObstacleGenerateType, ObstacleEntityType};
@@ -31,7 +31,7 @@ pub struct Game {
     pub game_start_time: Instant,
 
     // ------ rng ------
-    pub rng : ChaChaRng,
+    pub rng : Pcg64,
 
     // ------ auto play ------
     pub brain : Option<Brain>,
@@ -50,7 +50,7 @@ impl Game {
             last_time_update : now,
             next_obstacle_time : now,
             game_start_time : now,
-            rng : ChaChaRng::from_seed(str_to_u8_array(seed)),
+            rng : Pcg64::from_seed(str_to_u8_array(seed)),
             brain,
             cache,
         };
@@ -267,7 +267,7 @@ impl Application for Game {
     }
 
     fn subscription(&self) -> Subscription<Message> {
-        iced::time::every(std::time::Duration::from_millis(1000/(*PARAMS).game_fps as u64)).map(|_| {
+        iced::time::every(std::time::Duration::from_nanos(1000_000_000/(*PARAMS).game_fps as u64)).map(|_| {
             Message::Update(
                 Instant::now()
             )
@@ -355,10 +355,10 @@ mod tests {
         let random_number3: u32 = game.rng.gen();
         let random_number4: u32 = game.rng.gen();
 
-        assert_eq!(random_number0, 3689551725);
-        assert_eq!(random_number1, 2123915653);
-        assert_eq!(random_number2, 2261116396);
-        assert_eq!(random_number3, 1389975915);
-        assert_eq!(random_number4, 2957384555);
+        assert_eq!(random_number0, 4210505251);
+        assert_eq!(random_number1, 2381057059);
+        assert_eq!(random_number2, 2142037166);
+        assert_eq!(random_number3, 2036600936);
+        assert_eq!(random_number4, 640383128);
     }
 }

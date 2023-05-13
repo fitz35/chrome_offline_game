@@ -1,5 +1,5 @@
 use rand::{Rng, distributions::Uniform};
-use rand_chacha::ChaChaRng;
+use rand_pcg::Pcg64;
 use serde::{Serialize, Deserialize};
 
 use crate::{params::{PARAMS}, entity::Obstacle, utils::{check_collision, get_random_float, remove_indexes}};
@@ -44,7 +44,7 @@ impl Neurone {
     }
 
     /// create a totaly new random neurone
-    pub fn new_random(rng : &mut ChaChaRng) -> Self {
+    pub fn new_random(rng : &mut Pcg64) -> Self {
         let x = get_random_float(0.0, ((*PARAMS).game_width - (*PARAMS).neurone_width) as f64, rng);
         let y = get_random_float(0.0, ((*PARAMS).game_height - (*PARAMS).neurone_height) as f64, rng);
         let activation_condition = 
@@ -68,7 +68,7 @@ impl Neurone {
     }
 
     /// mutate this neurone
-    pub fn mutate(&mut self, rng : &mut ChaChaRng) {
+    pub fn mutate(&mut self, rng : &mut Pcg64) {
         // get the range of the mutation for x and y (we don't want to go out of the screen)
         let min_x = (self.x - (*PARAMS).neurone_x_mutation_range).max(0.0);
         let max_x = (self.x + (*PARAMS).neurone_x_mutation_range).min(((*PARAMS).game_width - (*PARAMS).neurone_width) as f64);
@@ -122,7 +122,7 @@ pub struct NeuroneWeb {
 impl NeuroneWeb {
 
     /// create a new completly random web of neurone
-    pub fn new_random(rng : &mut ChaChaRng) -> Self {
+    pub fn new_random(rng : &mut Pcg64) -> Self {
         let mut neurones = Vec::new();
         // get the number of neurones
         let nb_neurones = rng.gen_range((*PARAMS).neurone_web_creation_nb_neurones_min..(*PARAMS).neurone_web_creation_nb_neurones_max);
@@ -150,7 +150,7 @@ impl NeuroneWeb {
     }
 
     /// mutate this neurone web
-    pub fn mutate(&mut self, rng : &mut ChaChaRng) {
+    pub fn mutate(&mut self, rng : &mut Pcg64) {
         let mut neurones_to_remove: Vec<usize> = Vec::new();
         // mutate the neurone web
         for (i, neurone) in &mut self.neurones.iter_mut().enumerate() {   
@@ -204,7 +204,7 @@ mod tests {
     #[test]
     fn test_neurone_generation(){
         for _ in 0..100 {
-            let mut rng = ChaChaRng::from_seed([0; 32]);
+            let mut rng = Pcg64::from_seed([0; 32]);
             let neurone = Neurone::new_random(&mut rng);
             assert!(neurone.x >= 0.0);
             assert!(neurone.x <= ((*PARAMS).game_width - (*PARAMS).neurone_width) as f64);
@@ -216,7 +216,7 @@ mod tests {
     #[test]
     fn test_neurone_web_generation(){
         for _ in 0..100 {
-            let mut rng = ChaChaRng::from_seed(str_to_u8_array((*PARAMS).brain_seed.as_str()));
+            let mut rng = Pcg64::from_seed(str_to_u8_array((*PARAMS).brain_seed.as_str()));
             let neurone_web = NeuroneWeb::new_random(&mut rng);
             assert!(neurone_web.neurones.len() >= (*PARAMS).neurone_web_creation_nb_neurones_min as usize);
             assert!(neurone_web.neurones.len() <= (*PARAMS).neurone_web_creation_nb_neurones_max as usize);

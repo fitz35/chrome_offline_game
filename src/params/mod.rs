@@ -61,6 +61,8 @@ pub struct GameParameters {
     pub result_folder_path: String,
     /// the number of brain to save at the end of the training, if < 0 we save all the brain
     pub max_nb_brain_to_save: i64,
+    /// the interval to save the result (in number of generation)
+    pub interval_to_save_result: u64,
 }
 
 
@@ -71,7 +73,7 @@ impl GameParameters {
             // Basics
             game_width: 1280,
             game_height: 720,
-            game_fps: 300,
+            game_fps: 600,
 
             // Display
             // ...
@@ -110,10 +112,10 @@ impl GameParameters {
             neurone_web_creation_nb_neurones_max: 4,
             brain_creation_nb_neurone_web_min: 1,
             brain_creation_nb_neurone_web_max: 3,
-            neurone_web_add_mutation_rate: 0.2,
-            neurone_web_remove_mutation_rate: 0.2,
-            neurone_add_mutation_rate: 0.2,
-            neurone_remove_mutation_rate: 0.2,
+            neurone_web_add_mutation_rate: 0.01,
+            neurone_web_remove_mutation_rate: 0.01,
+            neurone_add_mutation_rate: 0.3,
+            neurone_remove_mutation_rate: 0.3,
             neurone_x_mutation_range: 300.0,
             neurone_y_mutation_range: 300.0,
 
@@ -123,6 +125,7 @@ impl GameParameters {
             limit_score: 1000,
             result_folder_path: "./ressources/results/".to_string(),
             max_nb_brain_to_save: 5,
+            interval_to_save_result: 100,
             
         }
     }

@@ -24,6 +24,9 @@ Don't forget to install [openGL](https://gist.github.com/Mluckydwyer/8df7782b1a6
 sudo apt install mesa-utils libglu1-mesa-dev freeglut3-dev mesa-common-dev
 ```
 
+## Random
+
+Use the [rand_pcg](https://crates.io/crates/rand_pcg) crate to save it with serialise/deserialise
 
 ## Params
 

@@ -1,7 +1,7 @@
 
 use std::{fs::File, io::BufReader};
 
-use brain::{brain_train_pipeline, Brain};
+use brain::{brain_train_pipeline, IntermediateResult};
 use game::{Game, CustomFlags};
 use iced::{Settings, Application};
 use program_args::ProgramArgs;
@@ -33,14 +33,14 @@ fn main() -> iced::Result {
         let file = File::open(args.brain_path.unwrap()).expect("Unable to open file");
         let reader = BufReader::new(file);
 
-        let brain : Vec<(Brain, usize)> = serde_json::from_reader(reader).expect("Unable to read file");
-        if brain.len() == 0 {
+        let inter : IntermediateResult = serde_json::from_reader(reader).expect("Unable to read file");
+        if inter.brains.len() == 0 {
             println!("The brain file is empty");
             return Ok(());
         }
         Game::run(Settings {
             antialiasing: true,
-            flags : CustomFlags::Brain(brain[0].0.clone()),
+            flags : CustomFlags::Brain(inter.brains[0].clone()),
             ..Settings::default()
         })
     }else if args.folder_path.is_some() {
