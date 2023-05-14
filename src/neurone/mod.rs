@@ -1,3 +1,4 @@
+use iced::Color;
 use rand::{Rng, distributions::Uniform};
 use rand_pcg::Pcg64;
 use serde::{Serialize, Deserialize};
@@ -46,7 +47,7 @@ impl Neurone {
     /// create a totaly new random neurone
     pub fn new_random(rng : &mut Pcg64) -> Self {
         let x = get_random_float(0.0, ((*PARAMS).game_width - (*PARAMS).neurone_width) as f64, rng);
-        let y = get_random_float((*PARAMS).hole_height as f64 + 1.0, ((*PARAMS).game_height - (*PARAMS).neurone_height) as f64, rng);
+        let y = get_random_float((*PARAMS).hole_height as f64 + 5.0, ((*PARAMS).game_height - (*PARAMS).neurone_height) as f64, rng);
         let activation_condition = 
             match rng.gen_range(0..2) {
                 0 => NeuroneActivationCondition::Air,
@@ -72,7 +73,7 @@ impl Neurone {
         // get the range of the mutation for x and y (we don't want to go out of the screen)
         let min_x = (self.x - (*PARAMS).neurone_x_mutation_range).max(0.0);
         let max_x = (self.x + (*PARAMS).neurone_x_mutation_range).min(((*PARAMS).game_width - (*PARAMS).neurone_width) as f64);
-        let min_y = (self.y - (*PARAMS).neurone_y_mutation_range).max((*PARAMS).hole_height as f64 + 1.0);// we don't want to go under the hole
+        let min_y = (self.y - (*PARAMS).neurone_y_mutation_range).max((*PARAMS).hole_height as f64 + 5.0);// we don't want to go under the hole
         let max_y = (self.y + (*PARAMS).neurone_y_mutation_range).min(((*PARAMS).game_height - (*PARAMS).neurone_height) as f64);
 
         self.x = get_random_float(min_x, max_x, rng);
@@ -118,6 +119,19 @@ impl Neurone {
         let neurone_y = self.y + (*PARAMS).neurone_height as f64 / 2.0;
         let distance = ((dinausor_x - neurone_x).powi(2) + (dinausor_y - neurone_y).powi(2)).sqrt();
         distance * (*PARAMS).neuron_cost_mult as f64 + (*PARAMS).neuron_cost_flat as f64    
+    }
+
+    pub fn get_color(&self) -> Color {
+        let alpha = 
+            match self.activation_condition {
+                NeuroneActivationCondition::Air => 0.5,
+                NeuroneActivationCondition::Obstacle => 1.0,
+            };
+
+        match self.activation {
+            NeuroneActivation::Jump => Color { r : 0.0, g : 1.0, b : 0.0, a : alpha},
+            NeuroneActivation::NoJump => Color { r : 1.0, g : 0.0, b : 0.0, a : alpha}
+        }
     }
 
 }

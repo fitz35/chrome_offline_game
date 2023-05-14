@@ -3,7 +3,7 @@ use std::time::{Instant, Duration};
 
 use rand::{Rng, SeedableRng};
 
-use iced::widget::canvas::{Cursor, Geometry, Cache};
+use iced::widget::canvas::{Cursor, Geometry, Cache, Path, Stroke, LineCap, LineJoin};
 use iced::widget::{canvas, Canvas};
 use iced::theme::{Theme};
 use iced::{Application, executor, Command, Rectangle, Size, Color, Point, Subscription, keyboard};
@@ -11,6 +11,7 @@ use rand_pcg::Pcg64;
 
 use crate::brain::Brain;
 use crate::entity::{Dinosaur, Obstacle, ObstacleGenerateType, ObstacleEntityType};
+use crate::neurone::Neurone;
 use crate::params::{PARAMS};
 use crate::utils::{str_to_u8_array, get_scale_value, check_collision, remove_indexes};
 
@@ -348,7 +349,48 @@ impl canvas::Program<Message> for Game {
                         Point { x: (obstacle.x as f32), y: (obstacle.y as f32) }, 
                         Size { width: (obstacle.width as f32), height: (obstacle.height as f32) }, 
                         Color::BLACK
-                    )
+                    );
+                }
+
+                // draw the brain
+                match &self.brain {
+                    Some(brain) => {
+                        for neurone_web in &brain.neurone_web {
+                            let mut last_neuron : Option<&Neurone> = None;
+                            for neurone in &neurone_web.neurones {
+                                frame.fill_rectangle(
+                                    Point { x: (neurone.x as f32), y: (neurone.y as f32) }, 
+                                    Size { width: (neurone.width as f32), height: (neurone.height as f32) }, 
+                                    neurone.get_color()
+                                );
+
+                                // draw the link
+                                match last_neuron {
+                                    Some(last_neuron) => {
+                                        let last_neuron_point = Point { x: (last_neuron.x as f32), y: (last_neuron.y as f32) };
+                                        let neurone_point = Point { x: (neurone.x as f32), y: (neurone.y as f32) };
+                                        let path = Path::line(
+                                            last_neuron_point, 
+                                            neurone_point
+                                        );
+                                        frame.stroke(
+                                            &path,
+                                            Stroke {
+                                                width: 1.0,
+                                                line_cap: LineCap::Round,
+                                                line_join: LineJoin::Round,
+                                                ..Stroke::default()
+                                            }
+                                            
+                                        );
+                                    },
+                                    None => {}
+                                }
+                                last_neuron = Some(neurone);
+                            }
+                        }
+                    },
+                    None => {}
                 }
             }
         });
