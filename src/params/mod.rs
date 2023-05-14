@@ -75,6 +75,7 @@ pub struct GameParameters {
     pub interval_to_save_result: u64,
     // energie cost
     pub neuron_cost_mult: u64,
+    pub neuron_cost_flat: u64,
     pub neuron_web_cost_mult: u64,
     pub neuron_web_cost_flat: u64,
 }
@@ -87,7 +88,7 @@ impl GameParameters {
             // Basics
             game_width: 1280,
             game_height: 720,
-            game_fps: 600,
+            game_fps: 60,
 
             // Display
             // ...
@@ -111,13 +112,13 @@ impl GameParameters {
             dinausor_height: 100,
             dinausor_x: 50.0,
             cactus_width: 40,
-            cactus_height: 80,
+            cactus_height: 100,
             rock_width: 40,
             rock_height: 40,
-            pterodactyle_width: 40,
+            pterodactyle_width: 80,
             pterodactyle_height: 40,
             pterodactyle_flying_height: 110,
-            pterodactyle_offset: 130,
+            pterodactyle_offset: 140,
             hole_width: 60,
             hole_height: 2,
 
@@ -137,16 +138,17 @@ impl GameParameters {
             neurone_y_mutation_range: 500.0,
 
             // training
-            training_nb_generation: 1000,
-            training_nb_brain: 500,
-            limit_score: 500,
+            training_nb_generation: 1500,
+            training_nb_brain: 6000,
+            limit_score: 400,
             result_folder_path: "./ressources/results/".to_string(),
             max_nb_brain_to_save: 100,
-            interval_to_save_result: 10,
+            interval_to_save_result: 100,
             // energie cost
             neuron_cost_mult: 5,
+            neuron_cost_flat : 10000,
             neuron_web_cost_mult: 15,
-            neuron_web_cost_flat : 10000,
+            neuron_web_cost_flat : 100000,
             
         }
     }

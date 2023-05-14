@@ -117,7 +117,7 @@ impl Neurone {
         let neurone_x = self.x + (*PARAMS).neurone_width as f64 / 2.0;
         let neurone_y = self.y + (*PARAMS).neurone_height as f64 / 2.0;
         let distance = ((dinausor_x - neurone_x).powi(2) + (dinausor_y - neurone_y).powi(2)).sqrt();
-        distance * (*PARAMS).neuron_cost_mult as f64
+        distance * (*PARAMS).neuron_cost_mult as f64 + (*PARAMS).neuron_cost_flat as f64    
     }
 
 }
