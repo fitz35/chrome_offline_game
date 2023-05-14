@@ -128,14 +128,14 @@ impl GameParameters {
             // training
             training_nb_generation: 1000,
             training_nb_brain: 500,
-            limit_score: 1000,
+            limit_score: 500,
             result_folder_path: "./ressources/results/".to_string(),
             max_nb_brain_to_save: 100,
-            interval_to_save_result: 1,
+            interval_to_save_result: 10,
             // energie cost
-            neuron_cost_mult: 1,
-            neuron_web_cost_mult: 10,
-            neuron_web_cost_flat : 1000,
+            neuron_cost_mult: 5,
+            neuron_web_cost_mult: 15,
+            neuron_web_cost_flat : 10000,
             
         }
     }

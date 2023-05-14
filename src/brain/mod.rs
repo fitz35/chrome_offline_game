@@ -215,7 +215,7 @@ pub fn brain_train_pipeline(folder_path_input : Option<String>){
             scores.push(result);
         }
 
-        // get the best brains
+        // ----------------- get the best brains -----------------
         // sort the scores
         let mut best_brains_score : Vec<&(Brain, u64)> = vec![&scores[0]];
         for score in &scores {
@@ -243,7 +243,7 @@ pub fn brain_train_pipeline(folder_path_input : Option<String>){
         }
 
 
-        // save the progression (brain and random)
+        // -------------------- save the progression (brain and random) -------------------------
         if i % (PARAMS).interval_to_save_result == 0 || i == i_begin + (*PARAMS).training_nb_generation - 1{
             let brains_to_save: Vec<Brain> = best_brains.iter().map(|&(brain, _)| brain.clone()).collect();
             let to_save = IntermediateResult {
@@ -259,7 +259,7 @@ pub fn brain_train_pipeline(folder_path_input : Option<String>){
 
         println!("(it : {}) best score : {}, best energy : {}", i, best_brains.get(0).unwrap().1, best_brains.get(0).unwrap().0.get_energie());
 
-        
+        // ------------------ create the next generation ------------------
         let mut next_generation = Brain::mutate_all(&best_brains.iter().map(|&(brain, _)| brain.clone()).collect(), &mut rng);
         // add the old best brains randomly
         if best_brains.len() <= (*PARAMS).max_nb_brain_to_save as usize ||
