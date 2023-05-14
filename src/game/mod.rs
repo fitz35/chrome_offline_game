@@ -367,8 +367,14 @@ impl canvas::Program<Message> for Game {
                                 // draw the link
                                 match last_neuron {
                                     Some(last_neuron) => {
-                                        let last_neuron_point = Point { x: (last_neuron.x as f32), y: (last_neuron.y as f32) };
-                                        let neurone_point = Point { x: (neurone.x as f32), y: (neurone.y as f32) };
+                                        let last_neuron_point = Point { 
+                                            x: (last_neuron.x as f32) + (last_neuron.width as f32)/2.0, 
+                                            y: (last_neuron.y as f32) + (last_neuron.height as f32)/2.0
+                                        };
+                                        let neurone_point = Point { 
+                                            x: (neurone.x as f32) + (neurone.width as f32)/2.0, 
+                                            y: (neurone.y as f32) + (neurone.height as f32)/2.0 
+                                        };
                                         let path = Path::line(
                                             last_neuron_point, 
                                             neurone_point
