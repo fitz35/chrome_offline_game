@@ -4,42 +4,51 @@ use lazy_static::lazy_static;
 
 #[derive(Serialize, Deserialize, PartialEq, Clone, Debug)]
 pub struct GameParameters {
-    // Basics
+    // -------------- Basics ---------------
     pub game_width: u16,
     pub game_height: u16,
     pub game_fps: u16,
 
-    // Display
+    // ---------------- Display -------------
     // ...
 
-    // Game Equilibrage
+    // ----------------- Game Equilibrage -----------------
     pub land_seed: String,
     pub gravity: u64,
 
-    // Game Timing
+    // ------------------- Game Timing --------------------
     pub dinausor_jump_velocity: f64,
     pub score_increase_speed_interval: f64,
 
-    // Generation of New Obstacle
+    // ---------------  Generation of New Obstacle ---------------
     pub min_obstacle_generation_time: f64,
     pub max_obstacle_generation_time: f64,
     pub obstacle_generation_time_decrease_speed: f64,
     pub obstacle_speed: f64,
 
-    // Entity
+    // ------------------- Entity --------------------
+    // dinausor
     pub dinausor_width: u16,
     pub dinausor_height: u16,
     pub dinausor_x: f64,
+    // obstacle
+    // cactus
     pub cactus_width: u16,
     pub cactus_height: u16,
+    // rock
     pub rock_width: u16,
     pub rock_height: u16,
+    // pterodactyle
     pub pterodactyle_width: u16,
     pub pterodactyle_height: u16,
     pub pterodactyle_flying_height: u16,
     pub pterodactyle_offset: u16,
+    // hole
+    pub hole_width: u16,
+    /// the height of the hole must be taken in the limit of the neuron y (the neuron must not detect him !)
+    pub hole_height: u16,
 
-    // Neurone
+    // ------------------ Neurone -------------------
     pub brain_seed: String,
     pub neurone_width: u16,
     pub neurone_height: u16,
@@ -54,7 +63,7 @@ pub struct GameParameters {
     pub neurone_x_mutation_range: f64,
     pub neurone_y_mutation_range: f64,
 
-    // training
+    //  ---------------- training -----------------
     pub training_nb_generation: u64,
     pub training_nb_brain: u64,
     /// the score limit to stop the training (if the brain reach this score, we actually consider it as a good brain)
@@ -109,6 +118,8 @@ impl GameParameters {
             pterodactyle_height: 40,
             pterodactyle_flying_height: 110,
             pterodactyle_offset: 130,
+            hole_width: 60,
+            hole_height: 2,
 
             // Neurone
             brain_seed: "Intellect".to_string(),

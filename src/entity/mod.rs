@@ -10,6 +10,7 @@ pub enum ObstacleEntityType {
     Cactus = 0,
     Rock = 1,
     Pterodactyle = 2,
+    Hole = 3,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -17,6 +18,7 @@ pub enum ObstacleGenerateType {
     Cactus = 0,
     Rock = 1,
     RockAndPterodactyle = 2,
+    RockAndHole = 3,
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -71,12 +73,25 @@ impl Obstacle {
         }
     }
 
+    pub fn new_hole(x: f64, velocity : f64, last_time_update : Instant) -> Self {
+        Self {
+            x : x - (*PARAMS).hole_width as f64,
+            y : 0.0,
+            width : (*PARAMS).hole_width,
+            height : (*PARAMS).hole_height,
+            velocity,
+            type_: ObstacleEntityType::Hole,
+            last_time_update,
+        }
+    }
+
     /// wrapper to create an obstacle
     pub fn new(x: f64, velocity : f64, last_time_update : Instant, type_ : ObstacleEntityType) -> Self {
         match type_ {
             ObstacleEntityType::Cactus => Obstacle::new_cactus(x, velocity, last_time_update),
             ObstacleEntityType::Rock => Obstacle::new_rock(x, velocity, last_time_update),
             ObstacleEntityType::Pterodactyle => Obstacle::new_pterodactyle(x, velocity, last_time_update),
+            ObstacleEntityType::Hole => Obstacle::new_hole(x, velocity, last_time_update),
         }
     }
 

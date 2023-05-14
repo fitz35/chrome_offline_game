@@ -131,10 +131,11 @@ impl Game {
         );
         let x = (*PARAMS).game_width as f64 + (*PARAMS).pterodactyle_offset as f64;
         
-        let random_obstacle: ObstacleGenerateType = match self.rng.gen_range(0..3) {
+        let random_obstacle: ObstacleGenerateType = match self.rng.gen_range(0..4) {
             0 => ObstacleGenerateType::Cactus,
             1 => ObstacleGenerateType::Rock,
             2 => ObstacleGenerateType::RockAndPterodactyle,
+            3 => ObstacleGenerateType::RockAndHole,
             _ => panic!("impossible"),
         };
 
@@ -167,6 +168,20 @@ impl Game {
                     (*PARAMS).obstacle_speed, 
                     new_next_obstacle_time,
                     ObstacleEntityType::Pterodactyle
+                ));
+            },
+            ObstacleGenerateType::RockAndHole => {
+                self.obstacles.push(Obstacle::new(
+                    x, 
+                    (*PARAMS).obstacle_speed, 
+                    new_next_obstacle_time,
+                    ObstacleEntityType::Rock
+                ));
+                self.obstacles.push(Obstacle::new(
+                    x, 
+                    (*PARAMS).obstacle_speed, 
+                    new_next_obstacle_time,
+                    ObstacleEntityType::Hole
                 ));
             },
         }

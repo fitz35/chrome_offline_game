@@ -118,6 +118,32 @@ fn brain_run(brain : Brain) -> u64 {
     game.score
 }
 
+/// generate the next generation
+fn generate_next_generation(ancestor : &Vec<Brain>, rng : &mut Pcg64) -> Vec<Brain> {
+    let mut next_generation = Brain::mutate_all(&ancestor.iter().map(|brain| brain.clone()).collect(), rng);
+    // add the old best brains randomly
+    if ancestor.len() <= (*PARAMS).max_nb_brain_to_save as usize ||
+        (*PARAMS).max_nb_brain_to_save < 0 {
+        for best_brain in ancestor {
+            next_generation.push(best_brain.clone());
+        }
+    }else{
+        for _ in 0..(*PARAMS).max_nb_brain_to_save {
+            // get a random index
+            let i_brain = rng.gen_range(0..ancestor.len());
+
+            let brain = ancestor[i_brain].clone();
+            next_generation.push(brain);
+        }
+    }
+    // update the next generation
+    next_generation
+}
+
+fn generate_next_generation_from_scoring(ancestor : &Vec<&(Brain, u64)>, rng : &mut Pcg64)-> Vec<Brain> {
+    generate_next_generation(&ancestor.iter().map(|&(brain, _)| brain.clone()).collect(), rng)
+}
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct IntermediateResult {
     pub brains : Vec<Brain>,
@@ -186,7 +212,7 @@ pub fn brain_train_pipeline(folder_path_input : Option<String>){
         let result : IntermediateResult = serde_json::from_str(&fs::read_to_string(brain_path).expect("Unable to read file of result")).unwrap();
         
         rng = result.rng;
-        brains = Brain::mutate_all(&result.brains, &mut rng);
+        brains = generate_next_generation(&result.brains, &mut rng);
 
         i_begin = max_i + 1;
     }
@@ -260,24 +286,8 @@ pub fn brain_train_pipeline(folder_path_input : Option<String>){
         println!("(it : {}) best score : {}, best energy : {}", i, best_brains.get(0).unwrap().1, best_brains.get(0).unwrap().0.get_energie());
 
         // ------------------ create the next generation ------------------
-        let mut next_generation = Brain::mutate_all(&best_brains.iter().map(|&(brain, _)| brain.clone()).collect(), &mut rng);
-        // add the old best brains randomly
-        if best_brains.len() <= (*PARAMS).max_nb_brain_to_save as usize ||
-            (*PARAMS).max_nb_brain_to_save < 0 {
-            for best_brain in best_brains {
-                next_generation.push(best_brain.0.clone());
-            }
-        }else{
-            for _ in 0..(*PARAMS).max_nb_brain_to_save {
-                // get a random index
-                let i_brain = rng.gen_range(0..best_brains.len());
-
-                let brain = best_brains[i_brain].0.clone();
-                next_generation.push(brain);
-            }
-        }
-        // update the next generation
-        brains = next_generation;
+        brains = generate_next_generation_from_scoring(&best_brains, &mut rng);
+        
     }
 
 }
