@@ -90,7 +90,7 @@ impl Obstacle {
        
         
         self.x -= delta * self.velocity;
-        //println!("update obstacle : {:?} -> {:?}", self, delta);
+        
         self.last_time_update = now;
     }
 

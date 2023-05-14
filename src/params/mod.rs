@@ -120,12 +120,12 @@ impl GameParameters {
             neurone_y_mutation_range: 500.0,
 
             // training
-            training_nb_generation: 1500,
-            training_nb_brain: 6000,
+            training_nb_generation: 1000,
+            training_nb_brain: 500,
             limit_score: 1000,
             result_folder_path: "./ressources/results/".to_string(),
             max_nb_brain_to_save: 100,
-            interval_to_save_result: 100,
+            interval_to_save_result: 1,
             
         }
     }

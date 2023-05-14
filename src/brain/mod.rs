@@ -97,12 +97,10 @@ fn brain_run(brain : Brain) -> u64 {
     // create the game
     let mut now = Instant::now();
     let mut game = Game::new(now, &(*PARAMS).land_seed, Some(brain), None);
-    let mut current_miliseconds = 0;
-    let interval = 1000_000_000 / (*PARAMS).game_fps as u64;// in miliseconds
+    let interval = 1000_000_000 / (*PARAMS).game_fps as u64;// in nanoseconds
+    let duration = Duration::from_nanos(interval);
     // run the game
     while !game.has_lost && (game.score < (*PARAMS).limit_score) {
-        current_miliseconds += interval;
-        let duration = Duration::from_nanos(current_miliseconds);
         now = now.checked_add(duration).unwrap();
         game.update(now);
     }

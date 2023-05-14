@@ -96,6 +96,7 @@ impl Game {
             },
             None => {}
         }
+        self.last_time_update = now;
     }
 
     pub fn jump(&mut self) {
@@ -195,7 +196,7 @@ impl Game {
 pub enum Message {
     Jump,
     Restart(Option<Brain>),
-    Update(Instant),
+    Update,
 }
 
 #[derive(Debug, Clone)]
@@ -243,7 +244,11 @@ impl Application for Game {
                 }
                 Command::none()
             },
-            Message::Update(now) => {
+            Message::Update => {
+                let now = self.last_time_update.checked_add(
+                    Duration::from_nanos(1000_000_000/(*PARAMS).game_fps as u64)
+                ).unwrap();
+
                 if !self.has_lost {
                     self.update(now);
                 }
@@ -268,9 +273,7 @@ impl Application for Game {
 
     fn subscription(&self) -> Subscription<Message> {
         iced::time::every(std::time::Duration::from_nanos(1000_000_000/(*PARAMS).game_fps as u64)).map(|_| {
-            Message::Update(
-                Instant::now()
-            )
+            Message::Update
         })
     }
 }
