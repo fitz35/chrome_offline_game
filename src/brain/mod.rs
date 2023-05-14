@@ -70,6 +70,16 @@ impl Brain {
         false
     }
 
+    /// get the energie of the brain
+    pub fn get_energie(&self) -> f64 {
+        let mut energie = 0.0;
+        for neurone_web in &self.neurone_web {
+            energie += neurone_web.get_energy();
+        }
+
+        energie
+    }
+
     /// mutate a vect of brain into a number of brain
     /// genere the next generation (mutate all the best brains, begin randomly)
     /// keep all the best brains and doesn't discard them
@@ -206,15 +216,32 @@ pub fn brain_train_pipeline(folder_path_input : Option<String>){
         }
 
         // get the best brains
-        let mut best_brains : Vec<&(Brain, u64)> = vec![&scores[0]];
+        // sort the scores
+        let mut best_brains_score : Vec<&(Brain, u64)> = vec![&scores[0]];
         for score in &scores {
-            if score.1 > best_brains.get(0).unwrap().1 {
-                best_brains = vec![score];
-            }else if score.1 == best_brains.get(0).unwrap().1 {
-                best_brains.push(score);
+            if score.1 > best_brains_score.get(0).unwrap().1 {
+                best_brains_score = vec![score];
+            }else if score.1 == best_brains_score.get(0).unwrap().1 {
+                best_brains_score.push(score);
             }
                 
         }
+
+        // sort on the energie if the score is max
+        let mut best_brains: Vec<&(Brain, u64)>;
+        if best_brains_score[0].1 == (*PARAMS).limit_score {
+            best_brains = vec![best_brains_score[0]];
+            for score in &best_brains_score {
+                if score.0.get_energie() < best_brains.get(0).unwrap().0.get_energie() {
+                    best_brains = vec![score];
+                }else if score.0.get_energie() == best_brains.get(0).unwrap().0.get_energie() {
+                    best_brains.push(score);
+                }
+            }
+        }else{
+            best_brains = best_brains_score;
+        }
+
 
         // save the progression (brain and random)
         if i % (PARAMS).interval_to_save_result == 0 || i == i_begin + (*PARAMS).training_nb_generation - 1{
@@ -230,7 +257,7 @@ pub fn brain_train_pipeline(folder_path_input : Option<String>){
         }
         
 
-        println!("(it : {}) best score : {}", i, best_brains.get(0).unwrap().1);
+        println!("(it : {}) best score : {}, best energy : {}", i, best_brains.get(0).unwrap().1, best_brains.get(0).unwrap().0.get_energie());
 
         
         let mut next_generation = Brain::mutate_all(&best_brains.iter().map(|&(brain, _)| brain.clone()).collect(), &mut rng);

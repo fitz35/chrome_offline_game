@@ -109,7 +109,16 @@ impl Neurone {
         }
     }
 
-    // --------------------- random helper ---------------------
+    /// get the energy of the neurone
+    pub fn get_energy(&self) -> f64 {
+        // calcul the euclidian distance between the neurone and the dinausor
+        let dinausor_x = (*PARAMS).dinausor_x + (*PARAMS).dinausor_width as f64 / 2.0;
+        let dinausor_y = (*PARAMS).dinausor_height as f64 / 2.0;
+        let neurone_x = self.x + (*PARAMS).neurone_width as f64 / 2.0;
+        let neurone_y = self.y + (*PARAMS).neurone_height as f64 / 2.0;
+        let distance = ((dinausor_x - neurone_x).powi(2) + (dinausor_y - neurone_y).powi(2)).sqrt();
+        distance * (*PARAMS).neuron_cost_mult as f64
+    }
 
 }
 
@@ -188,6 +197,15 @@ impl NeuroneWeb {
         }
 
         jump
+    }
+
+    /// get the energy of the neurone web
+    pub fn get_energy(&self) -> f64 {
+        let mut energy = 0.0;
+        for neurone in &self.neurones {
+            energy += neurone.get_energy();
+        }
+        energy * (*PARAMS).neuron_web_cost_mult as f64 + (*PARAMS).neuron_web_cost_flat as f64
     }
 
 

@@ -115,7 +115,7 @@ pub struct Dinosaur {
 impl Dinosaur {
     pub fn new_dinosaur(last_time_update : Instant) -> Self {
         Self {
-            x : 50.0,
+            x : (*PARAMS).dinausor_x,
             y : 0.0,
             width : (*PARAMS).dinausor_width,
             height : (*PARAMS).dinausor_height,

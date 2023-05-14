@@ -29,6 +29,7 @@ pub struct GameParameters {
     // Entity
     pub dinausor_width: u16,
     pub dinausor_height: u16,
+    pub dinausor_x: f64,
     pub cactus_width: u16,
     pub cactus_height: u16,
     pub rock_width: u16,
@@ -63,6 +64,10 @@ pub struct GameParameters {
     pub max_nb_brain_to_save: i64,
     /// the interval to save the result (in number of generation)
     pub interval_to_save_result: u64,
+    // energie cost
+    pub neuron_cost_mult: u64,
+    pub neuron_web_cost_mult: u64,
+    pub neuron_web_cost_flat: u64,
 }
 
 
@@ -95,6 +100,7 @@ impl GameParameters {
             // Entity
             dinausor_width: 40,
             dinausor_height: 100,
+            dinausor_x: 50.0,
             cactus_width: 40,
             cactus_height: 80,
             rock_width: 40,
@@ -126,6 +132,10 @@ impl GameParameters {
             result_folder_path: "./ressources/results/".to_string(),
             max_nb_brain_to_save: 100,
             interval_to_save_result: 1,
+            // energie cost
+            neuron_cost_mult: 1,
+            neuron_web_cost_mult: 10,
+            neuron_web_cost_flat : 1000,
             
         }
     }
