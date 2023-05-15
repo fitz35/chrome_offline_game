@@ -78,6 +78,24 @@ impl Neurone {
 
         self.x = get_random_float(min_x, max_x, rng);
         self.y = get_random_float(min_y, max_y, rng);
+
+        // mutate the activation condition if rng say so
+        if rng.gen_bool((*PARAMS).neurone_change_action_mutation_rate) {
+            self.activation_condition = 
+                match rng.gen_range(0..2) {
+                    0 => NeuroneActivationCondition::Air,
+                    _ => NeuroneActivationCondition::Obstacle,
+                };
+        }
+
+        // mutate the activation if rng say so
+        if rng.gen_bool((*PARAMS).neurone_change_action_mutation_rate) {
+            self.activation = 
+                match rng.gen_range(0..2) {
+                    0 => NeuroneActivation::Activate,
+                    _ => NeuroneActivation::PreventActivate,
+                };
+        }
     }
 
     /// get the activation of the neurone if its condition is met
@@ -208,6 +226,16 @@ impl NeuroneWeb {
         // add new neurone if rng say so
         if rng.gen_bool((*PARAMS).neurone_web_add_mutation_rate) {
             self.neurones.push(Neurone::new_random(rng));
+        }
+
+        // mutate the action if rng say so
+        if rng.gen_bool((*PARAMS).neurone_web_change_action_mutation_rate) {
+            self.action = 
+                match rng.gen_range(0..3) {
+                    0 => NeuroneWebAction::Jump,
+                    1 => NeuroneWebAction::Unbend,
+                    _ => NeuroneWebAction::Bend,
+                };
         }
     }
 

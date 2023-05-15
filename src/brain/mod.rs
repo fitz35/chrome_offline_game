@@ -123,18 +123,20 @@ fn brain_run(brain : Brain) -> u64 {
 fn generate_next_generation(ancestor : &Vec<Brain>, rng : &mut Pcg64) -> Vec<Brain> {
     let mut next_generation = Brain::mutate_all(&ancestor.iter().map(|brain| brain.clone()).collect(), rng);
     // add the old best brains randomly
-    if ancestor.len() <= (*PARAMS).max_nb_brain_to_save as usize ||
-        (*PARAMS).max_nb_brain_to_save < 0 {
+    if (*PARAMS).max_nb_brain_to_save < 0 || ancestor.len() <= (*PARAMS).max_nb_brain_to_save as usize{
         for best_brain in ancestor {
             next_generation.push(best_brain.clone());
         }
     }else{
-        for _ in 0..(*PARAMS).max_nb_brain_to_save {
+        // TODO : upgrade this to not copy all the brain
+        let mut old_brains = ancestor.clone();
+        for _ in 0..(*PARAMS).max_nb_brain_to_save as usize {
             // get a random index
-            let i_brain = rng.gen_range(0..ancestor.len());
+            let i_brain = rng.gen_range(0..old_brains.len());
 
-            let brain = ancestor[i_brain].clone();
+            let brain = old_brains.remove(i_brain);
             next_generation.push(brain);
+            
         }
     }
     // update the next generation

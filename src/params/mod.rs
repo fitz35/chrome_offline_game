@@ -51,16 +51,23 @@ pub struct GameParameters {
 
     // ------------------ Neurone -------------------
     pub brain_seed: String,
+
     pub neurone_width: u16,
     pub neurone_height: u16,
+
     pub neurone_web_creation_nb_neurones_min: u16,
     pub neurone_web_creation_nb_neurones_max: u16,
     pub brain_creation_nb_neurone_web_min: u16,
     pub brain_creation_nb_neurone_web_max: u16,
+
     pub neurone_web_add_mutation_rate: f64,
     pub neurone_web_remove_mutation_rate: f64,
+    pub neurone_web_change_action_mutation_rate : f64,
+
     pub neurone_add_mutation_rate: f64,
     pub neurone_remove_mutation_rate: f64,
+    pub neurone_change_action_mutation_rate : f64,
+
     pub neurone_x_mutation_range: f64,
     pub neurone_y_mutation_range: f64,
 
@@ -128,20 +135,26 @@ impl GameParameters {
             brain_seed: "Intellect".to_string(),
             neurone_width: 20,
             neurone_height: 20,
+
             neurone_web_creation_nb_neurones_min: 3,
             neurone_web_creation_nb_neurones_max: 6,
-            brain_creation_nb_neurone_web_min: 1,
-            brain_creation_nb_neurone_web_max: 3,
-            neurone_web_add_mutation_rate: 0.2,
-            neurone_web_remove_mutation_rate: 0.2,
-            neurone_add_mutation_rate: 0.3,
-            neurone_remove_mutation_rate: 0.3,
+            brain_creation_nb_neurone_web_min: 2,
+            brain_creation_nb_neurone_web_max: 4,
+
+            neurone_web_add_mutation_rate: 0.1,
+            neurone_web_remove_mutation_rate: 0.1,
+            neurone_web_change_action_mutation_rate: 0.4,
+
+            neurone_add_mutation_rate: 0.1,
+            neurone_remove_mutation_rate: 0.1,
+            neurone_change_action_mutation_rate: 0.4,
+
             neurone_x_mutation_range: 500.0,
             neurone_y_mutation_range: 500.0,
 
             // training
-            training_nb_generation: 1500,
-            training_nb_brain: 3000,
+            training_nb_generation: 4500,
+            training_nb_brain: 6000,
             limit_score: 400,
             result_folder_path: "./ressources/results/".to_string(),
             max_nb_brain_to_save: 100,
