@@ -27,8 +27,8 @@ pub enum NeuroneActivationCondition {
 /// if the activation, force to not jump or jump
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum NeuroneActivation {
-    Jump,
-    NoJump,
+    Activate,
+    PreventActivate,
 }
 
 impl Neurone {
@@ -55,8 +55,8 @@ impl Neurone {
             };
         let activation =
             match rng.gen_range(0..2) {
-                0 => NeuroneActivation::Jump,
-                _ => NeuroneActivation::NoJump,
+                0 => NeuroneActivation::Activate,
+                _ => NeuroneActivation::PreventActivate,
             };
         Self {
             x,
@@ -129,17 +129,26 @@ impl Neurone {
             };
 
         match self.activation {
-            NeuroneActivation::Jump => Color { r : 0.0, g : 1.0, b : 0.0, a : alpha},
-            NeuroneActivation::NoJump => Color { r : 1.0, g : 0.0, b : 0.0, a : alpha}
+            NeuroneActivation::Activate => Color { r : 0.0, g : 1.0, b : 0.0, a : alpha},
+            NeuroneActivation::PreventActivate => Color { r : 1.0, g : 0.0, b : 0.0, a : alpha}
         }
     }
 
+}
+
+/// action of the neurone web
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash)]
+pub enum NeuroneWebAction {
+    Jump,
+    Bend,
+    Unbend
 }
 
 /// a web of neurone
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct NeuroneWeb {
     pub neurones : Vec<Neurone>,
+    pub action : NeuroneWebAction,
 }
 
 impl NeuroneWeb {
@@ -162,13 +171,22 @@ impl NeuroneWeb {
                 };
             let activation =
                 match rng.gen_range(0..2) {
-                    0 => NeuroneActivation::Jump,
-                    _ => NeuroneActivation::NoJump,
+                    0 => NeuroneActivation::Activate,
+                    _ => NeuroneActivation::PreventActivate,
                 };
             neurones.push(Neurone::new(x, y, activation_condition, activation));
         }
+        // get the action of the neurone web
+        let action = 
+            match rng.gen_range(0..3) {
+                0 => NeuroneWebAction::Jump,
+                1 => NeuroneWebAction::Unbend,
+                _ => NeuroneWebAction::Bend,
+            };
+
         Self {
             neurones,
+            action,
         }
     }
 
@@ -187,30 +205,30 @@ impl NeuroneWeb {
         // remove the marqued random web
         remove_indexes(&mut self.neurones, &neurones_to_remove);
 
-        // add new neurone web if rng say so
+        // add new neurone if rng say so
         if rng.gen_bool((*PARAMS).neurone_web_add_mutation_rate) {
             self.neurones.push(Neurone::new_random(rng));
         }
     }
 
 
-    pub fn is_jump(&self, obstacles : &Vec<Obstacle>) -> bool {
-        let mut jump = false;
+    pub fn is_activated(&self, obstacles : &Vec<Obstacle>) -> bool {
+        let mut active = false;
         for neurone in &self.neurones {
             // get the activation of the neurone
             let activation = neurone.get_activation(obstacles);
             // if the neurone is activated, we check if it is a force to not jump
             if activation.is_some() {
-                if activation.unwrap() == NeuroneActivation::NoJump { // force the not jump
+                if activation.unwrap() == NeuroneActivation::PreventActivate { // force the not jump
                     return false;
                 }else{
                     // if we have a jump and no force to not jump, we can jump
-                    jump = true;
+                    active = true;
                 }
             }
         }
 
-        jump
+        active
     }
 
     /// get the energy of the neurone web

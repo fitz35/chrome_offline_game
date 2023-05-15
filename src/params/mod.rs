@@ -41,8 +41,9 @@ pub struct GameParameters {
     // pterodactyle
     pub pterodactyle_width: u16,
     pub pterodactyle_height: u16,
-    pub pterodactyle_flying_height: u16,
-    pub pterodactyle_offset: u16,
+    pub pterodactyle_flying_height_with_rock: u16,
+    pub pterodactyle_offset_with_rock: u16,
+    pub pterodactyle_flying_height_without_rock: u16,
     // hole
     pub hole_width: u16,
     /// the height of the hole must be taken in the limit of the neuron y (the neuron must not detect him !)
@@ -94,7 +95,7 @@ impl GameParameters {
             // ...
 
             // Game Equilibrage
-            land_seed: "42".to_string(),
+            land_seed: "1".to_string(),
             gravity: 2000,
 
             // Game Timing
@@ -115,10 +116,11 @@ impl GameParameters {
             cactus_height: 100,
             rock_width: 40,
             rock_height: 40,
-            pterodactyle_width: 80,
+            pterodactyle_width: 85,
             pterodactyle_height: 40,
-            pterodactyle_flying_height: 110,
-            pterodactyle_offset: 140,
+            pterodactyle_flying_height_with_rock: 110,
+            pterodactyle_offset_with_rock: 140,
+            pterodactyle_flying_height_without_rock: 95,
             hole_width: 60,
             hole_height: 2,
 
@@ -130,25 +132,25 @@ impl GameParameters {
             neurone_web_creation_nb_neurones_max: 6,
             brain_creation_nb_neurone_web_min: 1,
             brain_creation_nb_neurone_web_max: 3,
-            neurone_web_add_mutation_rate: 0.1,
-            neurone_web_remove_mutation_rate: 0.1,
-            neurone_add_mutation_rate: 0.2,
-            neurone_remove_mutation_rate: 0.2,
+            neurone_web_add_mutation_rate: 0.2,
+            neurone_web_remove_mutation_rate: 0.2,
+            neurone_add_mutation_rate: 0.3,
+            neurone_remove_mutation_rate: 0.3,
             neurone_x_mutation_range: 500.0,
             neurone_y_mutation_range: 500.0,
 
             // training
             training_nb_generation: 1500,
-            training_nb_brain: 6000,
+            training_nb_brain: 3000,
             limit_score: 400,
             result_folder_path: "./ressources/results/".to_string(),
             max_nb_brain_to_save: 100,
             interval_to_save_result: 100,
             // energie cost
             neuron_cost_mult: 5,
-            neuron_cost_flat : 10000,
+            neuron_cost_flat : 100000,
             neuron_web_cost_mult: 15,
-            neuron_web_cost_flat : 100000,
+            neuron_web_cost_flat : 1000000,
             
         }
     }

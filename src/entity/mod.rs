@@ -9,8 +9,9 @@ use crate::params::{PARAMS};
 pub enum ObstacleEntityType {
     Cactus = 0,
     Rock = 1,
-    Pterodactyle = 2,
+    PterodactyleWithRock = 2,
     Hole = 3,
+    Pterodactyle = 4,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -19,6 +20,7 @@ pub enum ObstacleGenerateType {
     Rock = 1,
     RockAndPterodactyle = 2,
     RockAndHole = 3,
+    Pterodactyle = 4,
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -61,10 +63,22 @@ impl Obstacle {
         }
     }
 
+    pub fn new_pterodactyle_with_rock(x: f64, velocity : f64, last_time_update : Instant) -> Self {
+        Self {
+            x : x - (*PARAMS).pterodactyle_offset_with_rock as f64,
+            y : (*PARAMS).pterodactyle_flying_height_with_rock as f64,
+            width : (*PARAMS).pterodactyle_width,
+            height : (*PARAMS).pterodactyle_height,
+            velocity : velocity,
+            type_: ObstacleEntityType::PterodactyleWithRock,
+            last_time_update,
+        }
+    }
+
     pub fn new_pterodactyle(x: f64, velocity : f64, last_time_update : Instant) -> Self {
         Self {
-            x : x - (*PARAMS).pterodactyle_offset as f64,
-            y : (*PARAMS).pterodactyle_flying_height as f64,
+            x,
+            y : (*PARAMS).pterodactyle_flying_height_without_rock as f64,
             width : (*PARAMS).pterodactyle_width,
             height : (*PARAMS).pterodactyle_height,
             velocity : velocity,
@@ -90,8 +104,9 @@ impl Obstacle {
         match type_ {
             ObstacleEntityType::Cactus => Obstacle::new_cactus(x, velocity, last_time_update),
             ObstacleEntityType::Rock => Obstacle::new_rock(x, velocity, last_time_update),
-            ObstacleEntityType::Pterodactyle => Obstacle::new_pterodactyle(x, velocity, last_time_update),
+            ObstacleEntityType::PterodactyleWithRock => Obstacle::new_pterodactyle_with_rock(x, velocity, last_time_update),
             ObstacleEntityType::Hole => Obstacle::new_hole(x, velocity, last_time_update),
+            ObstacleEntityType::Pterodactyle => Obstacle::new_pterodactyle(x, velocity, last_time_update),
         }
     }
 
@@ -124,6 +139,8 @@ pub struct Dinosaur {
     pub height: u16,
     pub velocity: f64,// vertical px/s
     pub last_time_update: Instant,// in seconds
+
+    pub is_bending : bool,
 }
 
 
@@ -136,12 +153,15 @@ impl Dinosaur {
             height : (*PARAMS).dinausor_height,
             velocity : 0.0,
             last_time_update,
+            is_bending : false,
         }
     }
 
-    /// jump
+    /// jump 
+    /// return true if the jump is done
+    /// NOTE : Cant jump if it is bending
     fn intern_hump(&mut self, velocity : f64) -> bool {
-        if self.y <= 0.0 && self.velocity <= 0.0{
+        if self.y <= 0.0 && self.velocity <= 0.0 && !self.is_bending{
             self.velocity = velocity;
             return true;
         }
@@ -149,9 +169,41 @@ impl Dinosaur {
     }
 
     /// rapid jump
+    /// return true if the jump is done
     pub fn jump(&mut self) -> bool {
         self.intern_hump((*PARAMS).dinausor_jump_velocity as f64)
     }
+
+    /// bend
+    pub fn bend(&mut self) -> bool {
+        if self.is_bending {
+            return false;
+        }else{
+            self.is_bending = true;
+            // switch height and width
+            self.switch_width_height();
+            return true;
+        }
+    }
+
+    /// unbend
+    pub fn unbend(&mut self) -> bool {
+        if !self.is_bending {
+            return false;
+        }else{
+            self.is_bending = false;
+            // switch height and width
+            self.switch_width_height();
+            return true;
+        }
+    }
+
+    fn switch_width_height(&mut self) {
+        let buf = self.width;
+        self.width = self.height;
+        self.height = buf;
+    }
+
 
     /// Update the position and apply the gravity
     pub fn update(&mut self, tick: Instant) {

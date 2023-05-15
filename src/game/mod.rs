@@ -1,4 +1,5 @@
 
+use std::collections::HashSet;
 use std::time::{Instant, Duration};
 
 use rand::{Rng, SeedableRng};
@@ -11,7 +12,7 @@ use rand_pcg::Pcg64;
 
 use crate::brain::Brain;
 use crate::entity::{Dinosaur, Obstacle, ObstacleGenerateType, ObstacleEntityType};
-use crate::neurone::Neurone;
+use crate::neurone::{Neurone, NeuroneWebAction};
 use crate::params::{PARAMS};
 use crate::utils::{str_to_u8_array, get_scale_value, check_collision, remove_indexes};
 
@@ -89,19 +90,40 @@ impl Game {
         }
 
         // if we have a brain, we use it
-        match &self.brain {
-            Some(brain) => {
-                if brain.is_jump(&self.obstacles) {
-                    self.jump();
-                }
-            },
-            None => {}
-        }
+        self.do_actions(self.get_brain_actions());
         self.last_time_update = now;
     }
 
-    pub fn jump(&mut self) {
-        self.dinosaur.jump();
+    // -----------------    actions    -----------------
+    /// do one action
+    fn do_action(&mut self, action : &NeuroneWebAction) {
+        match action {
+            NeuroneWebAction::Jump => {
+                self.dinosaur.jump();
+            },
+            NeuroneWebAction::Bend => {
+                self.dinosaur.bend();
+            },
+            NeuroneWebAction::Unbend => {
+                self.dinosaur.unbend();
+            },
+        }
+    }
+
+    /// doall the actions in the set
+    pub fn do_actions(&mut self, actions : HashSet<NeuroneWebAction>) {
+        for action in actions {
+            self.do_action(&action);
+        }
+    }
+
+    /// do all the actions of the brain (if there is one)
+    fn get_brain_actions(&self) -> HashSet<NeuroneWebAction> {
+        if self.brain.is_none() {
+            HashSet::new()
+        }else{
+            self.brain.as_ref().unwrap().get_activations(&self.obstacles)
+        }
     }
 
     // ---------------- helper and game generation ---------
@@ -130,13 +152,14 @@ impl Game {
             self.next_obstacle_time, 
             self.score
         );
-        let x = (*PARAMS).game_width as f64 + (*PARAMS).pterodactyle_offset as f64;
+        let x = (*PARAMS).game_width as f64 + (*PARAMS).pterodactyle_offset_with_rock as f64;
         
-        let random_obstacle: ObstacleGenerateType = match self.rng.gen_range(0..4) {
+        let random_obstacle: ObstacleGenerateType = match self.rng.gen_range(0..5) {
             0 => ObstacleGenerateType::Cactus,
             1 => ObstacleGenerateType::Rock,
             2 => ObstacleGenerateType::RockAndPterodactyle,
             3 => ObstacleGenerateType::RockAndHole,
+            4 => ObstacleGenerateType::Pterodactyle,
             _ => panic!("impossible"),
         };
 
@@ -168,7 +191,7 @@ impl Game {
                     x, 
                     (*PARAMS).obstacle_speed, 
                     new_next_obstacle_time,
-                    ObstacleEntityType::Pterodactyle
+                    ObstacleEntityType::PterodactyleWithRock
                 ));
             },
             ObstacleGenerateType::RockAndHole => {
@@ -183,6 +206,14 @@ impl Game {
                     (*PARAMS).obstacle_speed, 
                     new_next_obstacle_time,
                     ObstacleEntityType::Hole
+                ));
+            },
+            ObstacleGenerateType::Pterodactyle => {
+                self.obstacles.push(Obstacle::new(
+                    x, 
+                    (*PARAMS).obstacle_speed, 
+                    new_next_obstacle_time,
+                    ObstacleEntityType::Pterodactyle
                 ));
             },
         }
@@ -210,7 +241,7 @@ impl Game {
 // ----------------- front -----------------
 #[derive(Debug, Clone)]
 pub enum Message {
-    Jump,
+    Do(NeuroneWebAction),
     Restart(Option<Brain>),
     Update,
 }
@@ -254,9 +285,9 @@ impl Application for Game {
     // handle the message
     fn update(&mut self, message: Self::Message) -> iced::Command<Self::Message> {
         match message {
-            Message::Jump => {
+            Message::Do(action) => {
                 if !self.has_lost {
-                    self.jump();
+                    self.do_action(&action);
                 }
                 Command::none()
             },
@@ -314,8 +345,16 @@ impl canvas::Program<Message> for Game {
                             // restart the game
                             return (canvas::event::Status::Captured, Some(Message::Restart(self.brain.clone())))
                         }
+                        // unbend if bending
+                        if self.dinosaur.is_bending {
+                            return (canvas::event::Status::Captured, Some(Message::Do(NeuroneWebAction::Unbend)))
+                        }
+
                         // jump
-                        (canvas::event::Status::Captured, Some(Message::Jump))
+                        (canvas::event::Status::Captured, Some(Message::Do(NeuroneWebAction::Jump)))
+                    },
+                    keyboard::Event::CharacterReceived('s') => {
+                        (canvas::event::Status::Captured, Some(Message::Do(NeuroneWebAction::Bend)))
                     },
                     _ => (canvas::event::Status::Ignored, None)
                 }
@@ -356,6 +395,7 @@ impl canvas::Program<Message> for Game {
                 match &self.brain {
                     Some(brain) => {
                         for neurone_web in &brain.neurone_web {
+                            let action = &neurone_web.action;
                             let mut last_neuron : Option<&Neurone> = None;
                             for neurone in &neurone_web.neurones {
                                 frame.fill_rectangle(
@@ -379,6 +419,11 @@ impl canvas::Program<Message> for Game {
                                             last_neuron_point, 
                                             neurone_point
                                         );
+                                        let color = match action {
+                                            NeuroneWebAction::Jump => Color::from_rgb8(0, 255, 0),
+                                            NeuroneWebAction::Bend => Color::from_rgb8(255, 0, 0),
+                                            NeuroneWebAction::Unbend => Color::from_rgb8(0, 0, 255),
+                                        };
                                         frame.stroke(
                                             &path,
                                             Stroke {
@@ -386,6 +431,8 @@ impl canvas::Program<Message> for Game {
                                                 line_cap: LineCap::Round,
                                                 line_join: LineJoin::Round,
                                                 ..Stroke::default()
+                                                    .with_color(color)
+                                                    .clone()
                                             }
                                             
                                         );

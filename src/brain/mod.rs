@@ -1,3 +1,4 @@
+use std::collections::HashSet;
 use std::path::{Path};
 use std::time::{Instant, Duration};
 use std::thread;
@@ -9,6 +10,7 @@ use rand_pcg::Pcg64;
 use serde::{Deserialize, Serialize};
 use serde_json;
 
+use crate::neurone::NeuroneWebAction;
 use crate::params::GameParameters;
 use crate::utils::{remove_indexes, get_max_i};
 use crate::{neurone::NeuroneWeb, entity::Obstacle, params::{PARAMS}, utils::str_to_u8_array, game::Game};
@@ -57,17 +59,16 @@ impl Brain {
         }
     }
 
-
-
-    /// ask the brain if the dinausor should jump
-    pub fn is_jump(&self, obstacles : &Vec<Obstacle>) -> bool {
+    /// get the actions of the brain
+    pub fn get_activations(&self, obstacles : &Vec<Obstacle>) -> HashSet<NeuroneWebAction> {
+        let mut activations = HashSet::new();
         for neurone_web in &self.neurone_web {
-            if neurone_web.is_jump(obstacles) {
-                return true;
+            if neurone_web.is_activated(obstacles) {
+                activations.insert(neurone_web.action.clone());
             }
         }
 
-        false
+        activations
     }
 
     /// get the energie of the brain

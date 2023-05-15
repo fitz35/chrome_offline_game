@@ -1,0 +1,3644 @@
+{
+    "brains": [
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "neurone_web": [
+                {
+                    "neurones": [
+                        {
+                            "x": 736.4686432439541,
+                            "y": 409.10910249277595,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Air",
+                            "activation": "NoJump"
+                        }
+                    ]
+                },
+                {
+                    "neurones": [
+                        {
+                            "x": 148.99834635102647,
+                            "y": 26.98487482451437,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "Jump"
+                        },
+                        {
+                            "x": 58.85038103277629,
+                            "y": 93.07787412791691,
+                            "width": 20,
+                            "height": 20,
+                            "activation_condition": "Obstacle",
+                            "activation": "NoJump"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "rng": {
+        "state": 84204791227131093449787290543310894986,
+        "increment": 1
+    }
+}
