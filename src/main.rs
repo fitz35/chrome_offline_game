@@ -3,7 +3,8 @@ use std::{fs::File, io::BufReader};
 
 use brain::{brain_train_pipeline, IntermediateResult};
 use game::{Game, CustomFlags};
-use iced::{Settings, Application};
+use iced::{Settings, Application, window};
+use params::PARAMS;
 use program_args::ProgramArgs;
 use structopt::StructOpt;
 
@@ -26,6 +27,11 @@ fn main() -> iced::Result {
         // run the game
         Game::run(Settings {
             antialiasing: true,
+            window: window::Settings {
+                position: window::Position::Centered,
+                size: ((*PARAMS).game_width as u32, (*PARAMS).game_height as u32),
+                ..window::Settings::default()
+            },
             ..Settings::default()
         })
     }else if args.brain_path.is_some() {
@@ -41,6 +47,11 @@ fn main() -> iced::Result {
         Game::run(Settings {
             antialiasing: true,
             flags : CustomFlags::Brain(inter.brains[0].clone()),
+            window: window::Settings {
+                position: window::Position::Centered,
+                size: ((*PARAMS).game_width as u32, (*PARAMS).game_height as u32),
+                ..window::Settings::default()
+            },
             ..Settings::default()
         })
     }else if args.folder_path.is_some() {

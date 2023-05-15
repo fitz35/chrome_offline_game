@@ -102,7 +102,7 @@ impl GameParameters {
             // ...
 
             // Game Equilibrage
-            land_seed: "1".to_string(),
+            land_seed: "42".to_string(),
             gravity: 2000,
 
             // Game Timing
