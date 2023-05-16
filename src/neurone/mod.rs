@@ -178,7 +178,7 @@ impl NeuroneWeb {
         let nb_neurones = rng.gen_range((*PARAMS).neurone_web_creation_nb_neurones_min..(*PARAMS).neurone_web_creation_nb_neurones_max);
         // gain of performance by declaring the distribution outside of the loop
         let x_dist = Uniform::from(0.0..((*PARAMS).game_width - (*PARAMS).neurone_width) as f64);
-        let y_dist = Uniform::from(0.0..((*PARAMS).game_height - (*PARAMS).neurone_height) as f64);
+        let y_dist = Uniform::from(((*PARAMS).hole_height as f64 + 5.0)..((*PARAMS).game_height - (*PARAMS).neurone_height) as f64);
         for _ in 0..nb_neurones {
             let x = rng.sample(x_dist);
             let y = rng.sample(y_dist);

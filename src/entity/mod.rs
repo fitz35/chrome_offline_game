@@ -65,7 +65,7 @@ pub struct Obstacle {
 
 impl Obstacle {
     /// Create a new cactus obstacle
-    pub fn new_cactus(x: f64, velocity : f64, last_time_update : Instant) -> Self {
+    fn new_cactus(x: f64, velocity : f64, last_time_update : Instant) -> Self {
         Self {
             x,
             y : 0.0,
@@ -78,7 +78,7 @@ impl Obstacle {
     }
 
     /// Create a new rock obstacle
-    pub fn new_rock(x: f64, velocity : f64, last_time_update : Instant) -> Self {
+    fn new_rock(x: f64, velocity : f64, last_time_update : Instant) -> Self {
         Self {
             x,
             y : 0.0,
@@ -90,9 +90,9 @@ impl Obstacle {
         }
     }
 
-    pub fn new_pterodactyle_with_rock(x: f64, velocity : f64, last_time_update : Instant) -> Self {
+    fn new_pterodactyle_with_rock(x: f64, velocity : f64, last_time_update : Instant) -> Self {
         Self {
-            x : x - (*PARAMS).pterodactyle_offset_with_rock as f64,
+            x : x - (*PARAMS).pterodactyle_offset_with_rock as f64 - (*PARAMS).pterodactyle_width as f64,
             y : (*PARAMS).pterodactyle_flying_height_with_rock as f64,
             width : (*PARAMS).pterodactyle_width,
             height : (*PARAMS).pterodactyle_height,
@@ -102,7 +102,7 @@ impl Obstacle {
         }
     }
 
-    pub fn new_pterodactyle(x: f64, velocity : f64, last_time_update : Instant) -> Self {
+    fn new_pterodactyle(x: f64, velocity : f64, last_time_update : Instant) -> Self {
         Self {
             x,
             y : (*PARAMS).pterodactyle_flying_height_without_rock as f64,
@@ -114,7 +114,7 @@ impl Obstacle {
         }
     }
 
-    pub fn new_hole(x: f64, velocity : f64, last_time_update : Instant) -> Self {
+    fn new_hole(x: f64, velocity : f64, last_time_update : Instant) -> Self {
         Self {
             x : x - (*PARAMS).hole_width as f64,
             y : 0.0,
@@ -128,6 +128,7 @@ impl Obstacle {
 
     /// wrapper to create an obstacle
     pub fn new(x: f64, velocity : f64, last_time_update : Instant, type_ : ObstacleEntityType) -> Self {
+        let x = x + 400.0;
         match type_ {
             ObstacleEntityType::Cactus => Obstacle::new_cactus(x, velocity, last_time_update),
             ObstacleEntityType::Rock => Obstacle::new_rock(x, velocity, last_time_update),

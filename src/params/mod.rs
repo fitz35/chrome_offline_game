@@ -4,7 +4,7 @@ use lazy_static::lazy_static;
 use crate::neurone::NeuroneWebAction;
 
 
-pub const TRAINING_NB_GENERATION: u64 = 150000;
+pub const TRAINING_NB_GENERATION: u64 = 3_000_000;
 /// the score limit to stop the training (if the brain reach this score, we actually consider it as a good brain)
 pub const LIMIT_SCORE: u64 = 400;
 pub const RESULT_FOLDER_PATH: &str = "./ressources/results/";
@@ -110,9 +110,9 @@ impl GameParameters {
             // ...
 
             // Game Equilibrage
-            land_seed: "42".to_string(),
+            land_seed: "B".to_string(),
             gravity: 2000,
-            commands: vec![NeuroneWebAction::Jump],
+            commands: vec![NeuroneWebAction::Jump/*, NeuroneWebAction::Bend, NeuroneWebAction::Unbend*/],
 
             // Game Timing
             dinausor_jump_velocity: 800.0,
@@ -132,12 +132,12 @@ impl GameParameters {
             cactus_height: 100,
             rock_width: 40,
             rock_height: 40,
-            pterodactyle_width: 85,
+            pterodactyle_width: 120,
             pterodactyle_height: 40,
             pterodactyle_flying_height_with_rock: 110,
-            pterodactyle_offset_with_rock: 140,
+            pterodactyle_offset_with_rock: 65,
             pterodactyle_flying_height_without_rock: 95,
-            hole_width: 60,
+            hole_width: 80,
             hole_height: 2,
 
             // Neurone
@@ -145,26 +145,26 @@ impl GameParameters {
             neurone_width: 20,
             neurone_height: 20,
 
-            neurone_web_creation_nb_neurones_min: 3,
+            neurone_web_creation_nb_neurones_min: 2,
             neurone_web_creation_nb_neurones_max: 6,
             brain_creation_nb_neurone_web_min: 1,
             brain_creation_nb_neurone_web_max: 3,
 
-            neurone_web_add_mutation_rate: 0.1,
-            neurone_web_remove_mutation_rate: 0.1,
-            neurone_web_change_action_mutation_rate: 0.0,
+            neurone_web_add_mutation_rate: 0.4,
+            neurone_web_remove_mutation_rate: 0.4,
+            neurone_web_change_action_mutation_rate: 0.001,
 
-            neurone_add_mutation_rate: 0.2,
-            neurone_remove_mutation_rate: 0.2,
-            neurone_change_action_mutation_rate: 0.0,
+            neurone_add_mutation_rate: 0.4,
+            neurone_remove_mutation_rate: 0.4,
+            neurone_change_action_mutation_rate: 0.001,
 
-            neurone_x_mutation_range: 500.0,
-            neurone_y_mutation_range: 500.0,
+            neurone_x_mutation_range: 50.0,
+            neurone_y_mutation_range: 50.0,
 
             // training
-            training_nb_brain: 6000,
-            max_nb_brain_to_save: 100,
-            interval_to_save_result: 100,
+            training_nb_brain: 1000,
+            max_nb_brain_to_save: 50,
+            interval_to_save_result: 200,
             // energie cost
             neuron_cost_mult: 5,
             neuron_cost_flat : 100000,
