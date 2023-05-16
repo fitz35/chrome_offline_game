@@ -147,23 +147,23 @@ impl GameParameters {
 
             neurone_web_creation_nb_neurones_min: 3,
             neurone_web_creation_nb_neurones_max: 6,
-            brain_creation_nb_neurone_web_min: 2,
-            brain_creation_nb_neurone_web_max: 4,
+            brain_creation_nb_neurone_web_min: 1,
+            brain_creation_nb_neurone_web_max: 3,
 
-            neurone_web_add_mutation_rate: 0.2,
-            neurone_web_remove_mutation_rate: 0.2,
-            neurone_web_change_action_mutation_rate: 0.001,
+            neurone_web_add_mutation_rate: 0.1,
+            neurone_web_remove_mutation_rate: 0.1,
+            neurone_web_change_action_mutation_rate: 0.0,
 
             neurone_add_mutation_rate: 0.2,
             neurone_remove_mutation_rate: 0.2,
-            neurone_change_action_mutation_rate: 0.001,
+            neurone_change_action_mutation_rate: 0.0,
 
-            neurone_x_mutation_range: 150.0,
-            neurone_y_mutation_range: 150.0,
+            neurone_x_mutation_range: 500.0,
+            neurone_y_mutation_range: 500.0,
 
             // training
             training_nb_brain: 6000,
-            max_nb_brain_to_save: 600,
+            max_nb_brain_to_save: 100,
             interval_to_save_result: 100,
             // energie cost
             neuron_cost_mult: 5,

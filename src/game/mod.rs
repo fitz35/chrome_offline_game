@@ -33,7 +33,7 @@ pub struct Game {
     pub game_start_time: Instant,
 
     // ------ rng ------
-    pub rng : Pcg64,
+    pub land_rng : Pcg64,
 
     // ------ auto play ------
     pub brain : Option<Brain>,
@@ -52,7 +52,7 @@ impl Game {
             last_time_update : now,
             next_obstacle_time : now,
             game_start_time : now,
-            rng : Pcg64::from_seed(str_to_u8_array(seed)),
+            land_rng : Pcg64::from_seed(str_to_u8_array(seed)),
             brain,
             cache,
         };
@@ -154,7 +154,7 @@ impl Game {
         );
         let x = (*PARAMS).game_width as f64 + (*PARAMS).pterodactyle_offset_with_rock as f64;
         
-        let random_obstacle_index = self.rng.gen_range(0..OBSTACLE_GENERATE_TYPES.len());
+        let random_obstacle_index = self.land_rng.gen_range(0..OBSTACLE_GENERATE_TYPES.len());
         let random_obstacle: ObstacleGenerateType = OBSTACLE_GENERATE_TYPES[random_obstacle_index].clone();
 
         match random_obstacle {
@@ -458,11 +458,11 @@ mod tests {
     fn test_random_coherence() {
         // test the random number generator and the seed "test"
         let mut game = Game::new(Instant::now(), "test", None, None);
-        let random_number0: u32 = game.rng.gen();
-        let random_number1: u32 = game.rng.gen(); 
-        let random_number2: u32 = game.rng.gen();
-        let random_number3: u32 = game.rng.gen();
-        let random_number4: u32 = game.rng.gen();
+        let random_number0: u32 = game.land_rng.gen();
+        let random_number1: u32 = game.land_rng.gen(); 
+        let random_number2: u32 = game.land_rng.gen();
+        let random_number3: u32 = game.land_rng.gen();
+        let random_number4: u32 = game.land_rng.gen();
 
         assert_eq!(random_number0, 4210505251);
         assert_eq!(random_number1, 2381057059);
