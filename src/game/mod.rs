@@ -2,7 +2,8 @@
 use std::collections::HashSet;
 use std::time::{Instant, Duration};
 
-use rand::{Rng, SeedableRng};
+use rand::seq::IteratorRandom;
+use rand::{SeedableRng};
 
 use iced::widget::canvas::{Cursor, Geometry, Cache, Path, Stroke, LineCap, LineJoin};
 use iced::widget::{canvas, Canvas};
@@ -11,7 +12,7 @@ use iced::{Application, executor, Command, Rectangle, Size, Color, Point, Subscr
 use rand_pcg::Pcg64;
 
 use crate::brain::Brain;
-use crate::entity::{Dinosaur, Obstacle, ObstacleGenerateType, ObstacleEntityType};
+use crate::entity::{Dinosaur, Obstacle, ObstacleGenerateType, ObstacleEntityType, OBSTACLE_GENERATE_TYPES};
 use crate::neurone::{Neurone, NeuroneWebAction};
 use crate::params::{PARAMS};
 use crate::utils::{str_to_u8_array, get_scale_value, check_collision, remove_indexes};
@@ -154,14 +155,7 @@ impl Game {
         );
         let x = (*PARAMS).game_width as f64 + (*PARAMS).pterodactyle_offset_with_rock as f64;
         
-        let random_obstacle: ObstacleGenerateType = match self.rng.gen_range(0..5) {
-            0 => ObstacleGenerateType::Cactus,
-            1 => ObstacleGenerateType::Rock,
-            2 => ObstacleGenerateType::RockAndPterodactyle,
-            3 => ObstacleGenerateType::RockAndHole,
-            4 => ObstacleGenerateType::Pterodactyle,
-            _ => panic!("impossible"),
-        };
+        let random_obstacle: ObstacleGenerateType = OBSTACLE_GENERATE_TYPES.clone().into_iter().choose(&mut self.rng).unwrap();
 
         match random_obstacle {
             ObstacleGenerateType::Cactus => {
@@ -456,6 +450,8 @@ impl canvas::Program<Message> for Game {
 
 #[cfg(test)]
 mod tests {
+    use rand::Rng;
+
     use super::*;
 
     #[test]

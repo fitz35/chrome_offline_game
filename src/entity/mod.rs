@@ -1,8 +1,10 @@
 
 
-use std::time::Instant;
+use std::{time::Instant, collections:: HashSet};
 
-use crate::params::{PARAMS};
+use lazy_static::{lazy_static};
+
+use crate::{params::{PARAMS}, neurone::NeuroneWebAction};
 
 /// The different type of obstacle
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -14,7 +16,7 @@ pub enum ObstacleEntityType {
     Pterodactyle = 4,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ObstacleGenerateType {
     Cactus = 0,
     Rock = 1,
@@ -22,6 +24,30 @@ pub enum ObstacleGenerateType {
     RockAndHole = 3,
     Pterodactyle = 4,
 }
+
+lazy_static! {
+    /// vget the possible obstacles that can be generated given the params
+    pub static ref OBSTACLE_GENERATE_TYPES: HashSet<ObstacleGenerateType> = {
+        let mut set = HashSet::new();
+        let commands = &(*PARAMS).commands;
+        // jump obstacle
+        if commands.contains(&NeuroneWebAction::Jump) {
+            set.insert(ObstacleGenerateType::Cactus);
+            set.insert(ObstacleGenerateType::Rock);
+            set.insert(ObstacleGenerateType::RockAndPterodactyle);
+            set.insert(ObstacleGenerateType::RockAndHole);
+        }
+        // bend obstacle
+        if commands.contains(&NeuroneWebAction::Bend) &&
+            commands.contains(&NeuroneWebAction::Unbend) {
+            set.insert(ObstacleGenerateType::Pterodactyle);
+        }
+
+
+        set
+    };
+}
+
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Obstacle {

@@ -1,6 +1,15 @@
+use std::collections::HashSet;
+
 use serde::{Serialize, Deserialize};
 use lazy_static::lazy_static;
 
+use crate::neurone::NeuroneWebAction;
+
+
+pub const TRAINING_NB_GENERATION: u64 = 150000;
+/// the score limit to stop the training (if the brain reach this score, we actually consider it as a good brain)
+pub const LIMIT_SCORE: u64 = 400;
+pub const RESULT_FOLDER_PATH: &str = "./ressources/results/";
 
 #[derive(Serialize, Deserialize, PartialEq, Clone, Debug)]
 pub struct GameParameters {
@@ -15,6 +24,8 @@ pub struct GameParameters {
     // ----------------- Game Equilibrage -----------------
     pub land_seed: String,
     pub gravity: u64,
+    /// the commands that the neurone web can do (and the obstacle generation)
+    pub commands: HashSet<NeuroneWebAction>,
 
     // ------------------- Game Timing --------------------
     pub dinausor_jump_velocity: f64,
@@ -72,11 +83,8 @@ pub struct GameParameters {
     pub neurone_y_mutation_range: f64,
 
     //  ---------------- training -----------------
-    pub training_nb_generation: u64,
     pub training_nb_brain: u64,
-    /// the score limit to stop the training (if the brain reach this score, we actually consider it as a good brain)
-    pub limit_score: u64,
-    pub result_folder_path: String,
+    
     /// the number of brain to save at the end of the training, if < 0 we save all the brain
     pub max_nb_brain_to_save: i64,
     /// the interval to save the result (in number of generation)
@@ -86,6 +94,8 @@ pub struct GameParameters {
     pub neuron_cost_flat: u64,
     pub neuron_web_cost_mult: u64,
     pub neuron_web_cost_flat: u64,
+    /// terrain generation (None : the seed is set to the param_land_seed, Some(5) : the seed is random every 5 generation)
+    pub terrain_seed_generation_interval: Option<u64>,
 }
 
 
@@ -104,6 +114,7 @@ impl GameParameters {
             // Game Equilibrage
             land_seed: "42".to_string(),
             gravity: 2000,
+            commands: [NeuroneWebAction::Jump].iter().cloned().collect(),
 
             // Game Timing
             dinausor_jump_velocity: 800.0,
@@ -141,29 +152,28 @@ impl GameParameters {
             brain_creation_nb_neurone_web_min: 2,
             brain_creation_nb_neurone_web_max: 4,
 
-            neurone_web_add_mutation_rate: 0.1,
-            neurone_web_remove_mutation_rate: 0.1,
-            neurone_web_change_action_mutation_rate: 0.4,
+            neurone_web_add_mutation_rate: 0.2,
+            neurone_web_remove_mutation_rate: 0.2,
+            neurone_web_change_action_mutation_rate: 0.001,
 
-            neurone_add_mutation_rate: 0.1,
-            neurone_remove_mutation_rate: 0.1,
-            neurone_change_action_mutation_rate: 0.4,
+            neurone_add_mutation_rate: 0.2,
+            neurone_remove_mutation_rate: 0.2,
+            neurone_change_action_mutation_rate: 0.001,
 
-            neurone_x_mutation_range: 500.0,
-            neurone_y_mutation_range: 500.0,
+            neurone_x_mutation_range: 150.0,
+            neurone_y_mutation_range: 150.0,
 
             // training
-            training_nb_generation: 4500,
             training_nb_brain: 6000,
-            limit_score: 400,
-            result_folder_path: "./ressources/results/".to_string(),
-            max_nb_brain_to_save: 100,
+            max_nb_brain_to_save: 600,
             interval_to_save_result: 100,
             // energie cost
             neuron_cost_mult: 5,
             neuron_cost_flat : 100000,
             neuron_web_cost_mult: 15,
             neuron_web_cost_flat : 1000000,
+
+            terrain_seed_generation_interval : None,
             
         }
     }

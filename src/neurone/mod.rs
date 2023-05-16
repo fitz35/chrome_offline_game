@@ -1,5 +1,6 @@
 use iced::Color;
 use rand::{Rng, distributions::Uniform};
+use rand::seq::IteratorRandom;
 use rand_pcg::Pcg64;
 use serde::{Serialize, Deserialize};
 
@@ -195,12 +196,7 @@ impl NeuroneWeb {
             neurones.push(Neurone::new(x, y, activation_condition, activation));
         }
         // get the action of the neurone web
-        let action = 
-            match rng.gen_range(0..3) {
-                0 => NeuroneWebAction::Jump,
-                1 => NeuroneWebAction::Unbend,
-                _ => NeuroneWebAction::Bend,
-            };
+        let action = (*PARAMS).commands.iter().cloned().choose(rng).unwrap().clone();
 
         Self {
             neurones,

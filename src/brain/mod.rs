@@ -11,7 +11,7 @@ use serde::{Deserialize, Serialize};
 use serde_json;
 
 use crate::neurone::NeuroneWebAction;
-use crate::params::GameParameters;
+use crate::params::{GameParameters, self};
 use crate::utils::{remove_indexes, get_max_i};
 use crate::{neurone::NeuroneWeb, entity::Obstacle, params::{PARAMS}, utils::str_to_u8_array, game::Game};
 
@@ -104,14 +104,14 @@ impl Brain {
 }
 
 
-fn brain_run(brain : Brain) -> u64 {
+fn brain_run(brain : Brain, seed : &str) -> u64 {
     // create the game
     let mut now = Instant::now();
-    let mut game = Game::new(now, &(*PARAMS).land_seed, Some(brain), None);
+    let mut game = Game::new(now, seed, Some(brain), None);
     let interval = 1000_000_000 / (*PARAMS).game_fps as u64;// in nanoseconds
     let duration = Duration::from_nanos(interval);
     // run the game
-    while !game.has_lost && (game.score < (*PARAMS).limit_score) {
+    while !game.has_lost && (game.score < params::LIMIT_SCORE) {
         now = now.checked_add(duration).unwrap();
         game.update(now);
     }
@@ -128,14 +128,16 @@ fn generate_next_generation(ancestor : &Vec<Brain>, rng : &mut Pcg64) -> Vec<Bra
             next_generation.push(best_brain.clone());
         }
     }else{
-        // TODO : upgrade this to not copy all the brain
-        let mut old_brains = ancestor.clone();
+        let mut potential_i = Vec::new();
+        for i in 0..ancestor.len() {
+            potential_i.push(i);
+        }
+
         for _ in 0..(*PARAMS).max_nb_brain_to_save as usize {
             // get a random index
-            let i_brain = rng.gen_range(0..old_brains.len());
-
-            let brain = old_brains.remove(i_brain);
-            next_generation.push(brain);
+            let index_potential_i = rng.gen_range(0..potential_i.len());
+            let i_brain = potential_i.remove(index_potential_i);
+            next_generation.push(ancestor[i_brain].clone());
             
         }
     }
@@ -143,8 +145,29 @@ fn generate_next_generation(ancestor : &Vec<Brain>, rng : &mut Pcg64) -> Vec<Bra
     next_generation
 }
 
+/// wrapper
 fn generate_next_generation_from_scoring(ancestor : &Vec<&(Brain, u64)>, rng : &mut Pcg64)-> Vec<Brain> {
     generate_next_generation(&ancestor.iter().map(|&(brain, _)| brain.clone()).collect(), rng)
+}
+
+// generate the seed for the actual generation i
+fn generate_seed(i : u64, prec_seed : &str, rng : &mut Pcg64) -> String {
+    match (*PARAMS).terrain_seed_generation_interval {
+        Some(interval) => {
+            if i % interval == 0 {
+                rng
+                    .sample_iter(rand::distributions::Alphanumeric)
+                    .take(8)
+                    .map(char::from)
+                    .collect()
+            }else{
+                prec_seed.to_string()
+            }
+        },
+        None => {
+            (*PARAMS).land_seed.as_str().to_string()
+        }
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -168,7 +191,7 @@ pub fn brain_train_pipeline(folder_path_input : Option<String>){
 
         // Convert the timestamp to a string
         let timestamp = timestamp.to_string();
-        let result_folder = (*PARAMS).result_folder_path.clone();
+        let result_folder = params::RESULT_FOLDER_PATH.clone();
         folder_path = format!("{}{}", result_folder, timestamp);
     }
     // check the slash at the end
@@ -224,15 +247,17 @@ pub fn brain_train_pipeline(folder_path_input : Option<String>){
 
     // ----------- run the brains ------------
     
-
-    for i in i_begin..(i_begin + (*PARAMS).training_nb_generation) {
+    let mut land_seed = generate_seed(0, (*PARAMS).land_seed.as_str(), &mut rng);
+    for i in i_begin..(i_begin + params::TRAINING_NB_GENERATION) {
         // run the brains in parallel
+        println!("land seed : {}", land_seed);
         let mut scores : Vec<(Brain, u64)> = Vec::new();
         let mut handles = vec![];
         for brain in brains {
             let brain_copy = brain.clone();
+            let seed_copy = land_seed.clone();
             let handle = thread::spawn(move || {
-                let result = brain_run(brain_copy);
+                let result = brain_run(brain_copy, seed_copy.as_str());
                 (brain, result)
             });
             handles.push(handle);
@@ -258,7 +283,7 @@ pub fn brain_train_pipeline(folder_path_input : Option<String>){
 
         // sort on the energie if the score is max
         let mut best_brains: Vec<&(Brain, u64)>;
-        if best_brains_score[0].1 == (*PARAMS).limit_score {
+        if best_brains_score[0].1 == params::LIMIT_SCORE {
             best_brains = vec![best_brains_score[0]];
             for score in &best_brains_score {
                 if score.0.get_energie() < best_brains.get(0).unwrap().0.get_energie() {
@@ -273,7 +298,7 @@ pub fn brain_train_pipeline(folder_path_input : Option<String>){
 
 
         // -------------------- save the progression (brain and random) -------------------------
-        if i % (PARAMS).interval_to_save_result == 0 || i == i_begin + (*PARAMS).training_nb_generation - 1{
+        if i % (PARAMS).interval_to_save_result == 0 || i == i_begin + params::TRAINING_NB_GENERATION - 1{
             let brains_to_save: Vec<Brain> = best_brains.iter().map(|&(brain, _)| brain.clone()).collect();
             let to_save = IntermediateResult {
                 brains : brains_to_save,
@@ -290,6 +315,8 @@ pub fn brain_train_pipeline(folder_path_input : Option<String>){
 
         // ------------------ create the next generation ------------------
         brains = generate_next_generation_from_scoring(&best_brains, &mut rng);
+        // get the seed
+        land_seed = generate_seed(i + 1, land_seed.as_str(), &mut rng);
         
     }
 
