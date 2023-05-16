@@ -1,5 +1,3 @@
-use std::collections::HashSet;
-
 use serde::{Serialize, Deserialize};
 use lazy_static::lazy_static;
 
@@ -25,7 +23,7 @@ pub struct GameParameters {
     pub land_seed: String,
     pub gravity: u64,
     /// the commands that the neurone web can do (and the obstacle generation)
-    pub commands: HashSet<NeuroneWebAction>,
+    pub commands: Vec<NeuroneWebAction>,
 
     // ------------------- Game Timing --------------------
     pub dinausor_jump_velocity: f64,
@@ -114,7 +112,7 @@ impl GameParameters {
             // Game Equilibrage
             land_seed: "42".to_string(),
             gravity: 2000,
-            commands: [NeuroneWebAction::Jump].iter().cloned().collect(),
+            commands: vec![NeuroneWebAction::Jump],
 
             // Game Timing
             dinausor_jump_velocity: 800.0,
@@ -176,6 +174,13 @@ impl GameParameters {
             terrain_seed_generation_interval : None,
             
         }
+    }
+
+    pub fn new_from_file(path: &str) -> Self {
+        let file = std::fs::File::open(path).expect("Unable to open parameter file");
+        let reader = std::io::BufReader::new(file);
+
+        serde_json::from_reader(reader).expect("Unable to parse parameter file")
     }
 }
 

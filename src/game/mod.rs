@@ -2,8 +2,7 @@
 use std::collections::HashSet;
 use std::time::{Instant, Duration};
 
-use rand::seq::IteratorRandom;
-use rand::{SeedableRng};
+use rand::{SeedableRng, Rng};
 
 use iced::widget::canvas::{Cursor, Geometry, Cache, Path, Stroke, LineCap, LineJoin};
 use iced::widget::{canvas, Canvas};
@@ -155,7 +154,8 @@ impl Game {
         );
         let x = (*PARAMS).game_width as f64 + (*PARAMS).pterodactyle_offset_with_rock as f64;
         
-        let random_obstacle: ObstacleGenerateType = OBSTACLE_GENERATE_TYPES.clone().into_iter().choose(&mut self.rng).unwrap();
+        let random_obstacle_index = self.rng.gen_range(0..OBSTACLE_GENERATE_TYPES.len());
+        let random_obstacle: ObstacleGenerateType = OBSTACLE_GENERATE_TYPES[random_obstacle_index].clone();
 
         match random_obstacle {
             ObstacleGenerateType::Cactus => {

@@ -1,6 +1,6 @@
 
 
-use std::{time::Instant, collections:: HashSet};
+use std::{time::Instant};
 
 use lazy_static::{lazy_static};
 
@@ -27,24 +27,25 @@ pub enum ObstacleGenerateType {
 
 lazy_static! {
     /// vget the possible obstacles that can be generated given the params
-    pub static ref OBSTACLE_GENERATE_TYPES: HashSet<ObstacleGenerateType> = {
-        let mut set = HashSet::new();
+    /// WARN : not use HashMAp, it doesn't garantee the order, so the randomly repeatability is not garantee
+    pub static ref OBSTACLE_GENERATE_TYPES: Vec<ObstacleGenerateType> = {
+        let mut vector = Vec::new();
         let commands = &(*PARAMS).commands;
         // jump obstacle
         if commands.contains(&NeuroneWebAction::Jump) {
-            set.insert(ObstacleGenerateType::Cactus);
-            set.insert(ObstacleGenerateType::Rock);
-            set.insert(ObstacleGenerateType::RockAndPterodactyle);
-            set.insert(ObstacleGenerateType::RockAndHole);
+            vector.push(ObstacleGenerateType::Cactus);
+            vector.push(ObstacleGenerateType::Rock);
+            vector.push(ObstacleGenerateType::RockAndPterodactyle);
+            vector.push(ObstacleGenerateType::RockAndHole);
         }
         // bend obstacle
         if commands.contains(&NeuroneWebAction::Bend) &&
             commands.contains(&NeuroneWebAction::Unbend) {
-            set.insert(ObstacleGenerateType::Pterodactyle);
+            vector.push(ObstacleGenerateType::Pterodactyle);
         }
 
 
-        set
+        vector
     };
 }
 

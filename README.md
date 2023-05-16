@@ -26,7 +26,9 @@ sudo apt install mesa-utils libglu1-mesa-dev freeglut3-dev mesa-common-dev
 
 ## Random
 
-Use the [rand_pcg](https://crates.io/crates/rand_pcg) crate to save it with serialise/deserialise
+Use the [rand_pcg](https://crates.io/crates/rand_pcg) crate to save it with serialise/deserialise.
+
+WARN : Don't use hashSet to 
 
 ## Params
 
