@@ -4,7 +4,6 @@ use std::{fs::File, io::BufReader};
 use brain::{brain_train_pipeline, IntermediateResult};
 use game::{Game, CustomFlags};
 use iced::{Settings, Application, window};
-use params::PARAMS;
 use program_args::ProgramArgs;
 use structopt::StructOpt;
 
@@ -24,18 +23,27 @@ fn main() -> iced::Result {
 
     // if we want to play the game
     if args.play {
+        let params = params::GameParameters::new_default();
         // run the game
         Game::run(Settings {
             antialiasing: true,
             window: window::Settings {
                 position: window::Position::Centered,
-                size: ((*PARAMS).game_width as u32, (*PARAMS).game_height as u32),
+                size: (params.game_width as u32, params.game_height as u32),
                 ..window::Settings::default()
             },
             ..Settings::default()
         })
     }else if args.brain_path.is_some() {
         // run the brain play
+        let params;
+        if args.params_path.is_some() {
+            params = params::GameParameters::new_from_file(args.params_path.unwrap().as_str());
+        }else{
+            params = params::GameParameters::new_default();
+        }
+
+
         let file = File::open(args.brain_path.unwrap()).expect("Unable to open file");
         let reader = BufReader::new(file);
 
@@ -46,10 +54,10 @@ fn main() -> iced::Result {
         }
         Game::run(Settings {
             antialiasing: true,
-            flags : CustomFlags::Brain(inter.brains[0].clone()),
+            flags : CustomFlags::Brain(inter.brains[0].clone(), params.clone()),
             window: window::Settings {
                 position: window::Position::Centered,
-                size: ((*PARAMS).game_width as u32, (*PARAMS).game_height as u32),
+                size: (params.game_width as u32, params.game_height as u32),
                 ..window::Settings::default()
             },
             ..Settings::default()

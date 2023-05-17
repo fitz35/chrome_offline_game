@@ -1,12 +1,15 @@
-use serde::{Serialize, Deserialize};
-use lazy_static::lazy_static;
+use std::vec;
 
-use crate::neurone::NeuroneWebAction;
+use serde::{Serialize, Deserialize};
+
+use crate::{neurone::NeuroneWebAction, entity::ObstacleGenerateType};
 
 
 pub const TRAINING_NB_GENERATION: u64 = 3_000_000;
 /// the score limit to stop the training (if the brain reach this score, we actually consider it as a good brain)
 pub const LIMIT_SCORE: u64 = 400;
+/// the interval to save the result (in number of generation)
+pub const INTERVAL_TO_SAVE_RESULT: u64 = 100;
 pub const RESULT_FOLDER_PATH: &str = "./ressources/results/";
 
 #[derive(Serialize, Deserialize, PartialEq, Clone, Debug)]
@@ -24,6 +27,9 @@ pub struct GameParameters {
     pub gravity: u64,
     /// the commands that the neurone web can do (and the obstacle generation)
     pub commands: Vec<NeuroneWebAction>,
+    /// the obstacle that can be generated (depending on the commands, calculated at the start of the program)
+    #[serde(skip)]
+    pub obstacle_generate_types: Vec<ObstacleGenerateType>,
 
     // ------------------- Game Timing --------------------
     pub dinausor_jump_velocity: f64,
@@ -85,8 +91,7 @@ pub struct GameParameters {
     
     /// the number of brain to save at the end of the training, if < 0 we save all the brain
     pub max_nb_brain_to_save: i64,
-    /// the interval to save the result (in number of generation)
-    pub interval_to_save_result: u64,
+    
     // energie cost
     pub neuron_cost_mult: u64,
     pub neuron_cost_flat: u64,
@@ -99,8 +104,8 @@ pub struct GameParameters {
 
 impl GameParameters {
 
-    fn new_default() -> Self {
-        GameParameters {
+    pub fn new_default() -> Self {
+        let mut params = GameParameters {
             // Basics
             game_width: 1280,
             game_height: 720,
@@ -110,9 +115,10 @@ impl GameParameters {
             // ...
 
             // Game Equilibrage
-            land_seed: "B".to_string(),
+            land_seed: "c".to_string(),
             gravity: 2000,
-            commands: vec![NeuroneWebAction::Jump, NeuroneWebAction::Bend, NeuroneWebAction::Unbend],
+            commands: vec![NeuroneWebAction::Jump/*, NeuroneWebAction::Bend, NeuroneWebAction::Unbend*/],
+            obstacle_generate_types: Vec::new(),
 
             // Game Timing
             dinausor_jump_velocity: 800.0,
@@ -164,7 +170,6 @@ impl GameParameters {
             // training
             training_nb_brain: 1000,
             max_nb_brain_to_save: 50,
-            interval_to_save_result: 100,
             // energie cost
             neuron_cost_mult: 5,
             neuron_cost_flat : 100000,
@@ -173,18 +178,41 @@ impl GameParameters {
 
             terrain_seed_generation_interval : None,
             
-        }
+        };
+
+        params.obstacle_generate_types = params.get_obstacles_generation_type();
+
+        params
     }
 
     pub fn new_from_file(path: &str) -> Self {
         let file = std::fs::File::open(path).expect("Unable to open parameter file");
         let reader = std::io::BufReader::new(file);
 
-        serde_json::from_reader(reader).expect("Unable to parse parameter file")
+        let mut params : GameParameters = serde_json::from_reader(reader).expect("Unable to parse parameter file");
+        params.obstacle_generate_types = params.get_obstacles_generation_type();
+        params
+
     }
-}
 
+    /// vget the possible obstacles that can be generated given the params
+    /// WARN : not use HashMAp, it doesn't garantee the order, so the randomly repeatability is not garantee
+    fn get_obstacles_generation_type(&self) -> Vec<ObstacleGenerateType> {
+        let mut vector = Vec::new();
+        let commands = &self.commands;
+        // jump obstacle
+        if commands.contains(&NeuroneWebAction::Jump) {
+            vector.push(ObstacleGenerateType::Cactus);
+            vector.push(ObstacleGenerateType::Rock);
+            vector.push(ObstacleGenerateType::RockAndPterodactyle);
+            vector.push(ObstacleGenerateType::RockAndHole);
+        }
+        // bend obstacle
+        if commands.contains(&NeuroneWebAction::Bend) &&
+            commands.contains(&NeuroneWebAction::Unbend) {
+            vector.push(ObstacleGenerateType::Pterodactyle);
+        }
 
-lazy_static! {
-    pub static ref PARAMS: GameParameters = GameParameters::new_default();
+        vector
+    }
 }

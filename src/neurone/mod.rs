@@ -3,7 +3,7 @@ use rand::{Rng, distributions::Uniform};
 use rand_pcg::Pcg64;
 use serde::{Serialize, Deserialize};
 
-use crate::{params::{PARAMS}, entity::Obstacle, utils::{check_collision, get_random_float, remove_indexes}};
+use crate::{entity::Obstacle, utils::{check_collision, get_random_float, remove_indexes}, params::GameParameters};
 
 
 #[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
@@ -33,21 +33,21 @@ pub enum NeuroneActivation {
 
 impl Neurone {
     /// create a totally new neurone
-    pub fn new(x : f64, y : f64, activation_condition : NeuroneActivationCondition, activation : NeuroneActivation) -> Self {
+    pub fn new(params : &GameParameters, x : f64, y : f64, activation_condition : NeuroneActivationCondition, activation : NeuroneActivation) -> Self {
         Self {
             x,
             y,
-            width : (*PARAMS).neurone_width,
-            height : (*PARAMS).neurone_height,
+            width : params.neurone_width,
+            height : params.neurone_height,
             activation_condition,
             activation,
         }
     }
 
     /// create a totaly new random neurone
-    pub fn new_random(rng : &mut Pcg64) -> Self {
-        let x = get_random_float(0.0, ((*PARAMS).game_width - (*PARAMS).neurone_width) as f64, rng);
-        let y = get_random_float((*PARAMS).hole_height as f64 + 5.0, ((*PARAMS).game_height - (*PARAMS).neurone_height) as f64, rng);
+    pub fn new_random(params : &GameParameters, rng : &mut Pcg64) -> Self {
+        let x = get_random_float(0.0, (params.game_width - params.neurone_width) as f64, rng);
+        let y = get_random_float(params.hole_height as f64 + 5.0, (params.game_height - params.neurone_height) as f64, rng);
         let activation_condition = 
             match rng.gen_range(0..2) {
                 0 => NeuroneActivationCondition::Air,
@@ -61,26 +61,26 @@ impl Neurone {
         Self {
             x,
             y,
-            width : (*PARAMS).neurone_width,
-            height : (*PARAMS).neurone_height,
+            width : params.neurone_width,
+            height : params.neurone_height,
             activation_condition,
             activation,
         }
     }
 
     /// mutate this neurone
-    pub fn mutate(&mut self, rng : &mut Pcg64) {
+    pub fn mutate(&mut self, params : &GameParameters, rng : &mut Pcg64) {
         // get the range of the mutation for x and y (we don't want to go out of the screen)
-        let min_x = (self.x - (*PARAMS).neurone_x_mutation_range).max(0.0);
-        let max_x = (self.x + (*PARAMS).neurone_x_mutation_range).min(((*PARAMS).game_width - (*PARAMS).neurone_width) as f64);
-        let min_y = (self.y - (*PARAMS).neurone_y_mutation_range).max((*PARAMS).hole_height as f64 + 5.0);// we don't want to go under the hole
-        let max_y = (self.y + (*PARAMS).neurone_y_mutation_range).min(((*PARAMS).game_height - (*PARAMS).neurone_height) as f64);
+        let min_x = (self.x - params.neurone_x_mutation_range).max(0.0);
+        let max_x = (self.x + params.neurone_x_mutation_range).min((params.game_width - params.neurone_width) as f64);
+        let min_y = (self.y - params.neurone_y_mutation_range).max(params.hole_height as f64 + 5.0);// we don't want to go under the hole
+        let max_y = (self.y + params.neurone_y_mutation_range).min((params.game_height - params.neurone_height) as f64);
 
         self.x = get_random_float(min_x, max_x, rng);
         self.y = get_random_float(min_y, max_y, rng);
 
         // mutate the activation condition if rng say so
-        if rng.gen_bool((*PARAMS).neurone_change_action_mutation_rate) {
+        if rng.gen_bool(params.neurone_change_action_mutation_rate) {
             self.activation_condition = 
                 match rng.gen_range(0..2) {
                     0 => NeuroneActivationCondition::Air,
@@ -89,7 +89,7 @@ impl Neurone {
         }
 
         // mutate the activation if rng say so
-        if rng.gen_bool((*PARAMS).neurone_change_action_mutation_rate) {
+        if rng.gen_bool(params.neurone_change_action_mutation_rate) {
             self.activation = 
                 match rng.gen_range(0..2) {
                     0 => NeuroneActivation::Activate,
@@ -129,14 +129,14 @@ impl Neurone {
     }
 
     /// get the energy of the neurone
-    pub fn get_energy(&self) -> f64 {
+    pub fn get_energy(&self, params : &GameParameters) -> f64 {
         // calcul the euclidian distance between the neurone and the dinausor
-        let dinausor_x = (*PARAMS).dinausor_x + (*PARAMS).dinausor_width as f64 / 2.0;
-        let dinausor_y = (*PARAMS).dinausor_height as f64 / 2.0;
-        let neurone_x = self.x + (*PARAMS).neurone_width as f64 / 2.0;
-        let neurone_y = self.y + (*PARAMS).neurone_height as f64 / 2.0;
+        let dinausor_x = params.dinausor_x + params.dinausor_width as f64 / 2.0;
+        let dinausor_y = params.dinausor_height as f64 / 2.0;
+        let neurone_x = self.x + params.neurone_width as f64 / 2.0;
+        let neurone_y = self.y + params.neurone_height as f64 / 2.0;
         let distance = ((dinausor_x - neurone_x).powi(2) + (dinausor_y - neurone_y).powi(2)).sqrt();
-        distance * (*PARAMS).neuron_cost_mult as f64 + (*PARAMS).neuron_cost_flat as f64    
+        distance * params.neuron_cost_mult as f64 + params.neuron_cost_flat as f64    
     }
 
     pub fn get_color(&self) -> Color {
@@ -172,13 +172,13 @@ pub struct NeuroneWeb {
 impl NeuroneWeb {
 
     /// create a new completly random web of neurone
-    pub fn new_random(rng : &mut Pcg64) -> Self {
+    pub fn new_random(params : &GameParameters, rng : &mut Pcg64) -> Self {
         let mut neurones = Vec::new();
         // get the number of neurones
-        let nb_neurones = rng.gen_range((*PARAMS).neurone_web_creation_nb_neurones_min..(*PARAMS).neurone_web_creation_nb_neurones_max);
+        let nb_neurones = rng.gen_range(params.neurone_web_creation_nb_neurones_min..params.neurone_web_creation_nb_neurones_max);
         // gain of performance by declaring the distribution outside of the loop
-        let x_dist = Uniform::from(0.0..((*PARAMS).game_width - (*PARAMS).neurone_width) as f64);
-        let y_dist = Uniform::from(((*PARAMS).hole_height as f64 + 5.0)..((*PARAMS).game_height - (*PARAMS).neurone_height) as f64);
+        let x_dist = Uniform::from(0.0..(params.game_width - params.neurone_width) as f64);
+        let y_dist = Uniform::from((params.hole_height as f64 + 5.0)..(params.game_height - params.neurone_height) as f64);
         for _ in 0..nb_neurones {
             let x = rng.sample(x_dist);
             let y = rng.sample(y_dist);
@@ -192,11 +192,11 @@ impl NeuroneWeb {
                     0 => NeuroneActivation::Activate,
                     _ => NeuroneActivation::PreventActivate,
                 };
-            neurones.push(Neurone::new(x, y, activation_condition, activation));
+            neurones.push(Neurone::new(params, x, y, activation_condition, activation));
         }
         // get the action of the neurone web
-        let action_i = rng.gen_range(0..(*PARAMS).commands.len());
-        let action = (*PARAMS).commands[action_i].clone();
+        let action_i = rng.gen_range(0..params.commands.len());
+        let action = params.commands[action_i].clone();
 
         Self {
             neurones,
@@ -205,14 +205,14 @@ impl NeuroneWeb {
     }
 
     /// mutate this neurone web
-    pub fn mutate(&mut self, rng : &mut Pcg64) {
+    pub fn mutate(&mut self, params : &GameParameters, rng : &mut Pcg64) {
         let mut neurones_to_remove: Vec<usize> = Vec::new();
         // mutate the neurone web
         for (i, neurone) in &mut self.neurones.iter_mut().enumerate() {   
-            if rng.gen_bool((*PARAMS).neurone_remove_mutation_rate) {
+            if rng.gen_bool(params.neurone_remove_mutation_rate) {
                 neurones_to_remove.push(i);
             }else{
-                neurone.mutate(rng);
+                neurone.mutate(params, rng);
             }
         }
 
@@ -220,14 +220,14 @@ impl NeuroneWeb {
         remove_indexes(&mut self.neurones, &neurones_to_remove);
 
         // add new neurone if rng say so
-        if rng.gen_bool((*PARAMS).neurone_web_add_mutation_rate) {
-            self.neurones.push(Neurone::new_random(rng));
+        if rng.gen_bool(params.neurone_web_add_mutation_rate) {
+            self.neurones.push(Neurone::new_random(params, rng));
         }
 
         // mutate the action if rng say so
-        if rng.gen_bool((*PARAMS).neurone_web_change_action_mutation_rate) {
-            let commands_i = rng.gen_range(0..(*PARAMS).commands.len());
-            self.action = (*PARAMS).commands[commands_i].clone();
+        if rng.gen_bool(params.neurone_web_change_action_mutation_rate) {
+            let commands_i = rng.gen_range(0..params.commands.len());
+            self.action = params.commands[commands_i].clone();
         }
     }
 
@@ -252,12 +252,12 @@ impl NeuroneWeb {
     }
 
     /// get the energy of the neurone web
-    pub fn get_energy(&self) -> f64 {
+    pub fn get_energy(&self, params : &GameParameters) -> f64 {
         let mut energy = 0.0;
         for neurone in &self.neurones {
-            energy += neurone.get_energy();
+            energy += neurone.get_energy(params);
         }
-        energy * (*PARAMS).neuron_web_cost_mult as f64 + (*PARAMS).neuron_web_cost_flat as f64
+        energy * params.neuron_web_cost_mult as f64 + params.neuron_web_cost_flat as f64
     }
 
 
@@ -267,34 +267,36 @@ impl NeuroneWeb {
 mod tests {
     use rand::SeedableRng;
 
-    use crate::utils::str_to_u8_array;
+    use crate::{utils::str_to_u8_array};
 
     use super::*;
 
     #[test]
     fn test_neurone_generation(){
+        let params = GameParameters::new_default();
         for _ in 0..100 {
             let mut rng = Pcg64::from_seed([0; 32]);
-            let neurone = Neurone::new_random(&mut rng);
+            let neurone = Neurone::new_random(&params, &mut rng);
             assert!(neurone.x >= 0.0);
-            assert!(neurone.x <= ((*PARAMS).game_width - (*PARAMS).neurone_width) as f64);
+            assert!(neurone.x <= (params.game_width - params.neurone_width) as f64);
             assert!(neurone.y >= 0.0);
-            assert!(neurone.y <= ((*PARAMS).game_height - (*PARAMS).neurone_height) as f64);
+            assert!(neurone.y <= (params.game_height - params.neurone_height) as f64);
         }        
     }
 
     #[test]
     fn test_neurone_web_generation(){
+        let params = GameParameters::new_default();
         for _ in 0..100 {
-            let mut rng = Pcg64::from_seed(str_to_u8_array((*PARAMS).brain_seed.as_str()));
-            let neurone_web = NeuroneWeb::new_random(&mut rng);
-            assert!(neurone_web.neurones.len() >= (*PARAMS).neurone_web_creation_nb_neurones_min as usize);
-            assert!(neurone_web.neurones.len() <= (*PARAMS).neurone_web_creation_nb_neurones_max as usize);
+            let mut rng = Pcg64::from_seed(str_to_u8_array(params.brain_seed.as_str()));
+            let neurone_web = NeuroneWeb::new_random(&params, &mut rng);
+            assert!(neurone_web.neurones.len() >= params.neurone_web_creation_nb_neurones_min as usize);
+            assert!(neurone_web.neurones.len() <= params.neurone_web_creation_nb_neurones_max as usize);
             for neurone in &neurone_web.neurones {
                 assert!(neurone.x >= 0.0);
-                assert!(neurone.x <= ((*PARAMS).game_width - (*PARAMS).neurone_width) as f64);
+                assert!(neurone.x <= (params.game_width - params.neurone_width) as f64);
                 assert!(neurone.y >= 0.0);
-                assert!(neurone.y <= ((*PARAMS).game_height - (*PARAMS).neurone_height) as f64);
+                assert!(neurone.y <= (params.game_height - params.neurone_height) as f64);
             }        
         }
     }

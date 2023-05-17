@@ -9,6 +9,9 @@ pub struct ProgramArgs {
     #[structopt(short = "b", long = "play_brain", help = "Play the game with the given brain", conflicts_with = "train", conflicts_with = "play")]
     pub brain_path: Option<String>,
 
+    #[structopt(short = "o", long = "params", help = "get the params in this json file")]
+    pub params_path: Option<String>,
+
     #[structopt(short = "p", long = "play", help = "Play the game", conflicts_with = "train", conflicts_with = "play_brain")]
     pub play : bool,
 }

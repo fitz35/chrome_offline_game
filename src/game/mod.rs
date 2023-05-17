@@ -11,9 +11,9 @@ use iced::{Application, executor, Command, Rectangle, Size, Color, Point, Subscr
 use rand_pcg::Pcg64;
 
 use crate::brain::Brain;
-use crate::entity::{Dinosaur, Obstacle, ObstacleGenerateType, ObstacleEntityType, OBSTACLE_GENERATE_TYPES};
+use crate::entity::{Dinosaur, Obstacle, ObstacleGenerateType, ObstacleEntityType};
 use crate::neurone::{Neurone, NeuroneWebAction};
-use crate::params::{PARAMS};
+use crate::params::{GameParameters};
 use crate::utils::{str_to_u8_array, get_scale_value, check_collision, remove_indexes};
 
 
@@ -24,6 +24,8 @@ pub struct Game {
     pub score: u64,
 
     pub has_lost : bool,
+
+    params : GameParameters,
     // ------ timing ------
     /// last time the game was updated
     pub last_time_update: Instant, 
@@ -43,9 +45,9 @@ pub struct Game {
 }
 
 impl Game {
-    pub fn new(now : Instant, seed: &str, brain : Option<Brain>, cache : Option<Cache>) -> Self {
+    pub fn new(params : &GameParameters, now : Instant, seed: &str, brain : Option<Brain>, cache : Option<Cache>) -> Self {
         let me = Self {
-            dinosaur: Dinosaur::new_dinosaur(now),
+            dinosaur: Dinosaur::new_dinosaur(params, now),
             obstacles: Vec::new(),
             score: 0,
             has_lost : false,
@@ -55,6 +57,7 @@ impl Game {
             land_rng : Pcg64::from_seed(str_to_u8_array(seed)),
             brain,
             cache,
+            params : params.clone(),
         };
         me
     }
@@ -131,13 +134,13 @@ impl Game {
     // ................. obstacle : 
 
     /// get the timing for the next obstacle (accelerate 4 times)
-    fn get_next_obstacle_timing(last_time : Instant, score : u64) -> Instant {
+    fn get_next_obstacle_timing(&self, last_time : Instant, score : u64) -> Instant {
         let interval = get_scale_value(
-            (*PARAMS).max_obstacle_generation_time,
-            (*PARAMS).min_obstacle_generation_time,
-            (*PARAMS).obstacle_generation_time_decrease_speed,
+            self.params.max_obstacle_generation_time,
+            self.params.min_obstacle_generation_time,
+            self.params.obstacle_generation_time_decrease_speed,
             score,
-            (*PARAMS).score_increase_speed_interval,
+            self.params.score_increase_speed_interval,
             true
         );
         
@@ -148,64 +151,71 @@ impl Game {
 
     /// generate the next obstacle (add it to the vector) and update the timing
     fn generate_next_obstacle(&mut self) {
-        let new_next_obstacle_time = Self::get_next_obstacle_timing(
+        let new_next_obstacle_time = self.get_next_obstacle_timing(
             self.next_obstacle_time, 
             self.score
         );
-        let x = (*PARAMS).game_width as f64 + (*PARAMS).pterodactyle_offset_with_rock as f64;
+        let x = self.params.game_width as f64 + self.params.pterodactyle_offset_with_rock as f64;
         
-        let random_obstacle_index = self.land_rng.gen_range(0..OBSTACLE_GENERATE_TYPES.len());
-        let random_obstacle: ObstacleGenerateType = OBSTACLE_GENERATE_TYPES[random_obstacle_index].clone();
+        let random_obstacle_index = self.land_rng.gen_range(0..self.params.obstacle_generate_types.len());
+        let random_obstacle: ObstacleGenerateType = self.params.obstacle_generate_types[random_obstacle_index].clone();
 
         match random_obstacle {
             ObstacleGenerateType::Cactus => {
                 self.obstacles.push(Obstacle::new(
+                    &self.params,
                     x, 
-                    (*PARAMS).obstacle_speed, 
+                    self.params.obstacle_speed, 
                     new_next_obstacle_time,
                     ObstacleEntityType::Cactus 
                 ));
             },
             ObstacleGenerateType::Rock => {
                 self.obstacles.push(Obstacle::new(
+                    &self.params,
                     x, 
-                    (*PARAMS).obstacle_speed, 
+                    self.params.obstacle_speed, 
                     new_next_obstacle_time,
                     ObstacleEntityType::Rock
                 ));
             },
             ObstacleGenerateType::RockAndPterodactyle => {
                 self.obstacles.push(Obstacle::new(
+                    &self.params,
                     x, 
-                    (*PARAMS).obstacle_speed, 
+                    self.params.obstacle_speed, 
                     new_next_obstacle_time,
                     ObstacleEntityType::Rock
                 ));
                 self.obstacles.push(Obstacle::new(
+                    &self.params,
                     x, 
-                    (*PARAMS).obstacle_speed, 
+                    self.params.obstacle_speed, 
                     new_next_obstacle_time,
                     ObstacleEntityType::PterodactyleWithRock
                 ));
             },
             ObstacleGenerateType::RockAndHole => {
                 self.obstacles.push(Obstacle::new(
+                    &self.params,
                     x, 
-                    (*PARAMS).obstacle_speed, 
+                    self.params.obstacle_speed, 
                     new_next_obstacle_time,
                     ObstacleEntityType::Rock
                 ));
                 self.obstacles.push(Obstacle::new(
+                    &self.params,
                     x, 
-                    (*PARAMS).obstacle_speed, 
+                    self.params.obstacle_speed, 
                     new_next_obstacle_time,
                     ObstacleEntityType::Hole
                 ));
             },
             ObstacleGenerateType::Pterodactyle => {
                 self.obstacles.push(Obstacle::new(
+                    &self.params,
                     x, 
-                    (*PARAMS).obstacle_speed, 
+                    self.params.obstacle_speed, 
                     new_next_obstacle_time,
                     ObstacleEntityType::Pterodactyle
                 ));
@@ -243,7 +253,7 @@ pub enum Message {
 #[derive(Debug, Clone)]
 pub enum CustomFlags {
     None,
-    Brain(Brain),
+    Brain(Brain, GameParameters),
 }
 
 // define the default value for the flags
@@ -262,11 +272,16 @@ impl Application for Game {
     type Flags = CustomFlags;
 
     fn new(flags: Self::Flags) -> (Self, iced::Command<Self::Message>) {
+        
         (
+            
             // construct the game at the beginning
             match flags {
-                CustomFlags::None => Self::new(Instant::now(), (*PARAMS).land_seed.as_str(), None, Some(Default::default())),
-                CustomFlags::Brain(brain) => Self::new(Instant::now(), (*PARAMS).land_seed.as_str(), Some(brain), Some(Default::default())),
+                CustomFlags::None => {
+                    let params = GameParameters::new_default();
+                    Self::new(&params, Instant::now(), params.land_seed.as_str(), None, Some(Default::default()))
+                }
+                CustomFlags::Brain(brain, params) => Self::new(&params, Instant::now(), params.land_seed.as_str(), Some(brain), Some(Default::default())),
             },
             Command::none(),
         )
@@ -287,7 +302,7 @@ impl Application for Game {
             },
             Message::Update => {
                 let now = self.last_time_update.checked_add(
-                    Duration::from_nanos(1000_000_000/(*PARAMS).game_fps as u64)
+                    Duration::from_nanos(1000_000_000/self.params.game_fps as u64)
                 ).unwrap();
 
                 if !self.has_lost {
@@ -299,7 +314,7 @@ impl Application for Game {
                 Command::none()
             },
             Message::Restart(brain) => {
-                *self = Self::new(Instant::now(), (*PARAMS).land_seed.as_str(), brain, Some(Default::default()));
+                *self = Self::new(&GameParameters::new_default(), Instant::now(), self.params.land_seed.as_str(), brain, Some(Default::default()));
                 Command::none()
             },
         }
@@ -307,13 +322,13 @@ impl Application for Game {
 
     fn view(&self) -> iced::Element<'_, Self::Message, iced::Renderer<Self::Theme>> {
         Canvas::new(self)
-            .width((*PARAMS).game_width)
-            .height((*PARAMS).game_height)
+            .width(self.params.game_width)
+            .height(self.params.game_height)
             .into()
     }
 
     fn subscription(&self) -> Subscription<Message> {
-        iced::time::every(std::time::Duration::from_nanos(1000_000_000/(*PARAMS).game_fps as u64)).map(|_| {
+        iced::time::every(std::time::Duration::from_nanos(1000_000_000/self.params.game_fps as u64)).map(|_| {
             Message::Update
         })
     }
@@ -457,7 +472,7 @@ mod tests {
     #[test]
     fn test_random_coherence() {
         // test the random number generator and the seed "test"
-        let mut game = Game::new(Instant::now(), "test", None, None);
+        let mut game = Game::new(&GameParameters::new_default(), Instant::now(), "test", None, None);
         let random_number0: u32 = game.land_rng.gen();
         let random_number1: u32 = game.land_rng.gen(); 
         let random_number2: u32 = game.land_rng.gen();

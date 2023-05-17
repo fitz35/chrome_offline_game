@@ -2,9 +2,7 @@
 
 use std::{time::Instant};
 
-use lazy_static::{lazy_static};
-
-use crate::{params::{PARAMS}, neurone::NeuroneWebAction};
+use crate::{params::GameParameters};
 
 /// The different type of obstacle
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -25,30 +23,6 @@ pub enum ObstacleGenerateType {
     Pterodactyle = 4,
 }
 
-lazy_static! {
-    /// vget the possible obstacles that can be generated given the params
-    /// WARN : not use HashMAp, it doesn't garantee the order, so the randomly repeatability is not garantee
-    pub static ref OBSTACLE_GENERATE_TYPES: Vec<ObstacleGenerateType> = {
-        let mut vector = Vec::new();
-        let commands = &(*PARAMS).commands;
-        // jump obstacle
-        if commands.contains(&NeuroneWebAction::Jump) {
-            vector.push(ObstacleGenerateType::Cactus);
-            vector.push(ObstacleGenerateType::Rock);
-            vector.push(ObstacleGenerateType::RockAndPterodactyle);
-            vector.push(ObstacleGenerateType::RockAndHole);
-        }
-        // bend obstacle
-        if commands.contains(&NeuroneWebAction::Bend) &&
-            commands.contains(&NeuroneWebAction::Unbend) {
-            vector.push(ObstacleGenerateType::Pterodactyle);
-        }
-
-
-        vector
-    };
-}
-
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Obstacle {
@@ -61,80 +35,88 @@ pub struct Obstacle {
     pub velocity: f64,// horizontal px/s
     pub type_: ObstacleEntityType,
     pub last_time_update: Instant,
+
+    params : GameParameters,
 }
 
 impl Obstacle {
     /// Create a new cactus obstacle
-    fn new_cactus(x: f64, velocity : f64, last_time_update : Instant) -> Self {
+    fn new_cactus(params : &GameParameters, x: f64, velocity : f64, last_time_update : Instant) -> Self {
         Self {
             x,
             y : 0.0,
-            width : (*PARAMS).cactus_width,
-            height : (*PARAMS).cactus_height,
+            width : params.cactus_width,
+            height : params.cactus_height,
             velocity,
             type_: ObstacleEntityType::Cactus,
             last_time_update,
+
+            params : params.clone(),
         }
     }
 
     /// Create a new rock obstacle
-    fn new_rock(x: f64, velocity : f64, last_time_update : Instant) -> Self {
+    fn new_rock(params : &GameParameters, x: f64, velocity : f64, last_time_update : Instant) -> Self {
         Self {
             x,
             y : 0.0,
-            width : (*PARAMS).rock_width,
-            height : (*PARAMS).rock_height,
+            width : params.rock_width,
+            height : params.rock_height,
             velocity,
             type_: ObstacleEntityType::Rock,
             last_time_update,
+            params : params.clone(),
         }
     }
 
-    fn new_pterodactyle_with_rock(x: f64, velocity : f64, last_time_update : Instant) -> Self {
+    fn new_pterodactyle_with_rock(params : &GameParameters, x: f64, velocity : f64, last_time_update : Instant) -> Self {
         Self {
-            x : x - (*PARAMS).pterodactyle_offset_with_rock as f64 - (*PARAMS).pterodactyle_width as f64,
-            y : (*PARAMS).pterodactyle_flying_height_with_rock as f64,
-            width : (*PARAMS).pterodactyle_width,
-            height : (*PARAMS).pterodactyle_height,
+            x : x - params.pterodactyle_offset_with_rock as f64 - params.pterodactyle_width as f64,
+            y : params.pterodactyle_flying_height_with_rock as f64,
+            width : params.pterodactyle_width,
+            height : params.pterodactyle_height,
             velocity : velocity,
             type_: ObstacleEntityType::PterodactyleWithRock,
             last_time_update,
+            params : params.clone(),
         }
     }
 
-    fn new_pterodactyle(x: f64, velocity : f64, last_time_update : Instant) -> Self {
+    fn new_pterodactyle(params : &GameParameters, x: f64, velocity : f64, last_time_update : Instant) -> Self {
         Self {
             x,
-            y : (*PARAMS).pterodactyle_flying_height_without_rock as f64,
-            width : (*PARAMS).pterodactyle_width,
-            height : (*PARAMS).pterodactyle_height,
+            y : params.pterodactyle_flying_height_without_rock as f64,
+            width : params.pterodactyle_width,
+            height : params.pterodactyle_height,
             velocity : velocity,
             type_: ObstacleEntityType::Pterodactyle,
             last_time_update,
+            params : params.clone(),
         }
     }
 
-    fn new_hole(x: f64, velocity : f64, last_time_update : Instant) -> Self {
+    fn new_hole(params : &GameParameters, x: f64, velocity : f64, last_time_update : Instant) -> Self {
         Self {
-            x : x - (*PARAMS).hole_width as f64,
+            x : x - params.hole_width as f64,
             y : 0.0,
-            width : (*PARAMS).hole_width,
-            height : (*PARAMS).hole_height,
+            width : params.hole_width,
+            height : params.hole_height,
             velocity,
             type_: ObstacleEntityType::Hole,
             last_time_update,
+            params : params.clone(),
         }
     }
 
     /// wrapper to create an obstacle
-    pub fn new(x: f64, velocity : f64, last_time_update : Instant, type_ : ObstacleEntityType) -> Self {
+    pub fn new(params : &GameParameters, x: f64, velocity : f64, last_time_update : Instant, type_ : ObstacleEntityType) -> Self {
         let x = x + 400.0;
         match type_ {
-            ObstacleEntityType::Cactus => Obstacle::new_cactus(x, velocity, last_time_update),
-            ObstacleEntityType::Rock => Obstacle::new_rock(x, velocity, last_time_update),
-            ObstacleEntityType::PterodactyleWithRock => Obstacle::new_pterodactyle_with_rock(x, velocity, last_time_update),
-            ObstacleEntityType::Hole => Obstacle::new_hole(x, velocity, last_time_update),
-            ObstacleEntityType::Pterodactyle => Obstacle::new_pterodactyle(x, velocity, last_time_update),
+            ObstacleEntityType::Cactus => Obstacle::new_cactus(params, x, velocity, last_time_update),
+            ObstacleEntityType::Rock => Obstacle::new_rock(params, x, velocity, last_time_update),
+            ObstacleEntityType::PterodactyleWithRock => Obstacle::new_pterodactyle_with_rock(params, x, velocity, last_time_update),
+            ObstacleEntityType::Hole => Obstacle::new_hole(params, x, velocity, last_time_update),
+            ObstacleEntityType::Pterodactyle => Obstacle::new_pterodactyle(params, x, velocity, last_time_update),
         }
     }
 
@@ -169,19 +151,22 @@ pub struct Dinosaur {
     pub last_time_update: Instant,// in seconds
 
     pub is_bending : bool,
+
+    params : GameParameters,
 }
 
 
 impl Dinosaur {
-    pub fn new_dinosaur(last_time_update : Instant) -> Self {
+    pub fn new_dinosaur(params : &GameParameters, last_time_update : Instant) -> Self {
         Self {
-            x : (*PARAMS).dinausor_x,
+            x : params.dinausor_x,
             y : 0.0,
-            width : (*PARAMS).dinausor_width,
-            height : (*PARAMS).dinausor_height,
+            width : params.dinausor_width,
+            height : params.dinausor_height,
             velocity : 0.0,
             last_time_update,
             is_bending : false,
+            params : params.clone(),
         }
     }
 
@@ -199,7 +184,7 @@ impl Dinosaur {
     /// rapid jump
     /// return true if the jump is done
     pub fn jump(&mut self) -> bool {
-        self.intern_hump((*PARAMS).dinausor_jump_velocity as f64)
+        self.intern_hump(self.params.dinausor_jump_velocity as f64)
     }
 
     /// bend
@@ -237,7 +222,7 @@ impl Dinosaur {
     pub fn update(&mut self, tick: Instant) {
         let delta = tick.duration_since(self.last_time_update).as_secs_f64();
         self.y += self.velocity * delta;
-        self.velocity -= (*PARAMS).gravity as f64 * delta;
+        self.velocity -= self.params.gravity as f64 * delta;
         if self.y <= 0.0 {
             self.y = 0.0;
             self.velocity = 0.0;
