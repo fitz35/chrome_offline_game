@@ -174,6 +174,7 @@ fn generate_seed(i : u64, prec_seed : &str, rng : &mut Pcg64) -> String {
 pub struct IntermediateResult {
     pub brains : Vec<Brain>,
     pub rng : Pcg64,
+    pub score : u64,
 }
 
 /// train the brain
@@ -302,7 +303,8 @@ pub fn brain_train_pipeline(folder_path_input : Option<String>){
             let brains_to_save: Vec<Brain> = best_brains.iter().map(|&(brain, _)| brain.clone()).collect();
             let to_save = IntermediateResult {
                 brains : brains_to_save,
-                rng : rng.clone()
+                rng : rng.clone(),
+                score : best_brains[0].1,
             };
             // save the best brains
             let brain_str = serde_json::to_string(&to_save).unwrap();

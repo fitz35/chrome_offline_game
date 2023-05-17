@@ -112,7 +112,7 @@ impl GameParameters {
             // Game Equilibrage
             land_seed: "B".to_string(),
             gravity: 2000,
-            commands: vec![NeuroneWebAction::Jump/*, NeuroneWebAction::Bend, NeuroneWebAction::Unbend*/],
+            commands: vec![NeuroneWebAction::Jump, NeuroneWebAction::Bend, NeuroneWebAction::Unbend],
 
             // Game Timing
             dinausor_jump_velocity: 800.0,
@@ -137,7 +137,7 @@ impl GameParameters {
             pterodactyle_flying_height_with_rock: 110,
             pterodactyle_offset_with_rock: 65,
             pterodactyle_flying_height_without_rock: 95,
-            hole_width: 80,
+            hole_width: 90,
             hole_height: 2,
 
             // Neurone
@@ -164,7 +164,7 @@ impl GameParameters {
             // training
             training_nb_brain: 1000,
             max_nb_brain_to_save: 50,
-            interval_to_save_result: 200,
+            interval_to_save_result: 100,
             // energie cost
             neuron_cost_mult: 5,
             neuron_cost_flat : 100000,
