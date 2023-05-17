@@ -407,9 +407,22 @@ impl canvas::Program<Message> for Game {
                             let action = &neurone_web.action;
                             let mut last_neuron : Option<&Neurone> = None;
                             for neurone in &neurone_web.neurones {
+                                let color_action = match action {
+                                    NeuroneWebAction::Jump => Color::from_rgb8(122, 255, 0),
+                                    NeuroneWebAction::Bend => Color::from_rgb8(255, 0, 122),
+                                    NeuroneWebAction::Unbend => Color::from_rgb8(0, 122, 255),
+                                };
+                                // draw highlight
+                                let highlight_thickness = 2.0;
                                 frame.fill_rectangle(
                                     Point { x: (neurone.x as f32), y: (neurone.y as f32) }, 
                                     Size { width: (neurone.width as f32), height: (neurone.height as f32) }, 
+                                    color_action
+                                );
+
+                                frame.fill_rectangle(
+                                    Point { x: (neurone.x as f32 + highlight_thickness), y: (neurone.y as f32 + highlight_thickness) }, 
+                                    Size { width: (neurone.width as f32 - 2.0 * highlight_thickness), height: (neurone.height as f32 - 2.0 * highlight_thickness) }, 
                                     neurone.get_color()
                                 );
 
@@ -428,11 +441,6 @@ impl canvas::Program<Message> for Game {
                                             last_neuron_point, 
                                             neurone_point
                                         );
-                                        let color = match action {
-                                            NeuroneWebAction::Jump => Color::from_rgb8(0, 255, 0),
-                                            NeuroneWebAction::Bend => Color::from_rgb8(255, 0, 0),
-                                            NeuroneWebAction::Unbend => Color::from_rgb8(0, 0, 255),
-                                        };
                                         frame.stroke(
                                             &path,
                                             Stroke {
@@ -440,7 +448,7 @@ impl canvas::Program<Message> for Game {
                                                 line_cap: LineCap::Round,
                                                 line_join: LineJoin::Round,
                                                 ..Stroke::default()
-                                                    .with_color(color)
+                                                    .with_color(color_action)
                                                     .clone()
                                             }
                                             
