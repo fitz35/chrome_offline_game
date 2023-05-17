@@ -4,7 +4,7 @@ use std::time::{Instant, Duration};
 
 use rand::{SeedableRng, Rng};
 
-use iced::widget::canvas::{Cursor, Geometry, Cache, Path, Stroke, LineCap, LineJoin};
+use iced::widget::canvas::{Cursor, Geometry, Cache, Path, Stroke, LineCap, LineJoin, Frame, Text};
 use iced::widget::{canvas, Canvas};
 use iced::theme::{Theme};
 use iced::{Application, executor, Command, Rectangle, Size, Color, Point, Subscription, keyboard};
@@ -12,7 +12,7 @@ use rand_pcg::Pcg64;
 
 use crate::brain::Brain;
 use crate::entity::{Dinosaur, Obstacle, ObstacleGenerateType, ObstacleEntityType};
-use crate::neurone::{Neurone, NeuroneWebAction};
+use crate::neurone::{Neurone, NeuroneWebAction, get_color_from_neurone, NeuroneActivationCondition, NeuroneActivation, get_color_from_activation, get_color_from_action};
 use crate::params::{GameParameters};
 use crate::utils::{str_to_u8_array, get_scale_value, check_collision, remove_indexes};
 
@@ -412,15 +412,13 @@ impl canvas::Program<Message> for Game {
                 // draw the brain
                 match &self.brain {
                     Some(brain) => {
+                        let action_activate = brain.get_activations(&self.obstacles);
+                        draw_legend(frame, &action_activate);
                         for neurone_web in &brain.neurone_web {
                             let action = &neurone_web.action;
                             let mut last_neuron : Option<&Neurone> = None;
                             for neurone in &neurone_web.neurones {
-                                let color_action = match action {
-                                    NeuroneWebAction::Jump => Color::from_rgb8(0, 0, 0),
-                                    NeuroneWebAction::Bend => Color::from_rgb8(255, 0, 255),
-                                    NeuroneWebAction::Unbend => Color::from_rgb8(0, 0, 255),
-                                };
+                                let color_action = get_color_from_action(&action);
                                 // draw highlight
                                 let highlight_thickness = 2.0;
                                 frame.fill_rectangle(
@@ -440,7 +438,7 @@ impl canvas::Program<Message> for Game {
                                         height_without_thick
                                     ), 
                                     Size { width: width_without_thick, height: height_without_thick }, 
-                                    neurone.get_color()
+                                    get_color_from_neurone(neurone)
                                 );
 
                                 // draw the link
@@ -483,6 +481,68 @@ impl canvas::Program<Message> for Game {
         });
 
         vec![geometry]
+    }
+}
+
+
+fn draw_legend(frame : &mut Frame, action_activated :&HashSet<NeuroneWebAction>) {
+    // draw all the possible activation of neurone :
+    let all_conditions = vec![NeuroneActivationCondition::Air, NeuroneActivationCondition::Obstacle];
+    let all_activations = vec![NeuroneActivation::Activate, NeuroneActivation::PreventActivate];
+    let all_actions = vec![NeuroneWebAction::Jump, NeuroneWebAction::Bend, NeuroneWebAction::Unbend];
+
+
+    let mut y = 0.0;
+    for condition in all_conditions {
+        for activation in &all_activations {
+            let color = get_color_from_activation(*activation, condition);
+            frame.fill_rectangle(
+                Point { x: 0.0, y: y }, 
+                Size { width: 20.0, height: 20.0 }, 
+                color
+            );
+            frame.fill_text(Text {
+                content: format!("{} when cross a {}", activation, condition),
+                position: Point { x: 30.0, y: y },
+                size: 20.0,
+                color: Color::BLACK,
+                ..Text::default()
+            });
+
+            y += 30.0;
+        }
+    }
+
+    // action
+    y = 0.0;
+    let x: f32 = 350.0;
+    let thickness = 2.0;
+    for action in &all_actions {
+        let color = get_color_from_action(action);
+        frame.fill_rectangle(
+            Point { x: x, y: y }, 
+            Size { width: 20.0, height: 20.0 }, 
+            color
+        );
+
+        // activate ?
+        if !action_activated.contains(action) {
+            frame.fill_rectangle(
+                Point { x: x + thickness, y: y + thickness }, 
+                Size { width: 20.0 - 2.0*thickness, height: 20.0 - 2.0*thickness }, 
+                Color::WHITE
+            );
+        }
+
+        frame.fill_text(Text {
+            content: format!("{} action", action),
+            position: Point { x: x + 30.0, y: y },
+            size: 20.0,
+            color: Color::BLACK,
+            ..Text::default()
+        });
+
+        y += 30.0;
     }
 }
 

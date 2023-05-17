@@ -1,3 +1,5 @@
+use std::fmt;
+
 use iced::Color;
 use rand::{Rng, distributions::Uniform};
 use rand_pcg::Pcg64;
@@ -24,11 +26,48 @@ pub enum NeuroneActivationCondition {
     Obstacle,
 }
 
+impl fmt::Display for NeuroneActivationCondition {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match *self {
+            NeuroneActivationCondition::Air => write!(f, "Air"),
+            NeuroneActivationCondition::Obstacle => write!(f, "Obstacle"),
+        }
+    }
+}
+
 /// if the activation, force to not jump or jump
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum NeuroneActivation {
     Activate,
     PreventActivate,
+}
+
+impl fmt::Display for NeuroneActivation {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match *self {
+            NeuroneActivation::Activate => write!(f, "Activate"),
+            NeuroneActivation::PreventActivate => write!(f, "PreventActivate"),
+        }
+    }
+}
+
+/// get the color of the neurone depending on its activation and its condition
+pub fn get_color_from_activation(activation : NeuroneActivation, condition : NeuroneActivationCondition) -> Color {
+    let alpha = 
+            match condition {
+                NeuroneActivationCondition::Air => 0.5,
+                NeuroneActivationCondition::Obstacle => 1.0,
+            };
+
+    match activation {
+        NeuroneActivation::Activate => Color { r : 0.0, g : 1.0, b : 0.0, a : alpha},
+        NeuroneActivation::PreventActivate => Color { r : 1.0, g : 0.0, b : 0.0, a : alpha}
+    }
+}
+
+/// get the color of the neurone depending on its activation and its condition
+pub fn get_color_from_neurone(neurone : &Neurone) -> Color {
+    get_color_from_activation(neurone.activation, neurone.activation_condition)
 }
 
 impl Neurone {
@@ -138,20 +177,6 @@ impl Neurone {
         let distance = ((dinausor_x - neurone_x).powi(2) + (dinausor_y - neurone_y).powi(2)).sqrt();
         distance * params.neuron_cost_mult as f64 + params.neuron_cost_flat as f64    
     }
-
-    pub fn get_color(&self) -> Color {
-        let alpha = 
-            match self.activation_condition {
-                NeuroneActivationCondition::Air => 0.5,
-                NeuroneActivationCondition::Obstacle => 1.0,
-            };
-
-        match self.activation {
-            NeuroneActivation::Activate => Color { r : 0.0, g : 1.0, b : 0.0, a : alpha},
-            NeuroneActivation::PreventActivate => Color { r : 1.0, g : 0.0, b : 0.0, a : alpha}
-        }
-    }
-
 }
 
 /// action of the neurone web
@@ -160,6 +185,27 @@ pub enum NeuroneWebAction {
     Jump,
     Bend,
     Unbend
+}
+
+impl fmt::Display for NeuroneWebAction {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match *self {
+            NeuroneWebAction::Jump => write!(f, "Jump"),
+            NeuroneWebAction::Bend => write!(f, "Bend"),
+            NeuroneWebAction::Unbend => write!(f, "Unbend"),
+        }
+    }
+}
+
+/// get the color of the neurone web depending on its action
+pub fn get_color_from_action(action : &NeuroneWebAction) -> Color{
+    let color_action = match action {
+        NeuroneWebAction::Jump => Color::from_rgb8(0, 0, 0),
+        NeuroneWebAction::Bend => Color::from_rgb8(255, 0, 255),
+        NeuroneWebAction::Unbend => Color::from_rgb8(0, 0, 255),
+    };
+
+    color_action
 }
 
 /// a web of neurone
