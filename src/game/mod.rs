@@ -240,6 +240,15 @@ impl Game {
         self.score += to_remove.len() as u64;
         remove_indexes(&mut self.obstacles, &to_remove);
     }
+
+    // ............... display :
+    /// symetric of the point with the height
+    fn get_opposite(&self, point : Point, height : f32) -> Point {
+        Point {
+            x : point.x,
+            y : (self.params.game_height as f32) - point.y - height
+        }
+    }
 }
 
 // ----------------- front -----------------
@@ -386,7 +395,7 @@ impl canvas::Program<Message> for Game {
             }else{
                 // draw the dinosaur
                 frame.fill_rectangle(
-                    Point { x: (self.dinosaur.x as f32), y: (self.dinosaur.y as f32) }, 
+                    self.get_opposite(Point { x: (self.dinosaur.x as f32), y: (self.dinosaur.y as f32) }, self.dinosaur.height as f32), 
                     Size { width: (self.dinosaur.width as f32), height: (self.dinosaur.height as f32) }, 
                     Color::BLACK
                 );
@@ -394,7 +403,7 @@ impl canvas::Program<Message> for Game {
                 // draw the obstacles
                 for obstacle in self.obstacles.iter() {
                     frame.fill_rectangle(
-                        Point { x: (obstacle.x as f32), y: (obstacle.y as f32) }, 
+                        self.get_opposite(Point { x: (obstacle.x as f32), y: (obstacle.y as f32) }, obstacle.height as f32), 
                         Size { width: (obstacle.width as f32), height: (obstacle.height as f32) }, 
                         Color::BLACK
                     );
@@ -408,35 +417,43 @@ impl canvas::Program<Message> for Game {
                             let mut last_neuron : Option<&Neurone> = None;
                             for neurone in &neurone_web.neurones {
                                 let color_action = match action {
-                                    NeuroneWebAction::Jump => Color::from_rgb8(122, 255, 0),
-                                    NeuroneWebAction::Bend => Color::from_rgb8(255, 0, 122),
-                                    NeuroneWebAction::Unbend => Color::from_rgb8(0, 122, 255),
+                                    NeuroneWebAction::Jump => Color::from_rgb8(0, 0, 0),
+                                    NeuroneWebAction::Bend => Color::from_rgb8(255, 0, 255),
+                                    NeuroneWebAction::Unbend => Color::from_rgb8(0, 0, 255),
                                 };
                                 // draw highlight
                                 let highlight_thickness = 2.0;
                                 frame.fill_rectangle(
-                                    Point { x: (neurone.x as f32), y: (neurone.y as f32) }, 
+                                    self.get_opposite(Point { x: (neurone.x as f32), y: (neurone.y as f32) }, neurone.height as f32), 
                                     Size { width: (neurone.width as f32), height: (neurone.height as f32) }, 
                                     color_action
                                 );
 
+                                let width_without_thick = neurone.width as f32 - 2.0 * highlight_thickness;
+                                let height_without_thick = neurone.height as f32 - 2.0 * highlight_thickness;
                                 frame.fill_rectangle(
-                                    Point { x: (neurone.x as f32 + highlight_thickness), y: (neurone.y as f32 + highlight_thickness) }, 
-                                    Size { width: (neurone.width as f32 - 2.0 * highlight_thickness), height: (neurone.height as f32 - 2.0 * highlight_thickness) }, 
+                                    self.get_opposite(
+                                        Point { 
+                                            x: (neurone.x as f32 + highlight_thickness), 
+                                            y: (neurone.y as f32 + highlight_thickness) 
+                                        }, 
+                                        height_without_thick
+                                    ), 
+                                    Size { width: width_without_thick, height: height_without_thick }, 
                                     neurone.get_color()
                                 );
 
                                 // draw the link
                                 match last_neuron {
                                     Some(last_neuron) => {
-                                        let last_neuron_point = Point { 
+                                        let last_neuron_point = self.get_opposite(Point { 
                                             x: (last_neuron.x as f32) + (last_neuron.width as f32)/2.0, 
-                                            y: (last_neuron.y as f32) + (last_neuron.height as f32)/2.0
-                                        };
-                                        let neurone_point = Point { 
+                                            y: (last_neuron.y as f32) - (last_neuron.height as f32)/2.0
+                                        }, last_neuron.height as f32);
+                                        let neurone_point = self.get_opposite(Point { 
                                             x: (neurone.x as f32) + (neurone.width as f32)/2.0, 
-                                            y: (neurone.y as f32) + (neurone.height as f32)/2.0 
-                                        };
+                                            y: (neurone.y as f32) - (neurone.height as f32)/2.0 
+                                        }, last_neuron.height as f32);
                                         let path = Path::line(
                                             last_neuron_point, 
                                             neurone_point
