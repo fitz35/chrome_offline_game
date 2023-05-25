@@ -23,10 +23,16 @@ fn main() -> iced::Result {
 
     // if we want to play the game
     if args.play {
-        let params = params::GameParameters::new_default();
+        let params;
+        if args.params_path.is_some() {
+            params = params::GameParameters::new_from_file(args.params_path.unwrap().as_str());
+        }else{
+            params = params::GameParameters::new_default();
+        }
         // run the game
         Game::run(Settings {
             antialiasing: true,
+            flags : CustomFlags::Play(params.clone()),
             window: window::Settings {
                 position: window::Position::Centered,
                 size: (params.game_width as u32, params.game_height as u32),

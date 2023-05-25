@@ -255,13 +255,13 @@ impl Game {
 #[derive(Debug, Clone)]
 pub enum Message {
     Do(NeuroneWebAction),
-    Restart(Option<Brain>),
+    Restart(Option<Brain>, GameParameters),
     Update,
 }
 
 #[derive(Debug, Clone)]
 pub enum CustomFlags {
-    None,
+    Play(GameParameters),
     Brain(Brain, GameParameters),
 }
 
@@ -269,7 +269,7 @@ pub enum CustomFlags {
 impl Default for CustomFlags {
     fn default() -> Self {
         // Define the default values for CustomFlags here
-        CustomFlags::None
+        CustomFlags::Play(GameParameters::new_default())
     }
 }
 
@@ -286,8 +286,7 @@ impl Application for Game {
             
             // construct the game at the beginning
             match flags {
-                CustomFlags::None => {
-                    let params = GameParameters::new_default();
+                CustomFlags::Play(params) => {
                     Self::new(&params, Instant::now(), params.land_seed.as_str(), None, Some(Default::default()))
                 }
                 CustomFlags::Brain(brain, params) => Self::new(&params, Instant::now(), params.land_seed.as_str(), Some(brain), Some(Default::default())),
@@ -322,8 +321,8 @@ impl Application for Game {
                 self.cache.as_ref().unwrap().clear();
                 Command::none()
             },
-            Message::Restart(brain) => {
-                *self = Self::new(&GameParameters::new_default(), Instant::now(), self.params.land_seed.as_str(), brain, Some(Default::default()));
+            Message::Restart(brain, params) => {
+                *self = Self::new(&params, Instant::now(), params.land_seed.as_str(), brain, Some(Default::default()));
                 Command::none()
             },
         }
@@ -361,7 +360,7 @@ impl canvas::Program<Message> for Game {
                     keyboard::Event::CharacterReceived(' ') => {
                         if self.has_lost {
                             // restart the game
-                            return (canvas::event::Status::Captured, Some(Message::Restart(self.brain.clone())))
+                            return (canvas::event::Status::Captured, Some(Message::Restart(self.brain.clone(), self.params.clone())))
                         }
                         // unbend if bending
                         if self.dinosaur.is_bending {

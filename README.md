@@ -28,10 +28,14 @@ sudo apt install mesa-utils libglu1-mesa-dev freeglut3-dev mesa-common-dev
 
 Use the [rand_pcg](https://crates.io/crates/rand_pcg) crate to save it with serialise/deserialise.
 
-WARN : Don't use hashSet to 
+WARN : Don't use hashSet to
 
-## Params
+## Program params
 
-### Params crate
+There is 3 used of this program :
 
-The 'game_fps' must be higher than
+* To play : add `-p` this will let the user play
+* To see brain play : add `-b path/to/the/brain` this will display the brain and let play
+* To train the brains : add `-t path/to/the/training/folder` this will train (from new or continue from old)
+
+to precise the option, add `-o path/to/option/json` . (only work for play, and brain play, the training option are in folder )

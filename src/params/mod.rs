@@ -115,7 +115,7 @@ impl GameParameters {
             // ...
 
             // Game Equilibrage
-            land_seed: "c".to_string(),
+            land_seed: "gra".to_string(),
             gravity: 2000,
             commands: vec![NeuroneWebAction::Jump/*, NeuroneWebAction::Bend, NeuroneWebAction::Unbend*/],
             obstacle_generate_types: Vec::new(),
